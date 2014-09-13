@@ -1,2 +1,6 @@
 Kishan Mainali
+<<<<<<< HEAD
 Prakash Bhandari
+=======
+Prakash Bhandari
+>>>>>>> b9c496c2c833c169d91e33ed195e7bdf666c6873
