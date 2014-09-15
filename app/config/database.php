@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'karma',
 			'username'  => 'root',
-			'password'  => '',
+			'password'  => 'p@ssw0rd',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

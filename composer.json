@@ -8,7 +8,8 @@
         "nesbot/carbon": "1.12.0"
 	},
     "require-dev": {
-        "way/generators": "~2.0"
+        "way/generators": "~2.0",
+        "itsgoingd/clockwork": "1.*"
     },
 	"autoload": {
 		"classmap": [
@@ -18,7 +19,10 @@
 			"app/database/migrations",
 			"app/database/seeds",
 			"app/tests/TestCase.php"
-		]
+		],
+        "psr-4": {
+            "Karma\\":"app/Karma"
+        }
 	},
 	"scripts": {
 		"post-install-cmd": [
