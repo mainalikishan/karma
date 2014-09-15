@@ -41,10 +41,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/config/app.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="123" column="50" selection-start="4402" selection-end="4402" vertical-scroll-proportion="0.5876133" vertical-offset="1825" max-vertical-offset="3618">
+            <state line="123" column="50" selection-start="4402" selection-end="4402" vertical-scroll-proportion="-14.407408" vertical-offset="1825" max-vertical-offset="3618">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="readme.md" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/readme.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="624" selection-start="624" selection-end="624" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="651">
               <folding />
             </state>
           </provider>
@@ -62,6 +71,7 @@
       <list>
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/app/config/app.php" />
+        <option value="$PROJECT_DIR$/readme.md" />
       </list>
     </option>
   </component>
@@ -266,7 +276,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/config/app.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="123" column="50" selection-start="4402" selection-end="4402" vertical-scroll-proportion="0.5876133" vertical-offset="1825" max-vertical-offset="3618">
+        <state line="123" column="50" selection-start="4402" selection-end="4402" vertical-scroll-proportion="-14.407408" vertical-offset="1825" max-vertical-offset="3618">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/readme.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="624" selection-start="624" selection-end="624" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="651">
           <folding />
         </state>
       </provider>
