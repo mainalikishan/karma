@@ -31,6 +31,6 @@ class CreateIndChangeLog extends Migration {
     public function down()
     {
         //
-        Schema::drop('ind_user_change_log');
+        Schema::drop('ind_user_change_logon');
     }
 }
