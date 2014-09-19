@@ -20,6 +20,7 @@ class CreateJob extends Migration {
             $table->integer('jobAddressId');
             $table->text('jobSkills');
             $table->date('jobExpDate');
+            $table->enum('jobExp',array('0','1','2','3','4','5'));
             $table->timestamp('jobAddedDate');
             $table->timestamp('jobUpdatedDate');
             $table->integer('jobViewCount');
