@@ -1,10 +1,45 @@
 <?php
+/**
+ * User: Kishan
+ * Date: 9/20/14
+ * Time: 12:19 PM
+ */
 namespace Karma\Registration;
 
 
-class IndUserRegister {
+/**
+ * Class IndUserRegister
+ * @package Karma\Registration
+ */
+class IndUserRegister
+{
+    /**
+     * @var IndFacebookRegister
+     */
+    private $indFacebookRegister;
+    /**
+     * @var IndTwitterRegister
+     */
+    private $indTwitterRegister;
+    /**
+     * @var IndLinkedinRegister
+     */
+    private $indLinkedinRegister;
 
-    public function checkRegistration($post){
-        return "hello";
+    public function __construct(IndFacebookRegister $indFacebookRegister,
+                                IndTwitterRegister $indTwitterRegister,
+                                IndLinkedinRegister $indLinkedinRegister)
+    {
+
+        $this->indFacebookRegister = $indFacebookRegister;
+        $this->indTwitterRegister = $indTwitterRegister;
+        $this->indLinkedinRegister = $indLinkedinRegister;
+    }
+
+    public function checkRegistration($post)
+    {
+        $oauthType = $post['oauth_type'];
+
+       return $this->$oauthType->register();
     }
 } 
