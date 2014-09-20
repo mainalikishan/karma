@@ -2,8 +2,7 @@
 
 Route::group(['prefix' => 'api/v1'], function(){
     // Individual User routes
-    Route::get('induser/login', 'IndUserController@login');
-    Route::get('copuser/register', 'CopUserRegisterController@register');
-
+    Route::get('induser/login', 'IndUserRegisterController@login');
     // Corporate User routes
+    Route::get('copuser/register', 'CopUserRegisterController@register');
 });

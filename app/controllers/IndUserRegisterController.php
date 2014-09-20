@@ -2,7 +2,7 @@
 
 use Karma\Registration\IndUserRegister;
 
-class IndUserController extends ApiController
+class IndUserRegisterController extends ApiController
 {
     /**
      * @var Karma\Registration\IndUserRegister
