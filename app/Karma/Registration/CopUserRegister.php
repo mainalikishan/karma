@@ -1,6 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
  * User: Prakash
  * Date: 9/20/14
  * Time: 12:19 PM
@@ -11,9 +10,26 @@ namespace Karma\Registration;
 
 class CopUserRegister {
 
-    public function checkRegistration($post)
+    /**
+     * @var CopCustomRegister
+     */
+    private $copCustomRegister;
+    /**
+     * @var CopLinkedInRegister
+     */
+    private $copLinkedInRegister;
+
+    function __construct(CopCustomRegister $copCustomRegister, CopLinkedInRegister $copLinkedInRegister)
     {
-        return "hi ";
+
+        $this->copCustomRegister = $copCustomRegister;
+        $this->copLinkedInRegister = $copLinkedInRegister;
     }
 
-} 
+    public function checkRegistration($post)
+    {
+        $oauthType =$post['oauth_type'];
+       return  $this->$oauthType->register();
+    }
+
+}
