@@ -18,7 +18,12 @@ class CopUserRegisterController extends ApiController {
     public function register()
 	{
         //$post = $this->postRequestHandler();
-        $post['oauth_type']='copLinkedInRegister';
-        return $this->copUserRegister->checkRegistration($post);
+        $post['oauth_type']='copCustomRegister';
+        try{
+            return $this->copUserRegister->checkRegistration($post);
+        }
+        catch(Exception $e){
+            return $this->respondUnprocessableEntity($e->getMessage());
+        }
 	}
 }

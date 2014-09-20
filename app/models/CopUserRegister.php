@@ -1,6 +1,6 @@
 <?php
 
-class CopUser extends \Eloquent {
+class CopUserRegister extends \Eloquent {
     protected $fillable =['username','password'];
 
    //database table used by model

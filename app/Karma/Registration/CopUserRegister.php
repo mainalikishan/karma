@@ -29,6 +29,10 @@ class CopUserRegister {
     public function checkRegistration($post)
     {
         $oauthType =$post['oauth_type'];
+        if($oauthType!=='copCustomRegister'
+            && $oauthType!=='copLinkedInRegister') {
+            throw new \Exception('Illegal ouath type');
+        }
        return  $this->$oauthType->register();
     }
 
