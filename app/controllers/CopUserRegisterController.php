@@ -1,6 +1,7 @@
 <?php
 
 use Karma\Registration\CopUserRegister;
+use Karma\Validation\CopRegisterValidate;
 
 class CopUserRegisterController extends ApiController {
 
@@ -9,17 +10,34 @@ class CopUserRegisterController extends ApiController {
      * @var Karma\Registration\CopUserRegister
      */
     private $copUserRegister;
+    /**
+     * @var Karma\Validation\CopRegisterValidate
+     */
+    private $copRegisterValidate;
 
-    function __construct(CopUserRegister $copUserRegister)
+    function __construct(CopUserRegister $copUserRegister, CopRegisterValidate $copRegisterValidate)
     {
         $this->copUserRegister = $copUserRegister;
+        $this->copRegisterValidate = $copRegisterValidate;
     }
 
     public function register()
 	{
-        //$post = $this->postRequestHandler();
-        $post['oauth_type']='copCustomRegister';
+	    //$post = $this->postRequestHandler();
+        $post = new stdClass();
+        $post->oauth_type='copCustomRegister';
+        $post->userCompanyName='Jagirr Inc.';
+        $post->userEmail='thebhandariprakash@gmail.com';
+        $post->userPassword='prakash';
         try{
+            $this->copRegisterValidate->validate($post);
+        }
+        catch(Laracasts\Validation\FormValidationException $e){
+            return $this->respondUnprocessableEntity($e->getErrors());
+        }
+
+        try{
+            $this->copRegisterValidate->validate($post);
             return $this->copUserRegister->checkRegistration($post);
         }
         catch(Exception $e){

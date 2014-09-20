@@ -122,7 +122,8 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Way\Generators\GeneratorsServiceProvider',
-        'Clockwork\Support\Laravel\ClockworkServiceProvider'
+        'Clockwork\Support\Laravel\ClockworkServiceProvider',
+        'Laracasts\Validation\ValidationServiceProvider'
 
 	),
 

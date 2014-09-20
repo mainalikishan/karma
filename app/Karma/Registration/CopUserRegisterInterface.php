@@ -9,5 +9,5 @@ namespace Karma\Registration;
 
 
 interface CopUserRegisterInterface {
-    public function register();
+    public function register($post);
 } 

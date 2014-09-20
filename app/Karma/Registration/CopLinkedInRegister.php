@@ -10,8 +10,13 @@ namespace Karma\Registration;
 
 class CopLinkedInRegister implements CopUserRegisterInterface
 {
-    public function register()
+    function __construct()
     {
+    }
+
+    public function register($data)
+    {
+        return $this->category->fill($data)->save();
         return "success linked in";
     }
 }
