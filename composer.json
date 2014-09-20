@@ -22,7 +22,7 @@
 			"app/tests/TestCase.php"
 		],
         "psr-4": {
-            "Karma\\":"app/Karma"
+            "Karma\\": "app/Karma"
         }
 	},
 	"scripts": {

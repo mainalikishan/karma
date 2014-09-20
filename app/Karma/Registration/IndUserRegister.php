@@ -1,8 +1,10 @@
-<?php namespace Karma\Registration;
+<?php
+namespace Karma\Registration;
 
-class IndUserRegister
-{
+
+class IndUserRegister {
+
     public function checkRegistration($post){
         return "hello";
     }
-}
+} 

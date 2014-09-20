@@ -1,6 +1,6 @@
 <?php
 
-class ApiController extends \BaseController
+class ApiController extends BaseController
 {
     protected $statusCode = 200;
 
