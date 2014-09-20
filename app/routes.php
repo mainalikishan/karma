@@ -1,5 +1,8 @@
 <?php
 
 Route::group(['prefix' => 'api/v1'], function(){
-    Route::resource('induser', 'IndUserController');
+    // Individual User routes
+    Route::get('induser/login', 'IndUserController@login');
+
+    // Corporate User routes
 });
