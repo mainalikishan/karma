@@ -21,6 +21,12 @@ class IndUserRegisterController extends ApiController
     {
         // $post = $this->postRequestHandler();
         $post['oauth_type'] = "indLinkedinRegister";
-        return $this->indUserRegister->checkRegistration($post);
+        try{
+            return $this->indUserRegister->checkRegistration($post);
+        }
+        catch(Exception $e){
+            return $this->respondUnprocessableEntity($e->getMessage());
+        }
+
     }
 }

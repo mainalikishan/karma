@@ -39,7 +39,12 @@ class IndUserRegister
     public function checkRegistration($post)
     {
         $oauthType = $post['oauth_type'];
+        if($oauthType!=='indFacebookRegister'
+            && $oauthType!=='indTwitterRegister'
+            && $oauthType!=='indLinkedinRegister') {
+            throw new \Exception('Illegal ouath type');
+        }
 
-       return $this->$oauthType->register();
+        return $this->$oauthType->register();
     }
 } 
