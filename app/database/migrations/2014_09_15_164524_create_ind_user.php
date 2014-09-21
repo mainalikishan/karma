@@ -33,7 +33,7 @@ class CreateIndUser extends Migration {
             $table->string('userLastLoginIp',20);
             $table->timestamp('userLastUpdated');
             $table->enum('userStatus',array('Active','block'));
-            $table->enum('userAccountStatus',array('perDeactivate','tempDeactivate'));
+            $table->enum('userAccountStatus',array('Active','perDeactivate','tempDeactivate'));
             $table->integer('userReportCount');
         });
 	}

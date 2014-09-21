@@ -33,7 +33,7 @@ class CreateCopUser extends Migration {
             $table->bigInteger('userOauthId');
             $table->string('userOuthType',20);
             $table->enum('userStatus',array('Y','N'));
-            $table->enum('userAccountStatus',array('perDeactivate','tempDeactivate'));
+            $table->enum('userAccountStatus',array('Active','perDeactivate','tempDeactivate'));
             $table->integer('userReportCount');
 
         });

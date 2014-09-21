@@ -25,9 +25,10 @@ class CopUserRegisterController extends ApiController {
 	{
 	    //$post = $this->postRequestHandler();
         $post = new stdClass();
-        $post->oauth_type='copCustomRegister';
+        $post->userOuthType='copCustomRegister';
+        $post->userOauthId='9841173139';
         $post->userCompanyName='Jagirr Inc.';
-        $post->userEmail='thebhandariprakash@gmail.com';
+        $post->userEmail='thebhandariprakash5@gmail.com';
         $post->userPassword='prakash';
         try{
             $this->copRegisterValidate->validate($post);
