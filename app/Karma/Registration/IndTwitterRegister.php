@@ -10,7 +10,7 @@ namespace Karma\Registration;
 
 class IndTwitterRegister implements IndUserRegisterInterface
 {
-    public function register()
+    public function register($post)
     {
         return "twitter";
     }

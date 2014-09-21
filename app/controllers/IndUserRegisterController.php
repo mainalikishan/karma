@@ -20,13 +20,19 @@ class IndUserRegisterController extends ApiController
     public function login()
     {
         // $post = $this->postRequestHandler();
-        $post['oauth_type'] = "indLinkedinRegister";
-        try{
-            return $this->indUserRegister->checkRegistration($post);
-        }
-        catch(Exception $e){
-            return $this->respondUnprocessableEntity($e->getMessage());
-        }
+        $post = new stdClass();
+        $post->oauthType='indFacebookRegister';
+        $post->userCompanyName='Jagirr Inc.';
+        $post->userEmail='thebhandariprakash@gmail.com';
+        $post->userPassword='prakash';
+        return $this->indUserRegister->checkRegistration($post);
+
+//        try{
+//            return $this->indUserRegister->checkRegistration($post);
+//        }
+//        catch(Exception $e){
+//            return $this->respondUnprocessableEntity($e->getMessage());
+//        }
 
     }
 }
