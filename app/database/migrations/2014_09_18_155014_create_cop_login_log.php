@@ -17,6 +17,7 @@ class CreateCopLoginLog extends Migration {
             $table->bigIncrements('logId');
             $table->bigInteger('loginUserId');
             $table->text('logLoginAgent');
+            $table->string('logLoginIp', 50);
             $table->timestamp('logAddedDate');
 
         });

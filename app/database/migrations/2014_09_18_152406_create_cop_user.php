@@ -23,6 +23,7 @@ class CreateCopUser extends Migration {
             $table->string('userCompanyName',100);
             $table->string('userEmail',100);
             $table->string('userPassword',100);
+            $table->string('userToken',100);
             $table->string('userCoverPic',100);
             $table->string('userProfilePic',100);
             $table->text('userSummary');

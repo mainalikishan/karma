@@ -8,9 +8,10 @@
 namespace Karma\Users;
 
 
-class IndUser extends \Eloquent {
-    const CREATED_AT ='userRegDate';
-    const UPDATED_AT ='userLastUpdated';
+class IndUser extends \Eloquent
+{
+    const CREATED_AT = 'userRegDate';
+    const UPDATED_AT = 'userLastUpdated';
     protected $fillable = array(
         'userGenderId',
         'userCountryId',
@@ -20,8 +21,8 @@ class IndUser extends \Eloquent {
         'userEmail',
         'userPassword',
         'userDOB',
-        'userOuathId',
-        'userOuathType',
+        'userOauthId',
+        'userOauthType',
         'userSummary',
         'userLastLogin',
         'userLoginCount',
@@ -30,13 +31,22 @@ class IndUser extends \Eloquent {
     );
 
     //database table used by model
-    protected $table ='ind_user';
+    protected $table = 'ind_user';
 
     public function register()
     {
         $args = func_get_args();
         $c = array_combine($this->fillable, $args);
-        $user =  new static ($c);
+        $user = new static ($c);
         return $user;
+    }
+
+    public function isRegisted($userOauthId, $userOauthType)
+    {
+        $user = $this->where(compact('userOauthId', 'userOauthType'))->first();
+        if($user) {
+            return $user;
+        }
+        return false;
     }
 } 

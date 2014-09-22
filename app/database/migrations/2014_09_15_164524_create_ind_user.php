@@ -22,18 +22,19 @@ class CreateIndUser extends Migration {
             $table->string('userFname',80);
             $table->string('userLname',80);
             $table->string('userEmail',80);
-            $table->string('userPassword',50);
+            $table->string('userPassword',100);
+            $table->string('userToken',100);
             $table->date('userDOB');
-            $table->bigInteger('userOuathId');
-            $table->enum('userOuathType', array('Facebook', 'Twitter','LinkedIn'));
+            $table->bigInteger('userOauthId');
+            $table->enum('userOauthType', array('Facebook', 'Twitter','LinkedIn'));
             $table->mediumText('userSummary');
             $table->dateTime('userRegDate');
             $table->dateTime('userLastLogin');
             $table->integer('userLoginCount');
             $table->string('userLastLoginIp',20);
             $table->timestamp('userLastUpdated');
-            $table->enum('userStatus',array('Active','block'));
-            $table->enum('userAccountStatus',array('perDeactivate','tempDeactivate'));
+            $table->enum('userStatus',array('Active','Block'));
+            $table->enum('userAccountStatus',array('perDeactivate','tempDeactivate','active'));
             $table->integer('userReportCount');
         });
 	}

@@ -18,7 +18,8 @@ class CreateIndLoginLog extends Migration
             $table->bigIncrements('logId');
             $table->bigInteger('logUserId');
             $table->string('logIp', 20);
-            $table->string('logAgent', 255);
+            $table->text('logAgent');
+            $table->string('logLoginIp', 50);
             $table->timestamp('logAddedDate');
         });
     }

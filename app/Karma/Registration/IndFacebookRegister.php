@@ -32,26 +32,31 @@ class IndFacebookRegister implements IndUserRegisterInterface
 
     public function register($post)
     {
+        $user = $this->indUser->isRegisted('123456', 'Facebook');
+        if( !$user )
+        {
+            $user = $this->indUser->register(
+                $post->id,
+                $post->genderId,
+                $post->countryId,
+                $post->Fname,
+                $post->Lname,
+                $post->Email,
+                \Hash::make($post->Password),
+                $post->DOB,
+                $post->OauthId,
+                $post->OauthType,
+                $post->Summary,
+                date('Y-m-d H:i:s'),
+                date('Y-m-d H:i:s'),
+                '1',
+                'Active',
+                'active'
+            );
 
-        $user = $this->indUser->register(
-            '1',
-            '1',
-            '1',
-            'Kishan',
-            'Mainali',
-            'mainalikishan@gmail.com',
-            \Hash::make('123456'),
-            '1989-01-22',
-            '123456',
-            'Facebook',
-            'User Summary',
-            date('Y-m-d H:i:s'),
-            '1',
-            'Active',
-            'tempDeactivate'
-        );
+            $this->indUserRepository->save($user);
+        }
 
-        $this->indUserRepository->save($user);
         return $user;
     }
 }

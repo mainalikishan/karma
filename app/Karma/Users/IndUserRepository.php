@@ -9,8 +9,8 @@ namespace Karma\Users;
 
 
 class IndUserRepository {
-    public function save(IndUser $users)
+    public function save(IndUser $indUser)
     {
-        return $users->save();
+        return $indUser->save();
     }
 } 
