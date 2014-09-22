@@ -123,7 +123,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Way\Generators\GeneratorsServiceProvider',
         'Clockwork\Support\Laravel\ClockworkServiceProvider',
-        'Laracasts\Validation\ValidationServiceProvider'
+        'Laracasts\Validation\ValidationServiceProvider',
+        'Jenssegers\Agent\AgentServiceProvider',
 
 	),
 
@@ -192,6 +193,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
         'Clockwork'       => 'Clockwork\Support\Laravel\Facade',
+        'Agent'            => 'Jenssegers\Agent\Facades\Agent',
 
 	),
 

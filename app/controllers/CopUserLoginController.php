@@ -19,24 +19,27 @@ class CopUserLoginController extends ApiController {
         $this->copLogInHandler = $copLogInHandler;
     }
 
-    public function loginValidate()
+    public function login()
     {
-        $post = new stdClass();
-        $post->userEmail='thebhandariprakash@gmail.com';
-        $post->userPassword='prakash';
+        $post = $this->postRequestHandler();
+        if(is_object($post))
+        {
+            try{
+              $this->copLoginValidate->validate($post);
+            }
+            catch(Laracasts\Validation\FormValidationException $e){
+                return $this->respondUnprocessableEntity($e->getErrors());
+            }
 
-        try{
-            $this->copLoginValidate->validate($post);
-        }
-        catch(Laracasts\Validation\FormValidationException $e){
-            return $this->respondUnprocessableEntity($e->getErrors());
+            try{
+               $return = $this->copLogInHandler->login($post);
+               return $this->respond($return);
+            }
+            catch(Exception $e){
+                return $this->respondUnprocessableEntity($e->getMessage());
+            }
         }
 
-        try{
-            $this->copLogInHandler->login($post);
-        }
-        catch(Exception $e){
-            return $this->respondUnprocessableEntity($e->getMessage());
-        }
+        return $this->respondUnprocessableEntity();
     }
 }

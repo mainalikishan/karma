@@ -84,8 +84,9 @@ class ApiController extends BaseController
      */
     public function postRequestHandler()
     {
-        $receive = file_get_contents("php://input");
-        return (json_decode($receive, true));
+//        $receive = file_get_contents("php://input");
+//        return (json_decode($receive, true));
+        return (object)$_POST;
     }
 
 
