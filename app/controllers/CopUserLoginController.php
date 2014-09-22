@@ -1,4 +1,5 @@
 <?php
+use Karma\Login\CopLogInHandler;
 use Karma\Validation\CopLoginValidate;
 class CopUserLoginController extends ApiController {
 
@@ -6,11 +7,16 @@ class CopUserLoginController extends ApiController {
      * @var Karma\Validation\CopLoginValidate
      */
     private $copLoginValidate;
+    /**
+     * @var Karma\Login\CopLogInHandler
+     */
+    private $copLogInHandler;
 
-    function __construct(CopLoginValidate $copLoginValidate )
+    function __construct(CopLoginValidate $copLoginValidate, CopLogInHandler $copLogInHandler )
     {
         $this->copLoginValidate = $copLoginValidate;
 
+        $this->copLogInHandler = $copLogInHandler;
     }
 
     public function loginValidate()
@@ -27,14 +33,7 @@ class CopUserLoginController extends ApiController {
         }
 
         try{
-            if (Auth::attempt(array('userEmail' => $post->userEmail, 'userPassword' => $post->userPassword,'userStatus' => 'Y')))
-            {
-                echo"success";
-            }
-            else
-            {
-                echo "Login Fail.";
-            }
+            $this->copLogInHandler->login($post);
         }
         catch(Exception $e){
             return $this->respondUnprocessableEntity($e->getMessage());
