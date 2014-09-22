@@ -29,7 +29,9 @@ class CopCustomRegister implements CopUserRegisterInterface {
         $user = CopUser::register(
             $post->userCompanyName,
             $post->userEmail,
-            $post->userPassword
+            \Hash::make($post->userPassword),
+            $post->userOuthType,
+            $post->userOauthId
         );
         $this->copUserRepository->save($user);
         return $user;
