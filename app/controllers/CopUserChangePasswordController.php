@@ -3,7 +3,8 @@
 use Karma\Profile\CopChangePasswordHandler;
 use Karma\Validation\CopChangePasswordValidate;
 
-class CopUserChangePasswordController extends ApiController {
+class CopUserChangePasswordController extends ApiController
+{
 
     /**
      * @var Karma\Validation\CopChangePasswordValidate
@@ -14,7 +15,7 @@ class CopUserChangePasswordController extends ApiController {
      */
     private $copChangePasswordHandler;
 
-    function __construct(CopChangePasswordValidate $changePasswordValidate, CopChangePasswordHandler $copChangePasswordHandler)
+    public function __construct(CopChangePasswordValidate $changePasswordValidate, CopChangePasswordHandler $copChangePasswordHandler)
     {
         $this->changePasswordValidate = $changePasswordValidate;
         $this->copChangePasswordHandler = $copChangePasswordHandler;

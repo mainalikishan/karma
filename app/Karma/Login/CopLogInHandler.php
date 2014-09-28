@@ -16,13 +16,13 @@ class CopLogInHandler {
      */
     private $copUser;
 
-    function __construct(CopUser $copUser)
+   public function __construct(CopUser $copUser)
     {
 
         $this->copUser = $copUser;
     }
 
-    function login($data)
+    public function login($data)
     {
 
         $user = CopUser:: getUser($data->userEmail);
@@ -35,7 +35,7 @@ class CopLogInHandler {
                 $userLoginCount = $user->userLoginCount+1;
                 $userId=$user->userId;
                 $userLoginIp = \Request::getClientIp(true);
-                $userToken = \Hash::make($user->userEmail.time());
+                $userToken = \CustomHelper::generateToken($user->userEmail);
                 CopUser::updateUserLoginInfo($userId,$userLoginCount,$userLoginIp,$userToken);
 
                 //inserting login log

@@ -23,15 +23,7 @@ class CopUserRegisterController extends ApiController {
 
     public function register()
 	{
-	    //$post = $this->postRequestHandler();
-        //$post = new stdClass();
-       // $post->userOuthType='copCustomRegister';
-        //$post->userOauthId='9841173139';
-        //$post->userCompanyName='Jagirr Inc.';
-       // $post->userEmail='thebhandariprakash@gmail.com';
-       // $post->userPassword='prakash';
-
-        $post = $this->postRequestHandler();
+	   $post = $this->postRequestHandler();
         if(is_object($post))
         {
             try{
@@ -42,7 +34,9 @@ class CopUserRegisterController extends ApiController {
             }
 
             try{
-                return $this->copUserRegister->checkRegistration($post);
+                $user =  $this->copUserRegister->checkRegistration($post);
+                \Event::fire('copUser.register', $user);
+                return $user;
             }
             catch(Exception $e){
                 return $this->respondUnprocessableEntity($e->getMessage());

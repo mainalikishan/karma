@@ -18,12 +18,12 @@ class CopCustomRegister implements CopUserRegisterInterface {
      */
     private $copUserRepository;
 
-    function __construct(CopUserRepository $copUserRepository)
+public function __construct(CopUserRepository $copUserRepository)
     {
         $this->copUserRepository = $copUserRepository;
     }
 
-    function register($post)
+public function register($post)
     {
         $user = CopUser::register(
             $post->userCompanyName,

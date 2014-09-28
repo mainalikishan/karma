@@ -8,7 +8,8 @@
 namespace Karma\Registration;
 
 
-class CopUserRegister {
+class CopUserRegister
+{
 
     /**
      * @var CopCustomRegister
@@ -19,7 +20,7 @@ class CopUserRegister {
      */
     private $copLinkedInRegister;
 
-    function __construct(CopCustomRegister $copCustomRegister, CopLinkedInRegister $copLinkedInRegister)
+    public function __construct(CopCustomRegister $copCustomRegister, CopLinkedInRegister $copLinkedInRegister)
     {
         $this->copCustomRegister = $copCustomRegister;
         $this->copLinkedInRegister = $copLinkedInRegister;
@@ -27,12 +28,13 @@ class CopUserRegister {
 
     public function checkRegistration($post)
     {
-        $oauthType =$post->userOuthType;
-        if($oauthType!=='copCustomRegister'
-            && $oauthType!=='copLinkedInRegister') {
+        $oauthType = $post->userOuthType;
+        if ($oauthType !== 'copCustomRegister'
+            && $oauthType !== 'copLinkedInRegister'
+        ) {
             throw new \Exception('Illegal ouath type');
         }
-       return  $this->$oauthType->register($post);
+        return $this->$oauthType->register($post);
     }
 
 }
