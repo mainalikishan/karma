@@ -29,6 +29,10 @@ class IndFacebookRegister implements IndUserRegisterInterface
         $this->indUser = $indUser;
     }
 
+    /**
+     * @param $post
+     * @return bool|static
+     */
     public function register($post)
     {
         $user = $this->indUser->isRegisted($post->oauthId, self::oauthType);
@@ -47,6 +51,7 @@ class IndFacebookRegister implements IndUserRegisterInterface
                 $post->lname,
                 $post->email,
                 \Hash::make($post->password),
+                \CustomHelper::generateToken($post->email),
                 $post->dob,
                 $post->oauthId,
                 self::oauthType,

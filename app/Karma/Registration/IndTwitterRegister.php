@@ -47,6 +47,7 @@ class IndTwitterRegister implements IndUserRegisterInterface
                 $post->lname,
                 $post->email,
                 \Hash::make($post->password),
+                \CustomHelper::generateToken($post->email),
                 $post->dob,
                 $post->oauthId,
                 self::oauthType,

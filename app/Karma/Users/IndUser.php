@@ -23,6 +23,7 @@ class IndUser extends \Eloquent
         'userLname',
         'userEmail',
         'userPassword',
+        'userToken',
         'userDOB',
         'userOauthId',
         'userOauthType',
@@ -36,9 +37,13 @@ class IndUser extends \Eloquent
         'userAccountStatus'
     );
 
-    //database table used by model
+    // database table used by model
     protected $table = 'ind_user';
 
+
+    /**
+     * @return static
+     */
     public function register()
     {
         $args = func_get_args();
@@ -47,6 +52,12 @@ class IndUser extends \Eloquent
         return $user;
     }
 
+
+    /**
+     * @param $userOauthId
+     * @param $userOauthType
+     * @return bool
+     */
     public function isRegisted($userOauthId, $userOauthType)
     {
         $user = $this->where(compact('userOauthId', 'userOauthType'))->first();
