@@ -24,24 +24,30 @@ class CopUserRegisterController extends ApiController {
     public function register()
 	{
 	    //$post = $this->postRequestHandler();
-        $post = new stdClass();
-        $post->userOuthType='copCustomRegister';
-        $post->userOauthId='9841173139';
-        $post->userCompanyName='Jagirr Inc.';
-        $post->userEmail='thebhandariprakash@gmail.com';
-        $post->userPassword='prakash';
-        try{
-            $this->copRegisterValidate->validate($post);
-        }
-        catch(Laracasts\Validation\FormValidationException $e){
-            return $this->respondUnprocessableEntity($e->getErrors());
-        }
+        //$post = new stdClass();
+       // $post->userOuthType='copCustomRegister';
+        //$post->userOauthId='9841173139';
+        //$post->userCompanyName='Jagirr Inc.';
+       // $post->userEmail='thebhandariprakash@gmail.com';
+       // $post->userPassword='prakash';
 
-        try{
-            return $this->copUserRegister->checkRegistration($post);
+        $post = $this->postRequestHandler();
+        if(is_object($post))
+        {
+            try{
+                $this->copRegisterValidate->validate($post);
+            }
+            catch(Laracasts\Validation\FormValidationException $e){
+                return $this->respondUnprocessableEntity($e->getErrors());
+            }
+
+            try{
+                return $this->copUserRegister->checkRegistration($post);
+            }
+            catch(Exception $e){
+                return $this->respondUnprocessableEntity($e->getMessage());
+            }
         }
-        catch(Exception $e){
-            return $this->respondUnprocessableEntity($e->getMessage());
-        }
-	}
+        return $this->respondUnprocessableEntity();
+    }
 }

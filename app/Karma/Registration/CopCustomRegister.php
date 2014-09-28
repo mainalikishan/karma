@@ -25,7 +25,6 @@ class CopCustomRegister implements CopUserRegisterInterface {
 
     function register($post)
     {
-
         $user = CopUser::register(
             $post->userCompanyName,
             $post->userEmail,

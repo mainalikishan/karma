@@ -5,6 +5,8 @@ class CopUser extends \Eloquent
 {
     const CREATED_AT = 'userRegDate';
     const UPDATED_AT = 'userUpdatedDate';
+    protected $primaryKey = 'userId';
+
     protected $fillable = ['userCompanyName', 'userEmail', 'userPassword', 'userOuthType', 'userOauthId'];
     protected $CopUserRepository;
 
@@ -17,13 +19,24 @@ class CopUser extends \Eloquent
         return $user;
     }
 
-
     public static function getUser($username)
     {
         $user = \DB::table('cop_user')
+            ->select('userId', 'userIndustryTypeId', 'userCountryId', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail','userPassword', 'userSummary', 'userCoverPic', 'userProfilePic', 'userStatus', 'userAccountStatus', 'userOuthType', 'userOauthId', 'userLoginCount')
             ->where('userEmail', $username)
             ->where('userAccountStatus', '<>', 'perDeactivate')
             ->where('userStatus', 'Y')->first();
+        return $user;
+    }
+
+    public static function getUserById($userId)
+    {
+        $user = \DB::table('cop_user')
+            ->select('userId', 'userIndustryTypeId', 'userCountryId', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userOuthType', 'userOauthId')
+            ->where('userId', $userId)
+            ->where('userAccountStatus', '<>', 'perDeactivate')
+            ->where('userStatus', 'Y')
+            ->get();
         return $user;
     }
 
@@ -49,5 +62,36 @@ class CopUser extends \Eloquent
                 'logLoginIp' => $userLoginIp,
                 'logAddedDate' => date('Y-m-d H:i:s')
             ));
+    }
+
+    // updating user profile information
+    public static function updateUserProfileInfo($userId,
+                                                 $userToken,
+                                                 $userIndustryTypeId,
+                                                 $userCountryId,
+                                                 $userAddressId,
+                                                 $userCompanyPhone,
+                                                 $userCompanyName,
+                                                 $userSummary)
+    {
+        \DB::table('cop_user')
+            ->where('userId', $userId)
+            ->where('userToken', $userToken)
+            ->update(array('userIndustryTypeId' => $userIndustryTypeId,
+                'userCountryId' => $userCountryId,
+                'userAddressId' => $userAddressId,
+                'userCompanyPhone' => $userCompanyPhone,
+                'userCompanyName' => $userCompanyName,
+                'userSummary' => $userSummary,
+                'userUpdatedDate' => date('Y-m-d H:i:s')
+            ));
+    }
+
+    public function fetchPassword($userId) {
+        $user = $this->select(array('userId', 'userPassword'))->where(compact('userId'))->first();
+        if($user) {
+            return $user;
+        }
+        return false;
     }
 }

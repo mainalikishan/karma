@@ -26,7 +26,7 @@ class CopLogInHandler {
     {
 
         $user = CopUser:: getUser($data->userEmail);
-        if(count($user)>0)
+        if($user)
         {
 
             if(\Hash::check($data->userPassword, $user->userPassword))
