@@ -17,12 +17,11 @@ class CopProfileHandler
      */
     private $copUser;
 
-    function __construct(CopUser $copUser)
+public function __construct(CopUser $copUser)
     {
         $this->copUser = $copUser;
     }
-
-    function updateProfile($data)
+public function updateProfile($data)
     {
         //getting post value
         $userId = $data->userId;

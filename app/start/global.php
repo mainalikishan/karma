@@ -20,6 +20,8 @@ ClassLoader::addDirectories(array(
     app_path().'/libraries',
 ));
 
+Event::subscribe('Karma\Registration\Events\CopUserRegisterEventsHandler');
+
 /*
 |--------------------------------------------------------------------------
 | Application Error Logger

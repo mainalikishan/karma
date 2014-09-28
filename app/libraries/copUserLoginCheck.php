@@ -19,7 +19,8 @@ class CopUserLoginCheck {
                 return true;
             }
         }
-        throw new \Exception('invalid token');
+
+        throw new \Exception(\Lang::get('errors.invalid_token'));
     }
 
 } 
