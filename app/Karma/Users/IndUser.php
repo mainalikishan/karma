@@ -12,10 +12,13 @@ class IndUser extends \Eloquent
 {
     const CREATED_AT = 'userRegDate';
     const UPDATED_AT = 'userLastUpdated';
+    protected $primaryKey  = 'userId';
+
     protected $fillable = array(
         'userGenderId',
         'userCountryId',
         'userAddressId',
+        'userJobTitleId',
         'userFname',
         'userLname',
         'userEmail',
@@ -24,8 +27,11 @@ class IndUser extends \Eloquent
         'userOauthId',
         'userOauthType',
         'userSummary',
+        'userPic',
+        'userRegDate',
         'userLastLogin',
         'userLoginCount',
+        'userLastLoginIp',
         'userStatus',
         'userAccountStatus'
     );

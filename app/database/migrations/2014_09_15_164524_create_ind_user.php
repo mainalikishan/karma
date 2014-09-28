@@ -28,6 +28,7 @@ class CreateIndUser extends Migration {
             $table->bigInteger('userOauthId');
             $table->enum('userOauthType', array('Facebook', 'Twitter','LinkedIn'));
             $table->mediumText('userSummary');
+            $table->text('userPic');
             $table->dateTime('userRegDate');
             $table->dateTime('userLastLogin');
             $table->integer('userLoginCount');

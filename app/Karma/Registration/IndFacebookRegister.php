@@ -13,8 +13,7 @@ use Karma\Users\IndUser;
 
 class IndFacebookRegister implements IndUserRegisterInterface
 {
-
-
+    const oauthType = 'Facebook';
     /**
      * @var \Karma\Users\IndUserRepository
      */
@@ -32,31 +31,54 @@ class IndFacebookRegister implements IndUserRegisterInterface
 
     public function register($post)
     {
-        $user = $this->indUser->isRegisted('123456', 'Facebook');
-        if( !$user )
-        {
+        $user = $this->indUser->isRegisted($post->oauthId, self::oauthType);
+
+        if ($user) {
+            $user->userLastLogin = date('Y-m-d H:i:s');
+            $user->userLoginCount = $user->userLoginCount + 1;
+            $user->userLastLoginIp = \Request::getClientIp(true);
+        } else {
             $user = $this->indUser->register(
-                $post->id,
                 $post->genderId,
                 $post->countryId,
-                $post->Fname,
-                $post->Lname,
-                $post->Email,
-                \Hash::make($post->Password),
-                $post->DOB,
-                $post->OauthId,
-                $post->OauthType,
-                $post->Summary,
+                $post->addressId,
+                $post->jobTitleId,
+                $post->fname,
+                $post->lname,
+                $post->email,
+                \Hash::make($post->password),
+                $post->dob,
+                $post->oauthId,
+                self::oauthType,
+                $post->summary,
+                'profile_pic',
                 date('Y-m-d H:i:s'),
                 date('Y-m-d H:i:s'),
                 '1',
+                \Request::getClientIp(true),
                 'Active',
                 'active'
             );
-
-            $this->indUserRepository->save($user);
         }
 
+        $this->indUserRepository->save($user);
+        $user = $this->indUser
+            ->select(array(
+                'userGenderId',
+                'userCountryId',
+                'userAddressId',
+                'userJobTitleId',
+                'userFname',
+                'userLname',
+                'userEmail',
+                'userDOB',
+                'userOauthId',
+                'userOauthType',
+                'userSummary',
+                'userPic',
+                'userRegDate'))
+            ->where('userId', '=', $user->userId)
+            ->first();
         return $user;
     }
 }
