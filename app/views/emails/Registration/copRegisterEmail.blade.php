@@ -24,36 +24,58 @@
                             </td>
                         </tr>
                         <tr>
+                            <td width="100%" align="center" style="padding: 0 10px;">
+                                <div style=" padding: 25px 0 20px 0;">
+                                    <span style="font-weight:normal;color:#ccc">—</span>
+                                    <span
+                                        style="font-size:24px; font-weight: bold; width:100%; text-align: center;color:#444444;">
+                                        Welcome to Jagirr
+                                    </span>
+                                    <span style="font-weight:normal;color:#ccc">—</span>
+                                </div>
+                                <span style="color:#666666; font-size: 16px; line-height: 24px; padding: 0;">
+                                    Great to have you on board <span style="font-weight: bold;">mainalikishan!</span>
+                                    Jagirr is a simplified platform to find and search the right job/professionals just behind you.
+                                </span>
+
+
+                            </td>
+
+                        <tr>
                             <td>
-                                <table cellpadding="0" cellspacing="0" style="line-height:25px" border="0"
+                                <hr style="border:none;border-bottom:1px solid #eee;margin-bottom:20px;margin-top:20px;background-color:#fff;min-height:1px; width: 90%; text-align: center;">
+                            </td>
+                        </tr>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <table cellpadding="0" cellspacing="0" border="0"
                                        align="center">
                                     <tbody>
 
                                     <tr>
-                                        <td width="36"></td>
-                                        <td width="454" align="left"
-                                            style="color:#444444;border-collapse:collapse;font-size:11pt;font-family:proxima_nova,'Open Sans','Lucida Grande','Segoe UI',Arial,Verdana,'Lucida Sans Unicode',Tahoma,'Sans Serif';max-width:454px"
-                                            valign="top">
 
-                                            <br>Hi Prakash,<br/><br/>
-                                            Thanks for joining Jagirr. <br/>
+                                        <td
+                                            style="color:#666666; font-size: 16px;border-collapse:collapse;font-family:proxima_nova,'Open Sans','Lucida Grande','Segoe UI',Arial,Verdana,'Lucida Sans Unicode',Tahoma,'Sans Serif'; text-align: center; padding: 0 10px;"
+                                            valign="top">
                                             Before you get started, please activate your account by entering 4 digits
                                             number shown below :
-
-                                            <br/><br/>
+                                            <br/>
+                                            <br/>
                                             <center>
                                                 <div
                                                     style="border-radius:3px;color:white;font-size:22px;padding:14px 7px 14px 7px;max-width:180px;font-family:proxima_nova,'Open Sans','lucida grande','Segoe UI',arial,verdana,'lucida sans unicode',tahoma,sans-serif;border:1px #1ABC9C solid;text-align:center;text-decoration:none;width:180px;margin:6px auto;display:block;background-color:#1ABC9C">
                                                     1204
                                                 </div>
                                             </center>
-                                            <br>
-                                            Jagirr is a simplified platform to find and search the right job/professionals just behind you.
+
+
                                         </td>
-                                        <td width="36"></td>
+
                                     </tr>
                                     <tr>
-                                        <td colspan="3" height="36"></td>
+                                        <td height="36"></td>
                                     </tr>
                                     </tbody>
                                 </table>

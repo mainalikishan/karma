@@ -18,7 +18,7 @@ class CopUserRegisterMailer {
         {
             $message->from('norep@jagirr.com', 'Jagirr Test');
 
-            $message->to('mainalikishan@gmail.com','Test user')->subject('Welcome!');
+            $message->to('thebhandariprakash@gmail.com','Test user')->subject('Welcome!');
 
             //$message->attach($pathToFile);
         });
