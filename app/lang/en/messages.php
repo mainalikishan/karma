@@ -5,5 +5,6 @@
  * Time: 10:59 AM
  */
 return array(
-    'password_change_successful' => 'Password changed successfully.'
+    'password_change_successful' => 'Password changed successfully.',
+    'account_activation_successful'=>'Account activated successfully.'
 );

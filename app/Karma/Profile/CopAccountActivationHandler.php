@@ -33,11 +33,13 @@ class CopAccountActivationHandler
     {
         $email = $post->userEmail;
         $activationCode = $post->activationCode;
-        $user = checkActivationCode($email,$activationCode);
+
+        $user = $this->copUser->checkActivationCode($email,$activationCode);
         if ($user) {
-            $user->userEmailVerificationCode =   $activationCode;
+            $user->userId= $user->userId;
+            $user->userEmailVerification =   'Y';
             $this->copUserRepository->save($user);
-            return Lang::get('messages.account_activation_successful');
+            return \Lang::get('messages.account_activation_successful');
         }
         throw new \Exception('errors.invalid_activation_code');
 

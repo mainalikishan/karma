@@ -1,30 +1,44 @@
 <?php
 
-class CopUserActivationController extends ApiController {
+use Karma\Profile\CopAccountActivationHandler;
+use Karma\Validation\copAccountActivationValidate;
+
+class CopUserActivationController extends ApiController
+{
+    /**
+     * @var Karma\Profile\CopAccountActivationHandler
+     */
+    private $copAccountActivationHandler;
+
 
     /**
-     * @var CopAccountValidationValidate
+     * @var
      */
-    private $accountValidationValidate;
+    private $copAccountActivationValidate;
 
-    function __construct(CopAccountValidationValidate $accountValidationValidate)
+    function __construct(CopAccountActivationValidate $copAccountActivationValidate, CopAccountActivationHandler $copAccountActivationHandler)
     {
-        $this->accountValidationValidate = $accountValidationValidate;
+
+        $this->copAccountActivationHandler = $copAccountActivationHandler;
+        $this->copAccountActivationValidate = $copAccountActivationValidate;
     }
 
-    public function changePassword()
+
+    public function accountActivation()
     {
         $post = $this->postRequestHandler();
+
         if (is_object($post)) {
             try {
-                $this->accountValidationValidate->validate($post);
+                $this->copAccountActivationValidate->validate($post);
             } catch (Laracasts\Validation\FormValidationException $e) {
                 return $this->respondUnprocessableEntity($e->getErrors());
             }
 
             try {
-                $return = $this->copChangePasswordHandler->changePassword($post);
+                $return = $this->copAccountActivationHandler->accountActivation($post);
                 return $this->respond($return);
+
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }

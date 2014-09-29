@@ -7,7 +7,6 @@
 
 namespace Karma\Registration\Mailer;
 
-
 class CopLinkedInRegister implements CopUserRegisterMailerInterface
 {
     private $toEmail = '';

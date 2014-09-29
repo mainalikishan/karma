@@ -9,7 +9,7 @@ namespace Karma\Validation;
 
 use Laracasts\Validation\FormValidator;
 
-class CopAccountValidationValidate extends FormValidator
+class CopAccountActivationValidate extends FormValidator
 {
 
     /**

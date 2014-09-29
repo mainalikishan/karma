@@ -22,7 +22,7 @@ class CopUser extends \Eloquent
     public static function getUser($username)
     {
         $user = \DB::table('cop_user')
-            ->select('userId', 'userIndustryTypeId', 'userCountryId', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userStatus', 'userAccountStatus', 'userOuthType', 'userOauthId', 'userLoginCount','userEmailVerificationCode')
+            ->select('userId', 'userIndustryTypeId', 'userCountryId', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userStatus', 'userAccountStatus', 'userOuthType', 'userOauthId', 'userLoginCount','userEmailVerificationCode','userEmailVerification')
             ->where('userEmail', $username)
             ->where('userAccountStatus', '<>', 'perDeactivate')
             ->where('userStatus', 'Y')->first();
@@ -95,9 +95,9 @@ class CopUser extends \Eloquent
         return false;
     }
 
-    public function checkActivationCode($userEmail,$userEmailVerificationCode)
+    public  function checkActivationCode($userEmail,$userEmailVerificationCode)
     {
-        $user = $this->select(array('userEmail', 'userEmailVerificationCode'))
+        $user = $this->select(array('userEmail', 'userEmailVerificationCode','userId'))
             ->where(compact('userEmail'))
             ->where(compact('userEmailVerificationCode'))
             ->first();

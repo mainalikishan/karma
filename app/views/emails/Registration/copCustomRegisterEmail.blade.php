@@ -18,9 +18,9 @@
                             <td colspan="3" height="20"></td>
                         </tr>
                         <tr style="line-height:0px">
-                            <td width="100%" style="font-size:0px" align="center" height="1">
-                                <img alt="Jagirr" src="{{$logo}}"
-                                     width="150">
+                            <td width="100%" style="font-size:0px" align="center" height="1"><img alt="Jagirr"
+                                                                                                  src="{{$logo}}"
+                                                                                                  width="150">
                             </td>
                         </tr>
                         <tr>
@@ -37,25 +37,19 @@
                                     Great to have you on board <span style="font-weight: bold;">{{$name}}!</span>
                                     Jagirr is a simplified platform to find and search the right job/professionals just behind you.
                                 </span>
-
-
                             </td>
-
                         <tr>
                             <td>
                                 <hr style="border:none;border-bottom:1px solid #eee;margin-bottom:20px;margin-top:20px;background-color:#fff;min-height:1px; width: 90%; text-align: center;">
                             </td>
                         </tr>
-
                         </tr>
                         <tr>
                             <td>
                                 <table cellpadding="0" cellspacing="0" border="0"
                                        align="center">
                                     <tbody>
-
                                     <tr>
-
                                         <td
                                             style="color:#666666; font-size: 16px;border-collapse:collapse;font-family:proxima_nova,'Open Sans','Lucida Grande','Segoe UI',Arial,Verdana,'Lucida Sans Unicode',Tahoma,'Sans Serif'; text-align: center; padding: 0 10px;"
                                             valign="top">
@@ -69,10 +63,7 @@
                                                     {{$code}}
                                                 </div>
                                             </center>
-
-
                                         </td>
-
                                     </tr>
                                     <tr>
                                         <td height="36"></td>
@@ -83,7 +74,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <table cellpadding="0" cellspacing="0" align="center" border="0">
+                    <table cellpadding="0" cellspacing="0" align="right" border="0">
                         <tbody>
                         <tr>
                             <td height="10"></td>
@@ -93,10 +84,9 @@
                                 <table cellpadding="0" cellspacing="0" align="center" border="0">
                                     <tbody>
                                     <tr style="color:#1ABC9C;font-size:11px;font-family:proxima_nova,'Open Sans','Lucida Grande','Segoe UI',Arial,Verdana,'Lucida Sans Unicode',Tahoma,'Sans Serif'">
-                                        <td width="400" align="left">&nbsp;
+                                        <td align="left">&nbsp;
                                         </td>
-                                        <td width="128" align="right">&copy; {{ date('Y') }} <span
-                                                class="il">Jagirr</span></td>
+                                        <td align="right">&copy; {{ date('Y') }} <span>Jagirr</span></td>
                                     </tr>
                                     </tbody>
                                 </table>
