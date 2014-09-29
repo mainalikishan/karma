@@ -17,7 +17,8 @@ class CreateAddress extends Migration {
             $table->bigIncrements('addressId');
             $table->integer('addressCountryId');
             $table->string('addressName',100);
-            $table->string('addressCoordinate',255);
+            $table->text('addressCoordinate');
+            $table->string('addressTimeZone',255);
             $table->timestamp('addressAddedDate');
             $table->timestamp('addressUpdatedDate');
         });

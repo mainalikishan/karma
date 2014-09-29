@@ -10,7 +10,7 @@ Route::group(['prefix' => 'api/v1'], function(){
     Route::post('copuser/updateProfile', 'CopUserUpdateProfileController@updateProfile');
     Route::post('copuser/changePassword', 'CopUserChangePasswordController@changePassword');
     Route::post('copuser/accountActivation', 'CopUserActivationController@accountActivation');
-
+    Route::post('copuser/forgotPasswordCodeRequest', 'CopUserForgotPasswordController@codeRequest');
 
 
 });

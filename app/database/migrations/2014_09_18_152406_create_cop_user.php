@@ -14,7 +14,6 @@ class CreateCopUser extends Migration {
 	{
 		//
         Schema::create('cop_user',function(Blueprint $table){
-
             $table->bigIncrements('userId');
             $table->integer('userIndustryTypeId');
             $table->integer('userCountryId');
