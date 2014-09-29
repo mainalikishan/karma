@@ -55,8 +55,6 @@ class CopChangePasswordHandler
                 }
                 throw new \Exception(\Lang::get('errors.confirm_password_mismatched'));
             }
-            \Event::fire('copUser.register', $user);
-            return;
             throw new \Exception(\Lang::get('errors.invalid_current_password'));
         }
         throw new \Exception('errors.something_went_wrong');

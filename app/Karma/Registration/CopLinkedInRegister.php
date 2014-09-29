@@ -16,7 +16,7 @@ class CopLinkedInRegister implements CopUserRegisterInterface
 
     public function register($data)
     {
-        return $this->category->fill($data)->save();
+       // return $this->category->fill($data)->save();
         return "success linked in";
     }
 }

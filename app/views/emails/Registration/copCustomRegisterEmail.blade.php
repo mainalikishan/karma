@@ -19,7 +19,7 @@
                         </tr>
                         <tr style="line-height:0px">
                             <td width="100%" style="font-size:0px" align="center" height="1">
-                                <img alt="Jagirr" src="https://dl.dropboxusercontent.com/u/25944118/_logo.png"
+                                <img alt="Jagirr" src="{{$logo}}"
                                      width="150">
                             </td>
                         </tr>
@@ -34,7 +34,7 @@
                                     <span style="font-weight:normal;color:#ccc">—</span>
                                 </div>
                                 <span style="color:#666666; font-size: 16px; line-height: 24px; padding: 0;">
-                                    Great to have you on board <span style="font-weight: bold;">mainalikishan!</span>
+                                    Great to have you on board <span style="font-weight: bold;">{{$name}}!</span>
                                     Jagirr is a simplified platform to find and search the right job/professionals just behind you.
                                 </span>
 
@@ -66,7 +66,7 @@
                                             <center>
                                                 <div
                                                     style="border-radius:3px;color:white;font-size:22px;padding:14px 7px 14px 7px;max-width:180px;font-family:proxima_nova,'Open Sans','lucida grande','Segoe UI',arial,verdana,'lucida sans unicode',tahoma,sans-serif;border:1px #1ABC9C solid;text-align:center;text-decoration:none;width:180px;margin:6px auto;display:block;background-color:#1ABC9C">
-                                                    1204
+                                                    {{$code}}
                                                 </div>
                                             </center>
 

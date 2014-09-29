@@ -5,26 +5,32 @@
  * Time: 11:47 AM
  */
 namespace Karma\Registration\Events;
-use Karma\Registration\Mailer\CopUserRegisterMailer;
+
+
+use Karma\Registration\Mailer\CopCustomRegister;
+use Karma\Registration\Mailer\CopLinkedInRegister;
 
 class CopUserRegisterEventsHandler {
-    /**
-     * @var \Karma\Registration\Mailer\CopUserRegisterMailer
-     */
-    private $copUserRegisterMailer;
 
-    function __construct(CopUserRegisterMailer $copUserRegisterMailer)
+    /**
+     * @var \Karma\Registration\Mailer\CopCustomRegister
+     */
+    private $copCustomRegister;
+    /**
+     * @var \Karma\Registration\Mailer\CopLinkedInRegister
+     */
+    private $copLinkedInRegister;
+
+    function __construct(CopCustomRegister $copCustomRegister, CopLinkedInRegister $copLinkedInRegister)
     {
-        $this->copUserRegisterMailer = $copUserRegisterMailer;
+        $this->copCustomRegister = $copCustomRegister;
+        $this->copLinkedInRegister = $copLinkedInRegister;
     }
 
-    /**
-     * Handle user register events.
-     */
-
-    public function onUserRegister($event)
+    public function onUserRegister($data)
     {
-        $this->copUserRegisterMailer->sendWelcomeEmail($event);
+        $userOuthType = $data->userOuthType;
+        $this->$userOuthType->sendWelcomeEmail($data);
     }
 
     public function subscribe($events)

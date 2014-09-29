@@ -18,12 +18,30 @@ class CustomHelper
         if (count($post) == $allowedPostLength) {
             foreach (array_map(NULL, array_keys($post), $allowedPosts) as $k) {
                 list($post, $allowedPosts) = $k;
-                if($post !== $allowedPosts) {
+                if ($post !== $allowedPosts) {
                     throw new \Exception(\Lang::get('errors.invalid_post_request'));
                 }
             }
             return true;
         }
         throw new \Exception(\Lang::get('errors.invalid_post_request'));
+    }
+
+    public static function generateRandomDigitCode($length = 4)
+    {
+        $numbers = '0123456789';
+        $randomDigit = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomDigit .= $numbers[rand(0, strlen($numbers) - 1)];
+        }
+        if ($length != strlen($randomDigit)) {
+            $len = "";
+            for ($j = 0; $j < $length; $j++) {
+                $len .= 9;
+            }
+            return rand(0, $len);
+        } else {
+            return $randomDigit;
+        }
     }
 } 
