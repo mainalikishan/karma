@@ -19,7 +19,7 @@ class IndProfileValidate extends FormValidator
      * @var array
      */
     protected $rules = [
-        'userFname' => 'required'
+        'fname' => 'required'
     ];
 
 }

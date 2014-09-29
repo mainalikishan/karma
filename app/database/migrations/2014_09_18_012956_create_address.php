@@ -19,7 +19,7 @@ class CreateAddress extends Migration {
             $table->string('addressName',100);
             $table->string('addressCoordinate',255);
             $table->timestamp('addressAddedDate');
-            $table->timestamp('adressUpdatedDate');
+            $table->timestamp('addressUpdatedDate');
         });
 	}
 

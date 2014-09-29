@@ -67,23 +67,7 @@ class IndFacebookRegister implements IndUserRegisterInterface
         }
 
         $this->indUserRepository->save($user);
-        $user = $this->indUser
-            ->select(array(
-                'userGenderId',
-                'userCountryId',
-                'userAddressId',
-                'userJobTitleId',
-                'userFname',
-                'userLname',
-                'userEmail',
-                'userDOB',
-                'userOauthId',
-                'userOauthType',
-                'userSummary',
-                'userPic',
-                'userRegDate'))
-            ->where('userId', '=', $user->userId)
-            ->first();
+
         return $user;
     }
 }
