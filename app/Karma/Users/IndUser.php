@@ -12,7 +12,9 @@ class IndUser extends \Eloquent
 {
     const CREATED_AT = 'userRegDate';
     const UPDATED_AT = 'userLastUpdated';
-    protected $primaryKey  = 'userId';
+    protected $primaryKey = 'userId';
+
+    protected $guarded = array('userId');
 
     protected $fillable = array(
         'userGenderId',
@@ -61,8 +63,19 @@ class IndUser extends \Eloquent
     public function isRegisted($userOauthId, $userOauthType)
     {
         $user = $this->where(compact('userOauthId', 'userOauthType'))->first();
-        if($user) {
+        if ($user) {
             return $user;
+        }
+        return false;
+    }
+
+    public function loginCheck($userToken, $userId)
+    {
+        $user = $this->where(compact('userToken', 'userId'))->first();
+        if ($user) {
+            if ($userId == $user->userId && $userToken == $user->userToken) {
+                return $user;
+            }
         }
         return false;
     }

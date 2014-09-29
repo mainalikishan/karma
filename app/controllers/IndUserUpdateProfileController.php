@@ -33,7 +33,7 @@ class IndUserUpdateProfileController extends ApiController
         if (is_object($post)) {
             // validate inputs
             try {
-                $this->indProfileHandler->validate($post);
+                $this->indProfileValidate->validate($post);
             } catch (Laracasts\Validation\FormValidationException $e) {
                 return $this->respondUnprocessableEntity($e->getErrors());
             }
@@ -58,7 +58,7 @@ class IndUserUpdateProfileController extends ApiController
                 }
                 return $this->respond($return);
             } catch (Exception $e) {
-                return $this->respondUnprocessableEntity($e->getErrors());
+                return $this->respondUnprocessableEntity($e->getMessage());
             }
         }
         return $this->respondUnprocessableEntity();
