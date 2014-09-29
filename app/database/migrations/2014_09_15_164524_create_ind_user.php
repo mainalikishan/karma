@@ -18,6 +18,8 @@ class CreateIndUser extends Migration {
             $table->integer('userGenderId');
             $table->integer('userCountryId');
             $table->integer('userAddressId');
+            $table->text('userAddressCoordinate');
+            $table->text('userDynamicAddressCoordinate');/// it is updated dynamically
             $table->integer('userJobTitleId');
             $table->string('userFname',80);
             $table->string('userLname',80);

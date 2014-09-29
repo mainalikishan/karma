@@ -7,22 +7,22 @@ class CopUser extends \Eloquent
     const UPDATED_AT = 'userUpdatedDate';
     protected $primaryKey = 'userId';
 
-    protected $fillable = ['userCompanyName', 'userEmail', 'userPassword', 'userOuthType', 'userOauthId','userEmailVerificationCode'];
+    protected $fillable = ['userCompanyName', 'userEmail', 'userPassword', 'userOuthType', 'userOauthId', 'userEmailVerificationCode'];
     protected $CopUserRepository;
 
     //database table used
     protected $table = 'cop_user';
 
-    public static function register($userCompanyName, $userEmail, $userPassword, $userOuthType, $userOauthId,$userEmailVerificationCode)
+    public static function register($userCompanyName, $userEmail, $userPassword, $userOuthType, $userOauthId, $userEmailVerificationCode)
     {
-        $user = new static (compact('userCompanyName', 'userEmail', 'userPassword', 'userOuthType', 'userOauthId','userEmailVerificationCode'));
+        $user = new static (compact('userCompanyName', 'userEmail', 'userPassword', 'userOuthType', 'userOauthId', 'userEmailVerificationCode'));
         return $user;
     }
 
     public static function getUser($username)
     {
         $user = \DB::table('cop_user')
-            ->select('userId', 'userIndustryTypeId', 'userCountryId', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userStatus', 'userAccountStatus', 'userOuthType', 'userOauthId', 'userLoginCount','userEmailVerificationCode','userEmailVerification')
+            ->select('userId', 'userIndustryTypeId', 'userCountryId', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userStatus', 'userAccountStatus', 'userOuthType', 'userOauthId', 'userLoginCount', 'userEmailVerificationCode', 'userEmailVerification')
             ->where('userEmail', $username)
             ->where('userAccountStatus', '<>', 'perDeactivate')
             ->where('userStatus', 'Y')->first();
@@ -87,21 +87,21 @@ class CopUser extends \Eloquent
             ));
     }
 
-    public function fetchPassword($userId) {
+    public function fetchPassword($userId)
+    {
         $user = $this->select(array('userId', 'userPassword'))->where(compact('userId'))->first();
-        if($user) {
+        if ($user) {
             return $user;
         }
         return false;
     }
 
-    public  function checkActivationCode($userEmail,$userEmailVerificationCode)
+    public function checkActivationCode($userEmail, $userEmailVerificationCode)
     {
-        $user = $this->select(array('userEmail', 'userEmailVerificationCode','userId'))
-            ->where(compact('userEmail'))
-            ->where(compact('userEmailVerificationCode'))
+        $user = $this->select(array('userEmail', 'userEmailVerificationCode', 'userId'))
+            ->where(compact('userEmail', 'userEmailVerificationCode'))
             ->first();
-        if($user) {
+        if ($user) {
             return $user;
         }
         return false;

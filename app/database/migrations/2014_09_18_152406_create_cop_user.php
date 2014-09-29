@@ -19,6 +19,8 @@ class CreateCopUser extends Migration {
             $table->integer('userIndustryTypeId');
             $table->integer('userCountryId');
             $table->integer('userAddressId');
+            $table->text('userAddressCoordinate');
+            $table->text('userDynamicAddressCoordinate');/// it is updated dynamically
             $table->string('userCompanyPhone',15);
             $table->string('userCompanyName',100);
             $table->string('userEmail',100);

@@ -11,18 +11,23 @@ use Karma\Users\CopUser;
 
 class CopProfileHandler
 {
-
     /**
      * @var \Karma\Users\CopUser
      */
     private $copUser;
 
-public function __construct(CopUser $copUser)
+    public function __construct(CopUser $copUser)
     {
         $this->copUser = $copUser;
     }
-public function updateProfile($data)
+
+    public function updateProfile($data)
     {
+
+        // check post array  fields
+        \CustomHelper::postCheck($data,
+            array('userId', 'userToken', 'userIndustryTypeId', 'userCountryId', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userSummary'),
+            8);
         //getting post value
         $userId = $data->userId;
         $userToken = $data->userToken;

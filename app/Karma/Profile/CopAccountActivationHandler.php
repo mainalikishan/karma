@@ -34,10 +34,11 @@ class CopAccountActivationHandler
         $email = $post->userEmail;
         $activationCode = $post->activationCode;
 
-        $user = $this->copUser->checkActivationCode($email,$activationCode);
+        \CustomHelper::postCheck($post, array('userEmail', 'activationCode'), 2);
+        $user = $this->copUser->checkActivationCode($email, $activationCode);
         if ($user) {
-            $user->userId= $user->userId;
-            $user->userEmailVerification =   'Y';
+            $user->userId = $user->userId;
+            $user->userEmailVerification = 'Y';
             $this->copUserRepository->save($user);
             return \Lang::get('messages.account_activation_successful');
         }

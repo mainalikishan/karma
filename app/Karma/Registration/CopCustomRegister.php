@@ -25,6 +25,10 @@ public function __construct(CopUserRepository $copUserRepository)
 
 public function register($post)
     {
+
+        // check post array  fields
+        \CustomHelper::postCheck($post, array('userCompanyName', 'userEmail', 'userPassword', 'userOuthType', 'userOauthId'), 5);
+
         // get four digit verification code
         $userEmailVerificationCode = \CustomHelper::generateRandomDigitCode();
 

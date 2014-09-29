@@ -30,6 +30,10 @@ class CopChangePasswordHandler
 
     public function changePassword($data)
     {
+
+        // check post array  fields
+        \CustomHelper::postCheck($data, array('userId', 'userToken', 'userPassword', 'newPassword', 'confirmPassword'), 5);
+
         //getting post value
         $userId = $data->userId;
         $userToken = $data->userToken;
