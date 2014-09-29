@@ -5,7 +5,6 @@ use Karma\Validation\CopRegisterValidate;
 
 class CopUserRegisterController extends ApiController {
 
-
     /**
      * @var Karma\Registration\CopUserRegister
      */
@@ -35,6 +34,7 @@ class CopUserRegisterController extends ApiController {
 
             try{
                 $user =  $this->copUserRegister->checkRegistration($post);
+
                 \Event::fire('copUser.register', $user);
                 return $user;
             }

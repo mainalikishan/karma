@@ -25,12 +25,16 @@ public function __construct(CopUserRepository $copUserRepository)
 
 public function register($post)
     {
+        // get four digit verification code
+        $userEmailVerificationCode = \CustomHelper::generateRandomDigitCode();
+
         $user = CopUser::register(
             $post->userCompanyName,
             $post->userEmail,
             \Hash::make($post->userPassword),
             $post->userOuthType,
-            $post->userOauthId
+            $post->userOauthId,
+            $userEmailVerificationCode
         );
         $this->copUserRepository->save($user);
         return $user;

@@ -5,5 +5,7 @@ return array(
     'confirm_password_mismatched' => 'Password confirm mismatched.',
     'something_went_wrong' => 'Something went wrong.',
     'invalid_current_password'=>'Invalid current message.',
-    'invalid_token'=>'Invalid token key'
+    'invalid_token'=>'Invalid token key',
+    'invalid_activation_code'=>'Invalid account activation code.',
+    'account_activation_successful'=>'Account activated successfully.'
 );
