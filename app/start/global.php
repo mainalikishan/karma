@@ -21,6 +21,7 @@ ClassLoader::addDirectories(array(
 ));
 
 Event::subscribe('Karma\Registration\Events\CopUserRegisterEventsHandler');
+Event::subscribe('Karma\Profile\Events\CopUserPasswordCodeRequestEventsHandler');
 
 /*
 |--------------------------------------------------------------------------

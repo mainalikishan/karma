@@ -63,6 +63,12 @@
                                                     {{$code}}
                                                 </div>
                                             </center>
+
+                                            <br />
+                                            <br />
+                                            <div style="text-align: left;">
+                                            {{$signature}}
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>

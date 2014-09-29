@@ -6,5 +6,6 @@
  */
 return array(
     'password_change_successful' => 'Password changed successfully.',
-    'account_activation_successful'=>'Account activated successfully.'
+    'account_activation_successful'=>'Account activated successfully.',
+     'password_verification_code_sent'=>'Password verification code sent to email address.'
 );

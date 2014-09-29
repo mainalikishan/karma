@@ -12,5 +12,6 @@ return array(
     'invalid_country_id' => 'Invalid Country ID',
     'invalid_address_id' => 'Invalid Address ID',
     'invalid_activation_code'=>'Invalid account activation code.',
-    'account_activation_successful'=>'Account activated successfully.'
+    'account_activation_successful'=>'Account activated successfully.',
+    'invalid_email_address' => 'Invalid email address.',
 );

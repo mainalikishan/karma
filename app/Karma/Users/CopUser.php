@@ -106,4 +106,17 @@ class CopUser extends \Eloquent
         }
         return false;
     }
+
+    public function checkEmail($userEmail)
+    {
+        $user = $this->select(array('userCompanyName','userEmail', 'userPasswordRequestVerificationCode','userId'))
+            ->where(compact('userEmail'))
+            ->first();
+        if ($user) {
+            return $user;
+        }
+        return false;
+    }
+
+
 }

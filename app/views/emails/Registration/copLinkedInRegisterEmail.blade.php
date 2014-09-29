@@ -37,6 +37,11 @@
                                     Great to have you on board <span style="font-weight: bold;">{{$name}}!</span>
                                     Jagirr is a simplified platform to find and search the right job/professionals just behind you.
                                 </span>
+                                <br />
+                                <br />
+                                <div style="text-align: left;">
+                                    {{$signature}}
+                                </div>
                             </td>
                         </tr>
                         <tr>

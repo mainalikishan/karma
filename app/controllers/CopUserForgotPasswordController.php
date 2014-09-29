@@ -1,5 +1,6 @@
 <?php
 
+use Karma\Profile\CopUserForgotPasswordRequestHandler;
 use Karma\Validation\CopUserForgotPasswordRequestValidate;
 
 class CopUserForgotPasswordController extends ApiController {
@@ -9,10 +10,15 @@ class CopUserForgotPasswordController extends ApiController {
      * @var Karma\Validation\CopUserForgotPasswordRequestValidate
      */
     private $copUserForgotPasswordRequestValidate;
+    /**
+     * @var Karma\Profile\CopUserForgotPasswordRequestHandler
+     */
+    private $copUserForgotPasswordRequestHandler;
 
-    function __construct(CopUserForgotPasswordRequestValidate $copUserForgotPasswordRequestValidate)
+    function __construct(CopUserForgotPasswordRequestValidate $copUserForgotPasswordRequestValidate, CopUserForgotPasswordRequestHandler $copUserForgotPasswordRequestHandler)
     {
         $this->copUserForgotPasswordRequestValidate = $copUserForgotPasswordRequestValidate;
+        $this->copUserForgotPasswordRequestHandler = $copUserForgotPasswordRequestHandler;
     }
 
     public function codeRequest()
@@ -28,7 +34,8 @@ class CopUserForgotPasswordController extends ApiController {
             }
 
             try{
-                $return = $this->copLogInHandler->login($post);
+                $return = $this->copUserForgotPasswordRequestHandler->codeRequest($post);
+                \Event::fire('copUser.requestCode', $return);
                 return $this->respond($return);
             }
             catch(Exception $e){
