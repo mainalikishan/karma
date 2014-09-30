@@ -21,13 +21,15 @@ class IndUserRegisterController extends ApiController
     {
         $post = $this->postRequestHandler();
 
-        try{
-            $return = $this->indUserRegister->checkRegistration($post);
-            return $this->respond($return);
-        }
-        catch(Exception $e){
-            return $this->respondUnprocessableEntity($e->getMessage());
-        }
+        $return = $this->indUserRegister->checkRegistration($post);
+        return $this->respond($return);
+//        try{
+//            $return = $this->indUserRegister->checkRegistration($post);
+//            return $this->respond($return);
+//        }
+//        catch(Exception $e){
+//            return $this->respondUnprocessableEntity($e->getMessage());
+//        }
 
     }
 }

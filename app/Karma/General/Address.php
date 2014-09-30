@@ -17,20 +17,41 @@ class Address extends \Eloquent
     protected $fillable = array(
         'addressCountryId',
         'addressName',
-        'addressCoordinate'
+        'addressCoordinate',
+        'addressTimeZone'
     );
 
     // database table used by model
     protected $table = 'address';
 
-    public static function selectAddress($addressId) {
-        $address = self::select(array('addressName', 'addressCoordinate'))
+    public static function createAddress($addressCountryId, $addressName, $addressCoordinate, $addressTimeZone)
+    {
+        $address = new static (compact('addressCountryId', 'addressName', 'addressCoordinate', 'addressTimeZone'));
+        return $address;
+    }
+
+    public static function selectAddress($addressId)
+    {
+        $address = self::select(array('addressName', 'addressCoordinate', 'addressTimeZone'))
             ->where(compact('addressId'))
             ->first();
-        if($address) {
+        if ($address) {
             return $address;
         }
         throw new \Exception(\Lang::get('errors.invalid_address_id'));
+    }
+
+    public static function makeAddress($data, $country)
+    {
+        $address = self::select(array('addressId', 'addressCountryId'))
+            ->where('addressName', '=', $data->name)->first();
+        if ($address) {
+            return $address;
+        } else {
+            $address = self::createAddress($country, $data->name, $data->coordinate, $data->timezone);
+            $address->save();
+            return self::makeAddress($data, $country);
+        }
     }
 
 }

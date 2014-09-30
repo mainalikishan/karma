@@ -20,6 +20,8 @@ class IndUser extends \Eloquent
         'userGenderId',
         'userCountryId',
         'userAddressId',
+        'userAddressCoordinate',
+        'userDynamicAddressCoordinate',
         'userJobTitleId',
         'userFname',
         'userLname',

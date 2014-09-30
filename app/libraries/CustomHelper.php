@@ -1,10 +1,7 @@
 <?php
 
-/**
- * User: kishan
- * Date: 9/28/14
- * Time: 1:29 PM
- */
+use Carbon\Carbon;
+
 class CustomHelper
 {
     public static function generateToken($param)
@@ -43,5 +40,41 @@ class CustomHelper
         } else {
             return $randomDigit;
         }
+    }
+
+    public static function getAddressFromApi($coordinate = null, $radius = '500')
+    {
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' . $coordinate . '&radius=' . $radius . '&key=' . GOOGLE_API_KEY . '');
+
+        $place = json_decode($response->getBody());
+        if ($place->status === 'OK') {
+            $place = $place->results[0];
+
+            // get timezone
+            $response = $client->get('https://maps.googleapis.com/maps/api/timezone/json?location=' . $coordinate . '&timestamp=' . time() . '&key=' . GOOGLE_API_KEY . '');
+            $timezone = json_decode($response->getBody());
+            $timezone = $timezone->status === 'OK' ? $timezone->timeZoneId : '';
+
+            //get country
+            $response = $client->get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' . $place->place_id . '&key=' . GOOGLE_API_KEY . '');
+            $country = json_decode($response->getBody());
+
+            $countryISO = $country->status === 'OK' ? $country->result->address_components[2]->short_name : '';
+            $countryName = $country->status === 'OK' ? $country->result->address_components[2]->long_name : '';
+
+            return (object)array(
+                'name' => $place->vicinity,
+                'coordinate' => $place->geometry->location->lat . ',' . $place->geometry->location->lng,
+                'timezone' => $timezone,
+                'countryISO' => $countryISO,
+                'countryName' => $countryName
+            );
+        }
+        return false;
+    }
+
+    public static function dateConvertTimezone($dt, $timezone, $format) {
+        return $dt->tz($timezone)->$format();
     }
 } 

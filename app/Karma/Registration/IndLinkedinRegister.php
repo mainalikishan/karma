@@ -29,7 +29,7 @@ class IndLinkedinRegister implements IndUserRegisterInterface
         $this->indUser = $indUser;
     }
 
-    public function register($post)
+    public function register($post, $address)
     {
         $user = $this->indUser->isRegisted($post->oauthId, self::oauthType);
 

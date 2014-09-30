@@ -7,7 +7,8 @@
 		"laravel/framework": "4.2.*",
         "nesbot/carbon": "1.12.0",
         "laracasts/validation": "~1.0",
-        "jenssegers/agent": "*"
+        "jenssegers/agent": "*",
+        "guzzlehttp/guzzle": "~4.0"
 	},
     "require-dev": {
         "way/generators": "~2.0",

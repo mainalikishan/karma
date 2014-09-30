@@ -7,6 +7,8 @@
 namespace Karma\Registration;
 
 use Karma\Cache\IndUserCacheHandler;
+use Karma\General\Address;
+use Karma\General\Country;
 use Karma\Users\IndUser;
 
 
@@ -61,8 +63,15 @@ class IndUserRegister
             throw new \Exception('Illegal oauth type');
         }
 
+//        $address = \CustomHelper::getAddressFromApi($post->coordinate);
+//        if($address) {
+//            $country = Country::selectCountryNameByISO($address->countryISO);
+//            $country = $country? $country->countryId: 0;
+//            $address = Address::makeAddress($address, $country);
+//        }
+
         // check for login/register
-        $user = $this->$oauthType->register($post);
+        $user = $this->$oauthType->register($post, $address = false);
 
         // select only what is needed
         $user = $this->indUser
@@ -71,6 +80,8 @@ class IndUserRegister
                 'userGenderId',
                 'userCountryId',
                 'userAddressId',
+                'userAddressCoordinate',
+                'userDynamicAddressCoordinate',
                 'userJobTitleId',
                 'userFname',
                 'userLname',

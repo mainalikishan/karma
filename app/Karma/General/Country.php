@@ -29,7 +29,17 @@ class Country  extends \Eloquent
         if($country) {
             return $country->countryName;
         }
-        throw new \Exception(\Lang::get('errors.invalid_country_id'));
+        return false;
+    }
+
+    public static function selectCountryNameByISO($countryISOCode) {
+        $country = self::select(array('countryId', 'countryName'))
+            ->where(compact('countryISOCode'))
+            ->first();
+        if($country) {
+            return $country;
+        }
+        return false;
     }
 
 }

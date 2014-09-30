@@ -71,16 +71,15 @@ class IndUserCacheHandler
             foreach ($this->cacheKeys() as $key) {
                 if ($key === $updateType) {
                     if ($updateType == 'basic') {
-                        $gender = Gender::selectGenderName($data['userGenderId']);
-                        $country = Country::selectCountryName($data['userCountryId']);
-                        $address = Address::selectAddress($data['userAddressId']);
-                        $data['userGender'] = $gender;
-                        $data['userAddress'] =  $address->addressName;
-                        $data['userAddressCoordinate'] =  $address->addressCoordinate;
-                        $data['userCountry'] =  $country;
-                        unset($data['userGenderId']);
-                        unset($data['userAddressId']);
-                        unset($data['userCountryId']);
+                        $gender = Gender::selectGenderName($data->userGenderId);
+                        $country = Country::selectCountryName($data->userCountryId);
+                        $address = Address::selectAddress($data->userAddressId);
+                        $data->userGender = $gender;
+                        $data->userAddress =  $address->addressName;
+                        $data->userAddressCoordinate =  $address->addressCoordinate;
+                        $data->userCountry =  $country? $country : '';
+                        $data->userRegistered = \CustomHelper::dateConvertTimezone($data->userRegDate, $address->addressTimeZone, 'toFormattedDateString');
+                        unset($data->userGenderId, $data->userAddressId, $data->userCountryId, $data->userRegDate, $data->userSummary, $data->userJobTitleId);
                     }
                     $collection[$key] = $data;
                 }
