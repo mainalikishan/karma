@@ -118,5 +118,16 @@ class CopUser extends \Eloquent
         return false;
     }
 
+    public function checkForgotPasswordCode($userEmail,$userPasswordRequestVerificationCode)
+    {
+        $user = $this->select(array('userCompanyName','userEmail', 'userPasswordRequestVerificationCode','userId'))
+            ->where(compact('userEmail','userPasswordRequestVerificationCode'))
+            ->first();
+        if ($user) {
+            return $user;
+        }
+        return false;
+    }
+
 
 }

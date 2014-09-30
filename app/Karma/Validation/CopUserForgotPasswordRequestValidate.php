@@ -18,7 +18,7 @@ class CopUserForgotPasswordRequestValidate extends FormValidator
      * @var array
      */
     protected $rules = [
-        'userEmail' => 'required',
+        'userEmail' => 'required'
     ];
 
 }

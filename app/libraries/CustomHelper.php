@@ -44,4 +44,16 @@ class CustomHelper
             return $randomDigit;
         }
     }
+
+    public static function generateRandomCharacters($length = 6)
+    {
+        $characters = '23456789abcdefghijkmnpqrstuvwxyz';
+        $randomCharacter = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomCharacter .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+            return $randomCharacter;
+
+    }
 } 

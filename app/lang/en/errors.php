@@ -14,4 +14,5 @@ return array(
     'invalid_activation_code'=>'Invalid account activation code.',
     'account_activation_successful'=>'Account activated successfully.',
     'invalid_email_address' => 'Invalid email address.',
+    'invalid_code_email_address' => 'Invalid code or email address.',
 );
