@@ -12,7 +12,6 @@ class CreateCopUser extends Migration {
 	 */
 	public function up()
 	{
-		//
         Schema::create('cop_user',function(Blueprint $table){
             $table->bigIncrements('userId');
             $table->integer('userIndustryTypeId');
@@ -37,9 +36,9 @@ class CreateCopUser extends Migration {
             $table->enum('userStatus',array('Y','N'))->default('Y');
             $table->enum('userEmailVerification',array('Y','N'))->default('N');
             $table->integer('userEmailVerificationCode');
+            $table->integer('userPasswordRequestVerificationCode');
             $table->enum('userAccountStatus',array('Active','perDeactivate','tempDeactivate'))->default('Active');
             $table->integer('userReportCount');
-
         });
 	}
 

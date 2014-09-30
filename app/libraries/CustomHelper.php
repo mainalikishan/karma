@@ -74,7 +74,19 @@ class CustomHelper
         return false;
     }
 
-    public static function dateConvertTimezone($dt, $timezone, $format) {
+    public static function dateConvertTimezone($dt, $timezone, $format)
+    {
         return $dt->tz($timezone)->$format();
+    }
+
+    public static function generateRandomCharacters($length = 6)
+    {
+        $characters = '23456789abcdefghijkmnpqrstuvwxyz';
+        $randomCharacter = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomCharacter .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        return $randomCharacter;
     }
 } 

@@ -12,7 +12,6 @@ class CreateIndUser extends Migration {
 	 */
 	public function up()
 	{
-		//
         Schema::create('ind_user',function(Blueprint $table){
             $table->bigIncrements('userId');
             $table->integer('userGenderId');
