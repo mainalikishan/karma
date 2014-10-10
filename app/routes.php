@@ -12,5 +12,7 @@ Route::group(['prefix' => 'api/v1'], function(){
     Route::post('copuser/accountActivation', 'CopUserActivationController@accountActivation');
     Route::post('copuser/forgotPasswordCodeRequest', 'CopUserForgotPasswordController@codeRequest');
     Route::post('copuser/forgotPasswordCodeVerify', 'CopUserForgotPasswordController@codeVerify');
+    //Jobs routs
+    Route::post('jobs/add', 'JobController@create');
 
 });
