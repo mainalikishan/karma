@@ -22,7 +22,7 @@ class CopUser extends \Eloquent
     public static function getUser($username)
     {
         $user = \DB::table('cop_user')
-            ->select('userId', 'userIndustryTypeId', 'userCountryId', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userStatus', 'userAccountStatus', 'userOuthType', 'userOauthId', 'userLoginCount', 'userEmailVerificationCode', 'userEmailVerification')
+            ->select('userId', 'userIndustryTypeId', 'userCountryId', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userStatus', 'userAccountStatus', 'userOuthType', 'userOauthId', 'userLoginCount', 'userEmailVerificationCode', 'userEmailVerification','userPassword')
             ->where('userEmail', $username)
             ->where('userAccountStatus', '<>', 'perDeactivate')
             ->where('userStatus', 'Y')->first();

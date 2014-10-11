@@ -26,6 +26,7 @@ class CopLogInHandler {
     {
 
         $user = CopUser:: getUser($data->userEmail);
+
         if($user)
         {
 
