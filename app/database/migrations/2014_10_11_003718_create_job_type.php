@@ -15,7 +15,7 @@ class CreateJobType extends Migration {
         //
         Schema::create('job_type',function(Blueprint $table){
             $table->increments('jobTypeId');
-            $table->strlen('jobTypeName',50);
+            $table->string('jobTypeName',50);
         });
     }
 

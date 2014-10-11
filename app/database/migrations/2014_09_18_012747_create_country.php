@@ -28,6 +28,7 @@ class CreateCountry extends Migration {
             $table->string('east',30);
             $table->string('west',30);
             $table->string('capital',30);
+            $table->string('continentName',15);
             $table->char('continent',2);
             $table->string('areaInSqKm',20);
             $table->string('languages',30);
