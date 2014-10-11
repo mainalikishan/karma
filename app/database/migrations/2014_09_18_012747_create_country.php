@@ -18,7 +18,6 @@ class CreateCountry extends Migration {
             $table->increments('idCountry');
             $table->char('countryCode',3);
             $table->string('countryName',100);
-            $table->string('countryISOCode',5);
             $table->char('currencyCode',3);
             $table->string('population',20);
             $table->char('fipsCode',2);
