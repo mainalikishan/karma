@@ -15,9 +15,10 @@ class CreateIndEducation extends Migration {
 		//
         Schema::create('ind_education',function(Blueprint $table){
             $table->increments('eduId');
+            $table->integer('eduLevelId');
             $table->integer('eduUserId');
-            $table->integer('eduUniversityId');
-            $table->integer('eduDegreeId');
+            $table->string('eduUniversityId',100);
+            $table->string('eduDegreeId',100);
             $table->integer('eduPassedYear');
             $table->timestamp('eduAddedDate');
             $table->timestamp('eduUpdatedDate');

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProfession extends Migration {
+class CreateDummyProfession extends Migration {
 
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateProfession extends Migration {
      */
     public function up()
     {
-        Schema::create('profession', function(Blueprint $table)
+        Schema::create('dummy_profession', function(Blueprint $table)
         {
             $table->increments('professionId');
             $table->string('professionName',80);
@@ -34,7 +34,7 @@ class CreateProfession extends Migration {
     public function down()
     {
         //
-        Schema::drop('profession');
+        Schema::drop('dummy_profession');
     }
 
 }

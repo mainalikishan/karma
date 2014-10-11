@@ -13,9 +13,9 @@ class CreateSkill extends Migration {
 	public function up()
 	{
 		//
-        Schema::create('ind_skill',function(Blueprint $table){
+        Schema::create('skill',function(Blueprint $table){
             $table->increments('skillId');
-            $table->bigInteger('skillJobTitleId');
+            $table->string('skillProfessionId',100);
             $table->string('skillName',100);
             $table->timestamp('skillAddedDate');
             $table->timestamp('skillUpdatedDate');
@@ -30,7 +30,7 @@ class CreateSkill extends Migration {
 	public function down()
 	{
 		//
-        Schema::drop('ind_skill');
+        Schema::drop('skill');
 	}
 
 }
