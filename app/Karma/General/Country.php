@@ -22,16 +22,6 @@ class Country  extends \Eloquent
     // database table used by model
     protected $table = 'country';
 
-    public static function selectCountryName($countryId) {
-        $country = self::select(array('countryName'))
-            ->where(compact('countryId'))
-            ->first();
-        if($country) {
-            return $country->countryName;
-        }
-        return false;
-    }
-
     public static function selectCountryNameByISO($countryISOCode) {
         $country = self::select(array('countryId', 'countryName'))
             ->where(compact('countryISOCode'))

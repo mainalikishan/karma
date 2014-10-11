@@ -15,7 +15,7 @@ class Address extends \Eloquent
     protected $primaryKey = 'addressId';
 
     protected $fillable = array(
-        'addressCountryId',
+        'addressCountryISO',
         'addressName',
         'addressCoordinate',
         'addressTimeZone'
@@ -43,7 +43,7 @@ class Address extends \Eloquent
 
     public static function makeAddress($data, $country)
     {
-        $address = self::select(array('addressId', 'addressCountryId'))
+        $address = self::select(array('addressId', 'addressCountryISO'))
             ->where('addressName', '=', $data->name)->first();
         if ($address) {
             return $address;

@@ -72,14 +72,24 @@ class IndUserCacheHandler
                 if ($key === $updateType) {
                     if ($updateType == 'basic') {
                         $gender = Gender::selectGenderName($data->userGenderId);
-                        $country = Country::selectCountryName($data->userCountryId);
+                        $country = Country::selectCountryNameByISO($data->userCountryISO);
                         $address = Address::selectAddress($data->userAddressId);
                         $data->userGender = $gender;
                         $data->userAddress =  $address->addressName;
                         $data->userAddressCoordinate =  $address->addressCoordinate;
                         $data->userCountry =  $country? $country : '';
-                        $data->userRegistered = \CustomHelper::dateConvertTimezone($data->userRegDate, $address->addressTimeZone, 'toFormattedDateString');
-                        unset($data->userGenderId, $data->userAddressId, $data->userCountryId, $data->userRegDate, $data->userSummary, $data->userJobTitleId);
+                        $data->userRegistered = \CustomHelper::dateConvertTimezone(
+                            $data->userRegDate,
+                            $address->addressTimeZone,
+                            'toFormattedDateString');
+                        unset(
+                        $data->userGenderId,
+                        $data->userAddressId,
+                        $data->userCountryId,
+                        $data->userRegDate,
+                        $data->userSummary,
+                        $data->userJobTitleId
+                        );
                     }
                     $collection[$key] = $data;
                 }

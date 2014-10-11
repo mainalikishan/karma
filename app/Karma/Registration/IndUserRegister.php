@@ -63,12 +63,12 @@ class IndUserRegister
             throw new \Exception('Illegal oauth type');
         }
 
-//        $address = \CustomHelper::getAddressFromApi($post->coordinate);
-//        if($address) {
-//            $country = Country::selectCountryNameByISO($address->countryISO);
-//            $country = $country? $country->countryId: 0;
-//            $address = Address::makeAddress($address, $country);
-//        }
+        $address = \CustomHelper::getAddressFromApi($post->addressCoordinate);
+        if($address) {
+            $country = Country::selectCountryNameByISO($address->countryISO);
+            $country = $country? $country->countryISOCode: 0;
+            $address = Address::makeAddress($address, $country);
+        }
 
         // check for login/register
         $user = $this->$oauthType->register($post, $address = false);
@@ -79,7 +79,7 @@ class IndUserRegister
                 'userId',
                 'userGenderId',
                 'userCountryId',
-                'userAddressId',
+                'userAddressISO',
                 'userAddressCoordinate',
                 'userDynamicAddressCoordinate',
                 'userJobTitleId',

@@ -11,6 +11,8 @@ namespace Karma\Profile;
 use Karma\Cache\IndUserCacheHandler;
 use Karma\Users\IndUser;
 use Karma\Users\IndUserRepository;
+use Karma\General\Address;
+use Karma\General\Country;
 
 class IndProfileHandler
 {
@@ -44,15 +46,24 @@ class IndProfileHandler
     public function basic($post)
     {
         \CustomHelper::postCheck($post,
-            array('updateType', 'id', 'token', 'genderId', 'countryId', 'addressId', 'fname', 'lname', 'email', 'dob'),
+            array('updateType', 'userId', 'token', 'genderId', 'countryISO', 'addressCoordinate', 'fname', 'lname', 'email', 'dob'),
             10);
 
-        $user = $this->indUser->loginCheck($post->token, $post->id);
+        $user = $this->indUser->loginCheck($post->token, $post->userId);
 
         if($user) {
+
+            $address = \CustomHelper::getAddressFromApi($post->addressCoordinate);
+            if($address) {
+                $country = Country::selectCountryNameByISO($address->countryISO);
+                $country = $country? $country->countryISOCode: 0;
+                $address = Address::makeAddress($address, $country);
+            }
+
             $user->userGenderId = $post->genderId;
-            $user->userCountryId = $post->countryId;
-            $user->userAddressId = $post->addressId;
+            $user->userCountryISO = $post->countryISO;
+            $user->userAddressId = $address? $address->addressId: 0;
+            $user->userAddressCoordinate = $post->addressCoordinate;
             $user->userFname = $post->fname;
             $user->userLname = $post->lname;
             $user->userEmail = $post->email;
@@ -63,8 +74,10 @@ class IndProfileHandler
                 ->select(array(
                     'userId',
                     'userGenderId',
-                    'userCountryId',
+                    'userCountryISO',
                     'userAddressId',
+                    'userAddressCoordinate',
+                    'userDynamicAddressCoordinate',
                     'userJobTitleId',
                     'userFname',
                     'userLname',

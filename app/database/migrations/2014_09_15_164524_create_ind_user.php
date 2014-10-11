@@ -15,7 +15,7 @@ class CreateIndUser extends Migration {
         Schema::create('ind_user',function(Blueprint $table){
             $table->bigIncrements('userId');
             $table->integer('userGenderId');
-            $table->integer('userCountryId');
+            $table->string('userCountryISO', 5);
             $table->integer('userAddressId');
             $table->text('userAddressCoordinate');
             $table->text('userDynamicAddressCoordinate');/// it is updated dynamically

@@ -47,7 +47,7 @@ class IndFacebookRegister implements IndUserRegisterInterface
         } else {
             $user = $this->indUser->register(
                 $post->genderId,
-                $address? $address->addressCountryId : 0,
+                $address? $address->addressCountryISO : 0,
                 $address? $address->addressId: 0,
                 $post->coordinate,
                 $post->coordinate,

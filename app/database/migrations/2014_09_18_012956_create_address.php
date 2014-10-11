@@ -15,7 +15,7 @@ class CreateAddress extends Migration {
 		//
         Schema::create('address',function(Blueprint $table){
             $table->bigIncrements('addressId');
-            $table->integer('addressCountryId');
+            $table->string('addressCountryISO', 5);
             $table->string('addressName',100);
             $table->text('addressCoordinate');
             $table->string('addressTimeZone',255);
