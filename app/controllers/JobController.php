@@ -21,27 +21,6 @@ class JobController extends ApiController
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-
-    }
-
-
-    /**
      * Store a newly created resource in storage.
      *
      * @return Response
@@ -64,19 +43,6 @@ class JobController extends ApiController
         }
         return $this->respondUnprocessableEntity();
     }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -109,8 +75,6 @@ class JobController extends ApiController
      */
     public function update()
     {
-
-        //
         $post = $this->postRequestHandler();
         if (is_object($post)) {
             try {
@@ -135,10 +99,18 @@ class JobController extends ApiController
      * @param  int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+
+        $post = $this->postRequestHandler();
+        if (is_object($post)) {
+            try {
+                $return = $this->handler->destroy($post);
+                return $this->respond($return);
+            } catch (Exception $e) {
+                return $this->respondUnprocessableEntity($e->getMessage());
+            }
+        }
+        return $this->respondUnprocessableEntity();
     }
-
-
 }

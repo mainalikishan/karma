@@ -139,4 +139,36 @@ class JobsHandler
         throw new \Exception(\Lang::get('errors.job_not_found'));
     }
 
+    public function destroy($data)
+    {
+        // check post array  fields
+        \CustomHelper::postCheck($data,
+            array('userToken',
+                'jobUserId',
+                'jobId'),
+            3);
+        $userToken = $data->userToken;
+        $userId = $data->jobUserId;
+        $jobId = $data->jobId;
+
+        //checking for valid token id and user id
+        \CopUserLoginCheck::loginCheck($userToken, $userId);
+
+        // add job if token id and user id is valid
+        $job = $this->jobs
+            ->where('jobDelete', '=', 'N')
+            ->find($jobId);
+
+        if ($job) {
+            $job->jobDelete = 'Y';
+            $job->jobId = $data->jobId;
+
+            $result = $job->save();
+            if ($result) {
+                return \Lang::get('messages.job_delete_successful');
+            }
+        }
+        throw new \Exception(\Lang::get('errors.something_went_wrong'));
+    }
+
 }
