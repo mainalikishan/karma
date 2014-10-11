@@ -21,6 +21,9 @@ class JobsValidate extends FormValidator {
         'jobCountryId' => 'required',
         'jobAddressId' => 'required',
         'jobSummary' => 'required',
+        'jobTitle' => 'required',
+        'jobTypeId' => 'required',
+        'jobOpen' => 'required',
         'jobSkills' => 'required',
         'jobExpDate' => 'required',
         'jobExp' => 'required'

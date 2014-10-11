@@ -18,6 +18,9 @@ class CreateJob extends Migration {
             $table->bigInteger('jobUserId');
             $table->integer('jobCountryId');
             $table->integer('jobAddressId');
+            $table->integer('jobTypeId');
+            $table->string('jobTitle',255);
+            $table->integer('jobOpen');
             $table->text('jobSkills');
             $table->date('jobExpDate');
             $table->enum('jobExp',array('0','1','2','3','4','5'));
@@ -28,6 +31,7 @@ class CreateJob extends Migration {
             $table->integer('jobShortListCount');
             $table->integer('jobHireCount');
             $table->integer('jobRejectCount');
+            $table->enum('jobDelete',array('Y','N'))->default('N');
         });
 	}
 

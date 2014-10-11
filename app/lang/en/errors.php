@@ -15,4 +15,5 @@ return array(
     'account_activation_successful'=>'Account activated successfully.',
     'invalid_email_address' => 'Invalid email address.',
     'invalid_code_email_address' => 'Invalid code or email address.',
+    'job_not_found' => 'Job not found.',
 );

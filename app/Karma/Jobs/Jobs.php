@@ -17,7 +17,7 @@ class Jobs extends \Eloquent{
     //database table used
     protected $table = 'job';
 
-    protected $fillable = ['jobUserId', 'jobCountryId', 'jobAddressId', 'jobSkills', 'jobExpDate', 'jobExp'];
+    protected $fillable = ['jobUserId','jobTitle','jobTypeId','jobOpen', 'jobCountryId', 'jobAddressId', 'jobSkills', 'jobExpDate', 'jobExp'];
 
 
 } 
