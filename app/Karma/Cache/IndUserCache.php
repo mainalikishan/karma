@@ -26,8 +26,8 @@ class IndUserCache extends \Eloquent
     {
         $args = func_get_args();
         $c = array_combine($this->fillable, $args);
-        $user = new static ($c);
-        return $user;
+        $cache = new static ($c);
+        return $cache;
     }
 
     public function isCached($cacheUserId)

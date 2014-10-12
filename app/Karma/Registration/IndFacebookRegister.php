@@ -35,7 +35,7 @@ class IndFacebookRegister implements IndUserRegisterInterface
      * @param $address
      * @return bool|static
      */
-    public function register($post, $address)
+    public function register($post, $address = false)
     {
         $user = $this->indUser->isRegisted($post->oauthId, self::oauthType);
 
@@ -43,19 +43,19 @@ class IndFacebookRegister implements IndUserRegisterInterface
             $user->userLastLogin = date('Y-m-d H:i:s');
             $user->userLoginCount = $user->userLoginCount + 1;
             $user->userLastLoginIp = \Request::getClientIp(true);
-            $user->userDynamicAddressCoordinate = $post->coordinate;
+            $user->userDynamicAddressCoordinate = $post->addressCoordinate;
         } else {
             $user = $this->indUser->register(
                 $post->genderId,
                 $address? $address->addressCountryISO : 0,
                 $address? $address->addressId: 0,
-                $post->coordinate,
-                $post->coordinate,
+                $post->addressCoordinate,
+                $post->addressCoordinate,
                 $post->jobTitleId,
                 $post->fname,
                 $post->lname,
                 $post->email,
-                \Hash::make($post->password),
+                \Hash::make(\CustomHelper::generateRandomCharacters()),
                 \CustomHelper::generateToken($post->email),
                 $post->dob,
                 $post->oauthId,

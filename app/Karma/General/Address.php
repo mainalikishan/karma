@@ -24,9 +24,9 @@ class Address extends \Eloquent
     // database table used by model
     protected $table = 'address';
 
-    public static function createAddress($addressCountryId, $addressName, $addressCoordinate, $addressTimeZone)
+    public static function createAddress($addressCountryISO, $addressName, $addressCoordinate, $addressTimeZone)
     {
-        $address = new static (compact('addressCountryId', 'addressName', 'addressCoordinate', 'addressTimeZone'));
+        $address = new static (compact('addressCountryISO', 'addressName', 'addressCoordinate', 'addressTimeZone'));
         return $address;
     }
 
@@ -38,7 +38,7 @@ class Address extends \Eloquent
         if ($address) {
             return $address;
         }
-        throw new \Exception(\Lang::get('errors.invalid_address_id'));
+        return false;
     }
 
     public static function makeAddress($data, $country)

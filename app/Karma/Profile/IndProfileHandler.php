@@ -46,24 +46,28 @@ class IndProfileHandler
     public function basic($post)
     {
         \CustomHelper::postCheck($post,
-            array('updateType', 'userId', 'token', 'genderId', 'countryISO', 'addressCoordinate', 'fname', 'lname', 'email', 'dob'),
-            10);
+            array('updateType', 'userId', 'token', 'genderId', 'countryISO', 'addressCoordinate', 'dynamicAddressCoordinate', 'fname', 'lname', 'email', 'dob'),
+            11);
 
         $user = $this->indUser->loginCheck($post->token, $post->userId);
 
-        if($user) {
-
-            $address = \CustomHelper::getAddressFromApi($post->addressCoordinate);
-            if($address) {
-                $country = Country::selectCountryNameByISO($address->countryISO);
-                $country = $country? $country->countryISOCode: 0;
-                $address = Address::makeAddress($address, $country);
+        if ($user) {
+            $address = false;
+            $post->addressCoordinate = !empty($post->addressCoordinate)? $post->addressCoordinate: $post->dynamicAddressCoordinate;
+            if (!empty($post->addressCoordinate)) {
+                $address = \CustomHelper::getAddressFromApi($post->addressCoordinate);
+                if ($address) {
+                    $address = Address::makeAddress($address, $address->countryISO);
+                }
             }
 
             $user->userGenderId = $post->genderId;
-            $user->userCountryISO = $post->countryISO;
-            $user->userAddressId = $address? $address->addressId: 0;
+            $user->userCountryISO = !empty($post->addressCoordinate) ? $address->addressCountryISO : $post->countryISO;
+            $user->userAddressId = $address ? $address->addressId : 0;
             $user->userAddressCoordinate = $post->addressCoordinate;
+            if(!empty($post->dynamicAddressCoordinate)) {
+                $user->userDynamicAddressCoordinate = $post->dynamicAddressCoordinate;
+            }
             $user->userFname = $post->fname;
             $user->userLname = $post->lname;
             $user->userEmail = $post->email;

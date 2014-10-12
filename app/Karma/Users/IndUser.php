@@ -18,7 +18,7 @@ class IndUser extends \Eloquent
 
     protected $fillable = array(
         'userGenderId',
-        'userCountryId',
+        'userCountryISO',
         'userAddressId',
         'userAddressCoordinate',
         'userDynamicAddressCoordinate',

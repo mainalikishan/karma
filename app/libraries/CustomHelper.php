@@ -60,8 +60,19 @@ class CustomHelper
             $response = $client->get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' . $place->place_id . '&key=' . GOOGLE_API_KEY . '');
             $country = json_decode($response->getBody());
 
-            $countryISO = $country->status === 'OK' ? $country->result->address_components[2]->short_name : '';
-            $countryName = $country->status === 'OK' ? $country->result->address_components[2]->long_name : '';
+            $countryResponse = $country->status === 'OK' ? $country->result->address_components : [];
+
+            foreach($countryResponse as $iso) {
+                $country = Karma\General\Country::selectCountryNameByISO($iso->short_name);
+                if($country) {
+                    $countryISO = $country->countryCode;
+                    $countryName = $country->countryName;
+                    break;
+                } else {
+                    $countryISO = '';
+                    $countryName = '';
+                }
+            }
 
             return (object)array(
                 'name' => $place->vicinity,

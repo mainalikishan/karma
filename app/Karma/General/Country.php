@@ -12,19 +12,20 @@ class Country  extends \Eloquent
 {
     const CREATED_AT = 'countryAddedDate';
     const UPDATED_AT = 'countryUpdatedDate';
-    protected $primaryKey = 'countryId';
+    protected $primaryKey = 'idCountry';
 
     protected $fillable = array(
         'countryName',
-        'countryISOCode'
+        'countryCode'
     );
 
     // database table used by model
     protected $table = 'country';
 
-    public static function selectCountryNameByISO($countryISOCode) {
-        $country = self::select(array('countryId', 'countryName'))
-            ->where(compact('countryISOCode'))
+    public static function selectCountryNameByISO($countryCode) {
+        $countryCode = strtoupper($countryCode);
+        $country = self::select(array('idCountry', 'countryCode', 'countryName'))
+            ->where(compact('countryCode'))
             ->first();
         if($country) {
             return $country;

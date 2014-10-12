@@ -11,5 +11,5 @@ return array(
     'password_verification_code_sent'=>'Password verification code sent to email address.',
     'job_store_successful'=>'Job added successfully.',
     'job_update_successful'=>'Job updated successfully.',
-    'job_delete_successful'=>'Job deleted successfully.'
+    'job_delete_successful'=>'Job deleted successfully.',
 );

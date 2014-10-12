@@ -37,21 +37,23 @@ class IndUserCacheHandler
 
 
     /**
-     * @param $user
+     * @param array $data
+     * @param $userId
      * @return mixed
      */
-    public function create($user)
+    public function create($data = [], $userId)
     {
         $collection = [];
         foreach ($this->cacheKeys() as $key) {
             if ($key === 'basic') {
-                $collection[$key] = $user;
+                $data = $this->buildUpdateType($data, 'basic');
+                $collection[$key] = $data;
             } else {
                 $collection[$key] = '';
             }
         }
 
-        $cache = $this->indUserCache->createCache($user->userId, json_encode($collection));
+        $cache = $this->indUserCache->createCache($userId, json_encode($collection));
         return $cache->save();
     }
 
@@ -70,27 +72,7 @@ class IndUserCacheHandler
 
             foreach ($this->cacheKeys() as $key) {
                 if ($key === $updateType) {
-                    if ($updateType == 'basic') {
-                        $gender = Gender::selectGenderName($data->userGenderId);
-                        $country = Country::selectCountryNameByISO($data->userCountryISO);
-                        $address = Address::selectAddress($data->userAddressId);
-                        $data->userGender = $gender;
-                        $data->userAddress =  $address->addressName;
-                        $data->userAddressCoordinate =  $address->addressCoordinate;
-                        $data->userCountry =  $country? $country : '';
-                        $data->userRegistered = \CustomHelper::dateConvertTimezone(
-                            $data->userRegDate,
-                            $address->addressTimeZone,
-                            'toFormattedDateString');
-                        unset(
-                        $data->userGenderId,
-                        $data->userAddressId,
-                        $data->userCountryId,
-                        $data->userRegDate,
-                        $data->userSummary,
-                        $data->userJobTitleId
-                        );
-                    }
+                    $data = $this->buildUpdateType($data, $updateType);
                     $collection[$key] = $data;
                 }
             }
@@ -100,8 +82,37 @@ class IndUserCacheHandler
             $cache->save();
             return $this->indUserCache->selectCacheValue($userId);
         } else {
-            $this->create($data);
+            $this->create($data, $userId);
             return $this->indUserCache->selectCacheValue($userId);
         }
+    }
+
+    public function buildUpdateType($data = [], $updateType)
+    {
+        if ($updateType == 'basic') {
+            $gender = Gender::selectGenderName($data->userGenderId);
+            $country = Country::selectCountryNameByISO($data->userCountryISO);
+            $address = Address::selectAddress($data->userAddressId);
+            $data->userGender = $gender;
+            $data->userAddress = $address? $address->addressName: '';
+            $data->userAddressCoordinate = $address? $address->addressCoordinate: '';
+            $data->userCountry = $country ? $country->countryName : '';
+            $data->userRegistered = $address? \CustomHelper::dateConvertTimezone(
+                $data->userRegDate,
+                $address->addressTimeZone,
+                'toFormattedDateString'): \CustomHelper::dateConvertTimezone(
+                $data->userRegDate,
+                'UTC',
+                'toFormattedDateString');
+            unset(
+            $data->userGenderId,
+            $data->userAddressId,
+            $data->userCountryId,
+            $data->userRegDate,
+            $data->userSummary,
+            $data->userJobTitleId
+            );
+        }
+        return $data;
     }
 }
