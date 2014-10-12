@@ -44,13 +44,13 @@ class IndUserUpdateProfileController extends ApiController
                     case "basic":
                         $return = $this->indProfileHandler->basic($post);
                         break;
+                    case "whatIDo":
+                        $return = $this->indProfileHandler->whatIDo($post);
+                        break;
                     case "experience":
                         $return = $this->indProfileHandler->experience($post);
                         break;
                     case "education":
-                        $return = $this->indProfileHandler->education($post);
-                        break;
-                    case "whatIDo":
                         $return = $this->indProfileHandler->education($post);
                         break;
                     default:

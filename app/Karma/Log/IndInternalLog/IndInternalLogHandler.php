@@ -21,7 +21,7 @@ class IndInternalLogHandler {
 
     public static function addInternalLog($userId)
     {
-        $currentUrl = $uri = \ Request::url();;
+        $currentUrl = $uri = \ Request::url();
         $IP = \Request::getClientIp(true);
         $browser = \Agent::browser();
         $version = \Agent::version($browser);
@@ -31,7 +31,7 @@ class IndInternalLogHandler {
 
         $details = json_encode(array('api_url'=>$currentUrl,'ip'=>$IP,'agent'=>$logLoginAgent));
 
-        CopInternalLog::create(array(
+        IndInternalLog::create(array(
             'logUserId' => $userId,
             'logDetails' => $details
         ));

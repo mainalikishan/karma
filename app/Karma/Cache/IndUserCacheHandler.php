@@ -11,6 +11,8 @@ namespace Karma\Cache;
 use Karma\General\Gender;
 use Karma\General\Country;
 use Karma\General\Address;
+use Karma\General\Profession;
+use Karma\General\Skill;
 
 class IndUserCacheHandler
 {
@@ -32,7 +34,7 @@ class IndUserCacheHandler
      */
     private function cacheKeys()
     {
-        return array('basic', 'experience', 'education', 'whatIDo', 'preference', 'setting');
+        return array('basic', 'whatIDo', 'experience', 'education', 'preference', 'setting');
     }
 
 
@@ -89,30 +91,54 @@ class IndUserCacheHandler
 
     public function buildUpdateType($data = [], $updateType)
     {
-        if ($updateType == 'basic') {
-            $gender = Gender::selectGenderName($data->userGenderId);
-            $country = Country::selectCountryNameByISO($data->userCountryISO);
-            $address = Address::selectAddress($data->userAddressId);
-            $data->userGender = $gender;
-            $data->userAddress = $address? $address->addressName: '';
-            $data->userAddressCoordinate = $address? $address->addressCoordinate: '';
-            $data->userCountry = $country ? $country->countryName : '';
-            $data->userRegistered = $address? \CustomHelper::dateConvertTimezone(
-                $data->userRegDate,
-                $address->addressTimeZone,
-                'toFormattedDateString'): \CustomHelper::dateConvertTimezone(
-                $data->userRegDate,
-                'UTC',
-                'toFormattedDateString');
-            unset(
-            $data->userGenderId,
-            $data->userAddressId,
-            $data->userCountryId,
-            $data->userRegDate,
-            $data->userSummary,
-            $data->userJobTitleId
-            );
+        switch ($updateType) {
+            case "basic":
+                $gender = Gender::selectGenderName($data->userGenderId);
+                $country = Country::selectCountryNameByISO($data->userCountryISO);
+                $address = Address::selectAddress($data->userAddressId);
+                $data->userGender = $gender;
+                $data->userAddress = $address? $address->addressName: '';
+                $data->userAddressCoordinate = $address? $address->addressCoordinate: '';
+                $data->userCountry = $country ? $country->countryName : '';
+                $data->userRegistered = $address? \CustomHelper::dateConvertTimezone(
+                    $data->userRegDate,
+                    $address->addressTimeZone,
+                    'toFormattedDateString'): \CustomHelper::dateConvertTimezone(
+                    $data->userRegDate,
+                    'UTC',
+                    'toFormattedDateString');
+                unset(
+                    $data->userGenderId,
+                    $data->userAddressId,
+                    $data->userCountryId,
+                    $data->userRegDate
+                );
+                return $data;
+                break;
+            case "whatIDo":
+                $profession = Profession::selectProfessionName($data->userProfessionId);
+                $skills = explode(',', $data->userSkillIds);
+                $userSkills = [];
+                foreach($skills as $skill) {
+                    if(is_numeric($skill)) {
+                        $userSkills[] = Skill::selectSkillName($skill);
+                    }
+                    else {
+                        $userSkills[] = $skill;
+                    }
+                }
+                $data->userProfession = $profession;
+                $data->userSkills = implode(',', $userSkills);
+                return $data;
+                break;
+            case "experience":
+                return $data;
+                break;
+            case "education":
+                return $data;
+                break;
+            default:
+                return $data;
         }
-        return $data;
     }
 }

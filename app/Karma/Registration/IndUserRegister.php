@@ -83,14 +83,12 @@ class IndUserRegister
                 'userAddressId',
                 'userAddressCoordinate',
                 'userDynamicAddressCoordinate',
-                'userJobTitleId',
                 'userFname',
                 'userLname',
                 'userEmail',
                 'userDOB',
                 'userOauthId',
                 'userOauthType',
-                'userSummary',
                 'userPic',
                 'userRegDate'))
             ->where('userId', '=', $user->userId)

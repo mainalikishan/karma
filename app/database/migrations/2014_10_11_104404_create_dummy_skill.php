@@ -15,7 +15,6 @@ class CreateDummySkill extends Migration {
         //
         Schema::create('dummy_skill',function(Blueprint $table){
             $table->increments('skillId');
-            $table->bigInteger('skillJobTitleId');
             $table->string('skillName',100);
             $table->timestamp('skillAddedDate');
             $table->timestamp('skillUpdatedDate');

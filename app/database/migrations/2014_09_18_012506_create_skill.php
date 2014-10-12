@@ -12,10 +12,8 @@ class CreateSkill extends Migration {
 	 */
 	public function up()
 	{
-		//
-        Schema::create('skill',function(Blueprint $table){
+		Schema::create('skill',function(Blueprint $table){
             $table->increments('skillId');
-            $table->string('skillProfessionId',100);
             $table->string('skillName',100);
             $table->timestamp('skillAddedDate');
             $table->timestamp('skillUpdatedDate');

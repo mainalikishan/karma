@@ -50,8 +50,9 @@ class IndFacebookRegister implements IndUserRegisterInterface
                 $address? $address->addressCountryISO : 0,
                 $address? $address->addressId: 0,
                 $post->addressCoordinate,
-                $post->addressCoordinate,
-                $post->jobTitleId,
+                $post->addressCoordinate, // dynamic coordinate
+                0, // profession will be none at the time of registration
+                '', // skills will be none at the time of registration
                 $post->fname,
                 $post->lname,
                 $post->email,

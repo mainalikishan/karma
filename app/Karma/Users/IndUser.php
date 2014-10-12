@@ -22,7 +22,8 @@ class IndUser extends \Eloquent
         'userAddressId',
         'userAddressCoordinate',
         'userDynamicAddressCoordinate',
-        'userJobTitleId',
+        'userProfessionId',
+        'userSkillIds',
         'userFname',
         'userLname',
         'userEmail',
@@ -71,9 +72,9 @@ class IndUser extends \Eloquent
         return false;
     }
 
-    public function loginCheck($userToken, $userId)
+    public static function loginCheck($userToken, $userId)
     {
-        $user = $this->where(compact('userToken', 'userId'))->first();
+        $user = self::where(compact('userToken', 'userId'))->first();
         if ($user) {
             if ($userId == $user->userId && $userToken == $user->userToken) {
                 return $user;
