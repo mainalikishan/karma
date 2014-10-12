@@ -7,6 +7,7 @@
 
 namespace Karma\Profile;
 
+use Karma\Log\CopChangeLog\CopChangeLogHandler;
 use Karma\Users\CopUser;
 use Karma\Users\CopUserRepository;
 
@@ -21,11 +22,17 @@ class CopChangePasswordHandler
      * @var \Karma\Users\CopUserRepository
      */
     private $copUserRepository;
+    /**
+     * @var \Karma\Log\CopChangeLog\CopChangeLogHandler
+     */
+    private $copChangeLogHandler;
 
-    public function __construct(CopUser $copUser, CopUserRepository $copUserRepository)
+
+    public function __construct(CopUser $copUser, CopUserRepository $copUserRepository,CopChangeLogHandler $copChangeLogHandler)
     {
         $this->copUser = $copUser;
         $this->copUserRepository = $copUserRepository;
+        $this->copChangeLogHandler = $copChangeLogHandler;
     }
 
     public function changePassword($data)
@@ -55,7 +62,9 @@ class CopChangePasswordHandler
                     // update password
                     $user->userPassword = \Hash::make($newPassword);
                     $this->copUserRepository->save($user);
-                    return Lang::get('messages.password_change_successful');
+
+                   $this->copChangeLogHandler->addChangeLog($userId,'PASSWORD',$user->userPassword);
+                    return \Lang::get('messages.password_change_successful');
                 }
                 throw new \Exception(\Lang::get('errors.confirm_password_mismatched'));
             }

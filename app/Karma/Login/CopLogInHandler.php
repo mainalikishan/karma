@@ -9,14 +9,15 @@ namespace Karma\Login;
 
 use Karma\Users\CopUser;
 
-class CopLogInHandler {
+class CopLogInHandler
+{
 
     /**
      * @var \Karma\Users\CopUser
      */
     private $copUser;
 
-   public function __construct(CopUser $copUser)
+    public function __construct(CopUser $copUser)
     {
 
         $this->copUser = $copUser;
@@ -27,32 +28,20 @@ class CopLogInHandler {
 
         $user = CopUser:: getUser($data->userEmail);
 
-        if($user)
-        {
-
-            if(\Hash::check($data->userPassword, $user->userPassword))
-            {
+        if ($user) {
+            if (\Hash::check($data->userPassword, $user->userPassword)) {
                 //updating cop user table with login information
-                $userLoginCount = $user->userLoginCount+1;
-                $userId=$user->userId;
+                $userLoginCount = $user->userLoginCount + 1;
+                $userId = $user->userId;
                 $userLoginIp = \Request::getClientIp(true);
                 $userToken = \CustomHelper::generateToken($user->userEmail);
-                CopUser::updateUserLoginInfo($userId,$userLoginCount,$userLoginIp,$userToken);
+                CopUser::updateUserLoginInfo($userId, $userLoginCount, $userLoginIp, $userToken);
 
-                //inserting login log
-                $browser = \Agent::browser();
-                $version = \Agent::version($browser);
-                $platform = \Agent::platform();
-                $versionPlatform = \Agent::version($platform);
-                $logLoginAgent = $browser.",".$version.",".$platform.",".$versionPlatform;
-                CopUser:: loginLog($userId,$logLoginAgent,$userLoginIp);
-
-               return  CopUser:: getUser($user->userEmail);
-
+                // add internal log
+                CopInternalLogHandler:: addInternalLog($userId);
+                return CopUser:: getUser($user->userEmail);
             }
-
         }
-
         throw new \Exception('Invalid username or password');
     }
 } 

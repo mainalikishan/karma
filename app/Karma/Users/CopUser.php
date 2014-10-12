@@ -32,11 +32,11 @@ class CopUser extends \Eloquent
     public static function getUserById($userId)
     {
         $user = \DB::table('cop_user')
-            ->select('userId', 'userIndustryTypeId', 'userCountryId', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userOuthType', 'userOauthId')
+            ->select('userId', 'userIndustryTypeId', 'userCountryISO', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userOuthType', 'userOauthId','userSummary')
             ->where('userId', $userId)
             ->where('userAccountStatus', '<>', 'perDeactivate')
             ->where('userStatus', 'Y')
-            ->get();
+            ->first();
         return $user;
     }
 
@@ -68,7 +68,7 @@ class CopUser extends \Eloquent
     public static function updateUserProfileInfo($userId,
                                                  $userToken,
                                                  $userIndustryTypeId,
-                                                 $userCountryId,
+                                                 $userCountryISO,
                                                  $userAddressId,
                                                  $userCompanyPhone,
                                                  $userCompanyName,
@@ -78,7 +78,7 @@ class CopUser extends \Eloquent
             ->where('userId', $userId)
             ->where('userToken', $userToken)
             ->update(array('userIndustryTypeId' => $userIndustryTypeId,
-                'userCountryId' => $userCountryId,
+                'userCountryISO' => $userCountryISO,
                 'userAddressId' => $userAddressId,
                 'userCompanyPhone' => $userCompanyPhone,
                 'userCompanyName' => $userCompanyName,

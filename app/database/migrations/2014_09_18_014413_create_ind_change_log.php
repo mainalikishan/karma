@@ -16,7 +16,7 @@ class CreateIndChangeLog extends Migration {
         Schema::create('ind_user_change_log',function(Blueprint $table){
             $table->bigIncrements('logId');
             $table->bigInteger('logUserId');
-            $table->enum('logKey',array('DOB','NAME','PASSWORD'));
+            $table->enum('logKey',array('DOB','FNAME','LNAME','PASSWORD','COUNTRY','ADDRESS','SUMMARY'));
             $table->text('logChangeValue');
             $table->timestamp('logAddedDate');
             $table->timestamp('logUpdatedDate');

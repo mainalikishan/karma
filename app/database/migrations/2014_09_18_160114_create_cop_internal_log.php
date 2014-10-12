@@ -15,7 +15,7 @@ class CreateCopInternalLog extends Migration {
 		//
         Schema::create('cop_internal_log',function(Blueprint $table){
             $table->bigIncrements('logId');
-            $table->bigInteger('loginUserId');
+            $table->bigInteger('logUserId');
             $table->text('logDetails');
             $table->timestamp('logAddedDate');
         });

@@ -15,7 +15,7 @@ class CreateCopUser extends Migration {
         Schema::create('cop_user',function(Blueprint $table){
             $table->bigIncrements('userId');
             $table->integer('userIndustryTypeId');
-            $table->integer('userCountryId');
+            $table->string('userCountryISO',3);
             $table->integer('userAddressId');
             $table->text('userAddressCoordinate');
             $table->text('userDynamicAddressCoordinate');/// it is updated dynamically

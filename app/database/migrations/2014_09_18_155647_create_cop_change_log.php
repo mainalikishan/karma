@@ -16,7 +16,7 @@ class CreateCopChangeLog extends Migration {
         Schema::create('cop_change_log',function(Blueprint $table){
             $table->bigIncrements('logId');
             $table->bigInteger('logUserId');
-            $table->enum('logKey',array('CNAME','COUNTRY','ADDRESS','PHONE','PASSWORD'));
+            $table->enum('logKey',array('CNAME','COUNTRY','ADDRESS','PHONE','PASSWORD','INDUSTRY_TYPE','SUMMARY'));
             $table->string('logValue',100);
             $table->timestamp('logAddedDate');
 

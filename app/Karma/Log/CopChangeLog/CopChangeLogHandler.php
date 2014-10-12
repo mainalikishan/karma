@@ -5,15 +5,10 @@
  * Time: 2:10 PM
  */
 
-namespace Karma\Log;
+namespace Karma\Log\CopChangeLog;
 
 
 class CopChangeLogHandler {
-
-    /**
-     * @var CopChangeLog
-     */
-    private $changeLog;
     /**
      * @var CopChangeLog
      */
@@ -21,13 +16,16 @@ class CopChangeLogHandler {
 
     function __construct(CopChangeLog $copChangeLog)
     {
-
         $this->copChangeLog = $copChangeLog;
     }
 
-    public function addChangeLog()
+    public function addChangeLog($userId,$key,$value)
     {
-        $user = CopChangeLog:: getUser($data->userEmail);
+        $this->copChangeLog->create(array(
+            'logUserId' => $userId,
+            'logKey' => $key,
+            'logValue' => $value
+        ));
     }
 
 } 
