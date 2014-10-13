@@ -1,7 +1,5 @@
 <?php
 
-use Carbon\Carbon;
-
 class CustomHelper
 {
     public static function generateToken($param)
@@ -9,14 +7,59 @@ class CustomHelper
         return Hash::make($param . time() . rand(1, 999));
     }
 
-    public static function postCheck($post = [], $allowedPosts = [], $allowedPostLength = '0')
+    public static function validate($toValidate, $value) {
+        foreach($toValidate as $tv) {
+            switch ($tv) {
+                case "required":
+                    return !empty($value)? true: false;
+                    break;
+                case "optional":
+                    return true;
+                    break;
+                case "string":
+                    return is_string($value)? true: false;
+                    break;
+                case "integer":
+                    return is_numeric($value)? true: false;
+                    break;
+                case "array":
+                    return is_array($value)? true: false;
+                    break;
+                case "object":
+                    return is_object($value)? true: false;
+                    break;
+                case "email":
+                    return filter_var($value, FILTER_VALIDATE_EMAIL)? true: false;
+                    break;
+                case "name":
+                    return preg_match("/^[a-zA-Z ]*$/",$value)? true: false;
+                    break;
+                default:
+                    return false;
+            }
+        }
+    }
+
+    public static function postCheck($post = [], $allowedPost = [], $allowedPostLength = '0')
     {
         $post = (array)$post;
         if (count($post) == $allowedPostLength) {
-            foreach (array_map(NULL, array_keys($post), $allowedPosts) as $k) {
-                list($post, $allowedPosts) = $k;
-                if ($post !== $allowedPosts) {
-                    throw new \Exception(\Lang::get('errors.invalid_post_request'));
+            if (self::isAssoc($allowedPost)) {
+                foreach (array_map(NULL, array_keys($post), array_values($post), array_keys($allowedPost), array_values($allowedPost)) as $k) {
+                    list($post_key, $post_value, $allowedPost_key, $allowedPost_value) = $k;
+                    $toValidate = (explode('|', $allowedPost_value));
+                    $validate = self::validate($toValidate, $post_value);
+                    if($post_key !== $allowedPost_key OR !$validate) {
+                        throw new \Exception(\Lang::get('errors.invalid_post_request'));
+                    }
+                }
+            }
+            else {
+                foreach (array_map(NULL, array_keys($post), $allowedPost) as $k) {
+                    list($post, $allowedPost) = $k;
+                    if ($post !== $allowedPost) {
+                        throw new \Exception(\Lang::get('errors.invalid_post_request'));
+                    }
                 }
             }
             return true;
@@ -99,5 +142,10 @@ class CustomHelper
         }
 
         return $randomCharacter;
+    }
+
+    public static function isAssoc($arr)
+    {
+        return array_keys($arr) !== range(0, count($arr) - 1);
     }
 } 

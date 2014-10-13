@@ -14,6 +14,7 @@ use Karma\Users\IndUser;
 use Karma\Users\IndUserRepository;
 use Karma\General\Address;
 use Karma\General\DummySkill;
+use Karma\General\DummyProfession;
 
 class IndProfileHandler
 {
@@ -129,51 +130,66 @@ class IndProfileHandler
         // verify post request
         \CustomHelper::postCheck($post,
             array(
-                'updateType',
-                'userId',
-                'token',
-                'professionId',
-                'skills',
-                'summary'),
+                'updateType' => 'required|string',
+                'userId' => 'required|integer',
+                'token' => 'required',
+                'professionId' => 'required',
+                'skills' => 'required|array',
+                'summary' => 'required'),
             6);
-
-        // skills must be in array
-        if (!is_array($post->skills)) {
-            throw new \Exception(\Lang::get('errors.invalid_post_request'));
-        }
 
         // verify login info.
         $user = IndUser::loginCheck($post->token, $post->userId);
 
         if ($user) {
+            $userSkills = [];
             foreach ($post->skills as $skill) {
-                if (!is_numeric($skill)) {
-                    DummySkill::registerSkill($skill);
+                if (!empty($skill)) {
+                    if (!is_numeric($skill)) {
+                        $userSkills[] = DummySkill::registerSkill($skill);
+                    } else {
+                        $userSkills[] = ucwords($skill);
+                    }
                 }
             }
-            $skillIds = implode(',', $post->skills);
-            $user->create(array(
-                'userProfessionId' => $post->professionId,
-                'userSkillIds' => $skillIds
+            $skillIds = implode(',', $userSkills);
+
+            if (!empty($post->professionId) && !is_numeric($post->professionId)) {
+                $profession = DummyProfession::registerProfession($post->professionId);
+            } else {
+                $profession = $post->professionId;
+            }
+
+            // update info.
+            $user->update(array(
+                'userProfessionId' => $profession,
+                'userSkillIds' => $skillIds,
+                'userSummary' => $post->summary
             ));
 
             // select profession id
             $user = $this->indUser
                 ->select(array(
                     'userProfessionId',
-                    'userSkillIds'
+                    'userSkillIds',
+                    'userSummary'
                 ))
-                ->where('userId', '=', $user->userId)
+                ->where('userId', '=', $post->userId)
                 ->first();
 
             // internal Log
-            IndInternalLogHandler::addInternalLog($user->userId);
+            IndInternalLogHandler::addInternalLog($post->userId);
 
             // create cache for user
-            $return = $this->indUserCacheHandler->make($user, 'whatIDo', $user->userId);
+            $return = $this->indUserCacheHandler->make($user, 'whatIDo', $post->userId);
             return $return;
         }
         throw new \Exception(\Lang::get('errors.invalid_token'));
+
+    }
+
+    public function experience($post)
+    {
 
     }
 }

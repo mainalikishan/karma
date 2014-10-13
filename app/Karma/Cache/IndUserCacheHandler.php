@@ -116,7 +116,10 @@ class IndUserCacheHandler
                 return $data;
                 break;
             case "whatIDo":
-                $profession = Profession::selectProfessionName($data->userProfessionId);
+                $profession =
+                    is_numeric($data->userProfessionId)?
+                    Profession::selectProfessionName($data->userProfessionId):
+                    $data->userProfessionId;
                 $skills = explode(',', $data->userSkillIds);
                 $userSkills = [];
                 foreach($skills as $skill) {
@@ -128,7 +131,11 @@ class IndUserCacheHandler
                     }
                 }
                 $data->userProfession = $profession;
-                $data->userSkills = implode(',', $userSkills);
+                $data->userSkills = $userSkills;
+                unset(
+                    $data->userProfessionId,
+                    $data->userSkillIds
+                );
                 return $data;
                 break;
             case "experience":

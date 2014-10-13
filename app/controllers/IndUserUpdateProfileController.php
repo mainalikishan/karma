@@ -31,12 +31,6 @@ class IndUserUpdateProfileController extends ApiController
         $post = $this->postRequestHandler();
 
         if (is_object($post)) {
-            // validate inputs
-            try {
-                $this->indProfileValidate->validate($post);
-            } catch (Laracasts\Validation\FormValidationException $e) {
-                return $this->respondUnprocessableEntity($e->getErrors());
-            }
 
             // lets update as per updateType requested
             try {

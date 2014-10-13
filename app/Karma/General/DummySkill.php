@@ -23,6 +23,7 @@ class DummySkill extends \Eloquent
 
     public static function createSkill($skillName)
     {
+        $skillName = ucwords($skillName);
         $dummySkill = new static (compact('skillName'));
         return $dummySkill;
     }
@@ -43,7 +44,7 @@ class DummySkill extends \Eloquent
             ->where(compact('skillName'))
             ->first();
         if ($dummySkill) {
-            return $dummySkill;
+            return $dummySkill->skillName;
         } else {
             $dummySkill = self::createSkill($skillName);
             $dummySkill->save();
