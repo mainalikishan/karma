@@ -8,6 +8,11 @@
 namespace Karma\Registration;
 
 
+use Karma\Cache\CopUserCacheHandler;
+use Karma\Log\CopInternalLog\CopInternalLogHandler;
+use Karma\Users\CopUser;
+use Karma\General\Address;
+
 class CopUserRegister
 {
 
@@ -19,22 +24,76 @@ class CopUserRegister
      * @var CopLinkedInRegister
      */
     private $copLinkedInRegister;
+    /**
+     * @var \Karma\Cache\CopUserCacheHandler
+     */
+    private $copUserCacheHandler;
+    /**
+     * @var \Karma\Users\CopUser
+     */
+    private $copUser;
 
-    public function __construct(CopCustomRegister $copCustomRegister, CopLinkedInRegister $copLinkedInRegister)
+    public function __construct(CopCustomRegister $copCustomRegister,
+                                CopLinkedInRegister $copLinkedInRegister,
+                                CopUserCacheHandler $copUserCacheHandler,
+                                CopUser $copUser)
     {
         $this->copCustomRegister = $copCustomRegister;
         $this->copLinkedInRegister = $copLinkedInRegister;
+        $this->copUserCacheHandler = $copUserCacheHandler;
+        $this->copUser = $copUser;
     }
 
     public function checkRegistration($post)
     {
-        $oauthType = $post->userOuthType;
+        $oauthType = $post->userOauthType;
         if ($oauthType !== 'copCustomRegister'
             && $oauthType !== 'copLinkedInRegister'
         ) {
-            throw new \Exception('Illegal ouath type');
+            throw new \Exception('Illegal oauth type');
         }
-        return $this->$oauthType->register($post);
+
+        $address = false;
+        if (isset($post->userAddressCoordinate) && !empty($post->userAddressCoordinate)) {
+            $address = \CustomHelper::getAddressFromApi($post->userAddressCoordinate);
+            if ($address) {
+                $address = Address::makeAddress($address, $address->countryISO);
+            }
+        }
+
+        $user = $this->$oauthType->register($post, $address);
+        if ($user) {
+            // select only what is needed
+            $user = $this->copUser
+                ->select(array(
+                    'userId',
+                    'userIndustryTypeId',
+                    'userCountryISO',
+                    'userAddressId',
+                    'userAddressCoordinate',
+                    'userDynamicAddressCoordinate',
+                    'userCompanyPhone',
+                    'userCompanyName',
+                    'userEmail',
+                    'userCoverPic',
+                    'userProfilePic',
+                    'userSummary',
+                    'userRegDate',
+                    'userUpdatedDate',
+                    'userOauthId',
+                    'userOauthType',
+                    'userToken'
+                ))
+                ->where('userId', '=', $user->userId)
+                ->first();
+
+            // add internal log
+            CopInternalLogHandler::addInternalLog($user->userId,$post);
+
+            // create cache for user
+            $return = $this->copUserCacheHandler->make($user, 'basic', $user->userId);
+            return $return;
+        }
     }
 
 }

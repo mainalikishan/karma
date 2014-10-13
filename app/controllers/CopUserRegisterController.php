@@ -34,9 +34,7 @@ class CopUserRegisterController extends ApiController {
 
             try{
                 $user =  $this->copUserRegister->checkRegistration($post);
-
-                \Event::fire('copUser.register', $user);
-                return $user;
+                return $this->respond($user);
             }
             catch(Exception $e){
                 return $this->respondUnprocessableEntity($e->getMessage());

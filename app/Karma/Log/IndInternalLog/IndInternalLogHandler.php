@@ -19,7 +19,7 @@ class IndInternalLogHandler {
         $this->indInternalLog = $indInternalLog;
     }
 
-    public static function addInternalLog($userId)
+    public static function addInternalLog($userId,$post=false)
     {
         $currentUrl = $uri = \ Request::url();
         $IP = \Request::getClientIp(true);
@@ -29,7 +29,7 @@ class IndInternalLogHandler {
         $versionPlatform = \Agent::version($platform);
         $logLoginAgent = $browser.",".$version.",".$platform.",".$versionPlatform;
 
-        $details = json_encode(array('api_url'=>$currentUrl,'ip'=>$IP,'agent'=>$logLoginAgent));
+        $details = json_encode(array('api_url'=>$currentUrl,'ip'=>$IP,'agent'=>$logLoginAgent,'post'=>$post));
 
         IndInternalLog::create(array(
             'logUserId' => $userId,

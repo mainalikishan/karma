@@ -5,19 +5,38 @@ class CopUser extends \Eloquent
 {
     const CREATED_AT = 'userRegDate';
     const UPDATED_AT = 'userUpdatedDate';
-    protected $primaryKey = 'userId';
 
-    protected $fillable = ['userCompanyName','userCountryISO', 'userEmail', 'userPassword', 'userOuthType', 'userOauthId', 'userEmailVerificationCode'];
-    protected $CopUserRepository;
+    //primary key
+    protected $primaryKey = 'userId';
 
     //database table used
     protected $table = 'cop_user';
 
-    public static function register($userCompanyName, $userEmail, $userPassword, $userOuthType, $userOauthId, $userEmailVerificationCode)
-    {
-        $user = new static (compact('userCompanyName', 'userEmail', 'userPassword', 'userOuthType', 'userOauthId', 'userEmailVerificationCode'));
-        return $user;
-    }
+    protected $fillable = ['userIndustryTypeId',
+        'userCompanyName',
+        'userCountryISO',
+        'userAddressCoordinate',
+        'userAddressId',
+        'userCompanyPhone',
+        'userEmail',
+        'userSummary',
+        'userCoverPic',
+        'userProfilePic',
+        'userPassword',
+        'userLoginCount',
+        'userLoginIp',
+        'userOauthId',
+        'userOauthType',
+        'userStatus',
+        'userEmailVerification',
+        'userEmailVerificationCode',
+        'userPasswordRequestVerificationCode',
+        'userAccountStatus',
+        'userReportCount'
+    ];
+
+    protected $CopUserRepository;
+
 
     public static function getUser($username)
     {

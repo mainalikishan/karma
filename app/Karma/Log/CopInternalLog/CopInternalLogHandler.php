@@ -19,7 +19,7 @@ class CopInternalLogHandler {
         $this->copInternalLog = $copInternalLog;
     }
 
-    public static function addInternalLog($userId)
+    public static function addInternalLog($userId,$post=false)
     {
 
 
@@ -31,7 +31,8 @@ class CopInternalLogHandler {
         $versionPlatform = \Agent::version($platform);
         $logLoginAgent = $browser.",".$version.",".$platform.",".$versionPlatform;
 
-        $details = json_encode(array('api_url'=>$currentUrl,'ip'=>$IP,'agent'=>$logLoginAgent));
+
+        $details = json_encode(array('api_url'=>$currentUrl,'ip'=>$IP,'agent'=>$logLoginAgent,'post'=>$post));
 
         CopInternalLog::create(array(
             'logUserId' => $userId,

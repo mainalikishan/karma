@@ -29,8 +29,8 @@ class CopUserRegisterEventsHandler {
 
     public function onUserRegister($data)
     {
-        $userOuthType = $data->userOuthType;
-        $this->$userOuthType->sendWelcomeEmail($data);
+        $userOauthType = $data->userOauthType;
+        $this->$userOauthType->sendWelcomeEmail($data);
     }
 
     public function subscribe($events)

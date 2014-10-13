@@ -14,5 +14,4 @@ class CopUserRepository {
     {
         return $users->save();
     }
-
 } 
