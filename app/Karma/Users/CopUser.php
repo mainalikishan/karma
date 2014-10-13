@@ -7,7 +7,7 @@ class CopUser extends \Eloquent
     const UPDATED_AT = 'userUpdatedDate';
     protected $primaryKey = 'userId';
 
-    protected $fillable = ['userCompanyName', 'userEmail', 'userPassword', 'userOuthType', 'userOauthId', 'userEmailVerificationCode'];
+    protected $fillable = ['userCompanyName','userCountryISO', 'userEmail', 'userPassword', 'userOuthType', 'userOauthId', 'userEmailVerificationCode'];
     protected $CopUserRepository;
 
     //database table used
@@ -22,7 +22,7 @@ class CopUser extends \Eloquent
     public static function getUser($username)
     {
         $user = \DB::table('cop_user')
-            ->select('userId', 'userIndustryTypeId', 'userCountryId', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userStatus', 'userAccountStatus', 'userOuthType', 'userOauthId', 'userLoginCount', 'userEmailVerificationCode', 'userEmailVerification','userPassword')
+            ->select('userId', 'userIndustryTypeId', 'userCountryISO', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userStatus', 'userAccountStatus', 'userOuthType', 'userOauthId', 'userLoginCount', 'userEmailVerificationCode', 'userEmailVerification','userPassword')
             ->where('userEmail', $username)
             ->where('userAccountStatus', '<>', 'perDeactivate')
             ->where('userStatus', 'Y')->first();

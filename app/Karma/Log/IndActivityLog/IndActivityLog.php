@@ -1,14 +1,14 @@
 <?php
 /**
  * User: Prakash
- * Date: 10/12/14
- * Time: 8:03 PM
+ * Date: 10/13/14
+ * Time: 8:40 PM
  */
 
-namespace Karma\Log\CopInternalLog;
+namespace Karma\Log\IndActivityLog;
 
 
-class CopInternalLog extends \Eloquent
+class IndActivityLog extends \Eloquent
 {
 
     const CREATED_AT = 'logAddedDate';
@@ -18,6 +18,6 @@ class CopInternalLog extends \Eloquent
 
     protected $fillable = ['logUserId', 'logDetails'];
 
-    //database table cop_internal_log
-    protected $table = 'cop_internal_log';
+    //database table ind_user_activity_log
+    protected $table = 'ind_user_activity_log';
 }

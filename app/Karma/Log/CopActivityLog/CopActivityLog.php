@@ -5,10 +5,10 @@
  * Time: 8:03 PM
  */
 
-namespace Karma\Log\CopInternalLog;
+namespace Karma\Log\CopActivityLog;
 
 
-class CopInternalLog extends \Eloquent
+class CopActivityLog extends \Eloquent
 {
 
     const CREATED_AT = 'logAddedDate';
@@ -18,6 +18,6 @@ class CopInternalLog extends \Eloquent
 
     protected $fillable = ['logUserId', 'logDetails'];
 
-    //database table cop_internal_log
-    protected $table = 'cop_internal_log';
+    //database table cop_activity_log
+    protected $table = 'cop_activity_log';
 }

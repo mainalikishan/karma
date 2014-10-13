@@ -7,6 +7,8 @@
 
 namespace Karma\Login;
 
+use Karma\Log\CopActivityLog\CopActivityLogHandler;
+use Karma\Log\CopInternalLog\CopInternalLogHandler;
 use Karma\Users\CopUser;
 
 class CopLogInHandler
@@ -38,8 +40,9 @@ class CopLogInHandler
                 CopUser::updateUserLoginInfo($userId, $userLoginCount, $userLoginIp, $userToken);
 
                 // add internal log
-                CopInternalLogHandler:: addInternalLog($userId);
-                return CopUser:: getUser($user->userEmail);
+                CopInternalLogHandler::addInternalLog($userId);
+                CopActivityLogHandler::addActivityLog($userId,"log text");
+               return CopUser:: getUser($user->userEmail);
             }
         }
         throw new \Exception('Invalid username or password');

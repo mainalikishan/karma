@@ -21,6 +21,8 @@ class CopInternalLogHandler {
 
     public static function addInternalLog($userId)
     {
+
+
         $currentUrl = $uri = \ Request::url();;
         $IP = \Request::getClientIp(true);
         $browser = \Agent::browser();
