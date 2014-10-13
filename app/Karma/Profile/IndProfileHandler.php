@@ -52,18 +52,17 @@ class IndProfileHandler
         // verify post request
         \CustomHelper::postCheck($post,
             array(
-                'updateType',
-                'userId',
-                'token',
-                'genderId',
-                'countryISO',
-                'addressCoordinate',
-                'dynamicAddressCoordinate',
-                'fname',
-                'lname',
-                'email',
-                'dob'),
-            11);
+                'updateType' => 'required|string',
+                'userId' => 'required|integer',
+                'token' => 'required',
+                'genderId' => 'required',
+                'countryISO' => 'optional',
+                'addressCoordinate' => 'optional',
+                'dynamicAddressCoordinate' => 'optional',
+                'fname' => 'required',
+                'lname' => 'required',
+                'dob'  => 'required'),
+            10);
 
         // verify login info.
         $user = IndUser::loginCheck($post->token, $post->userId);
@@ -91,7 +90,6 @@ class IndProfileHandler
                         $user->userDynamicAddressCoordinate,
                 'userFname' => $post->fname,
                 'userLname' => $post->lname,
-                'userEmail' => $post->email,
                 'userDOB' => $post->dob
             ));
 
