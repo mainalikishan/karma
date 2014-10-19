@@ -8,5 +8,7 @@ return array(
     'userPassword'=>'Password',
     'userOauthType'=>'Oauth Type',
     'userOauthId'=>'Oauth ID',
-    'userAddressCoordinate'=>'Address'
+    'userAddressCoordinate'=>'Address',
+    'jobSummary'=>'Job Summary',
+    'jobExpDate'=>'Job expiry date'
 );

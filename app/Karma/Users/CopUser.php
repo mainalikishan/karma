@@ -38,15 +38,32 @@ class CopUser extends \Eloquent
     protected $CopUserRepository;
 
 
-//    public static function getUser($username)
-//    {
-//        $user = \DB::table('cop_user')
-//            ->select('userId', 'userIndustryTypeId', 'userCountryISO', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userStatus', 'userAccountStatus', 'userOauthType', 'userOauthId', 'userLoginCount', 'userEmailVerificationCode', 'userEmailVerification', 'userPassword')
-//            ->where('userEmail', $username)
-//            ->where('userAccountStatus', '<>', 'perDeactivate')
-//            ->where('userStatus', 'Y')->first();
-//        return $user;
-//    }
+    public  function getUser($username)
+    {
+        $user = $this->select('userId',
+            'userIndustryTypeId',
+            'userCountryISO',
+            'userAddressId',
+            'userCompanyPhone',
+            'userCompanyName',
+            'userEmail',
+            'userSummary',
+            'userCoverPic',
+            'userProfilePic',
+            'userStatus',
+            'userAccountStatus',
+            'userOauthType',
+            'userOauthId',
+            'userLoginCount',
+            'userEmailVerificationCode',
+            'userEmailVerification',
+            'userPassword')
+            ->where('userEmail', $username)
+            ->where('userAccountStatus', '<>', 'perDeactivate')
+            ->where('userEmailVerification', 'Y')
+            ->where('userStatus', 'Y')->first();
+        return $user;
+    }
 
     public  function getUserById($userId)
     {
@@ -55,18 +72,6 @@ class CopUser extends \Eloquent
             ->where('userStatus', 'Y')
             ->first();
         return $user;
-    }
-
-
-    // updating login information
-    public static function loginLog($userId, $logLoginAgent, $userLoginIp)
-    {
-        \DB::table('cop_login_log')
-            ->insert(array('logLoginAgent' => $logLoginAgent,
-                'loginUserId' => $userId,
-                'logLoginIp' => $userLoginIp,
-                'logAddedDate' => date('Y-m-d H:i:s')
-            ));
     }
 
     public function fetchPassword($userId)

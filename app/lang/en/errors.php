@@ -17,6 +17,7 @@ return array(
     'account_activation_successful'=>'Account activated successfully',
     'invalid_email_address' => 'Invalid email address',
     'invalid_code_email_address' => 'Invalid code or email address',
+    'invalid_email_password_address' => 'Invalid email or password',
     'job_not_found' => 'Job not found',
     'required' => 'is required',
     'integer' => 'must be a number',
@@ -25,6 +26,6 @@ return array(
     'email' => 'is not a valid email',
     'duplicate_email'=>'Email already taken.',
     'min6' => 'must contain at-least 6 characters',
-    'min20' => 'shouldn\'t contain more than 20 characters',
+    'max20' => 'shouldn\'t contain more than 20 characters',
 
 );
