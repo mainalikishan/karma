@@ -139,6 +139,8 @@ class IndUserCacheHandler
                 return $data;
                 break;
             case "experience":
+                $data->expStartDate = $data->expStartDate->tz('UTC')->toFormattedDateString();
+                $data->expEndDate = $data->expEndDate->tz('UTC')->toFormattedDateString();
                 return $data;
                 break;
             case "education":

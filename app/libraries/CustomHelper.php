@@ -41,6 +41,7 @@ class CustomHelper
             $moreValidate = (explode('=', $tv));
             if(count($moreValidate)>1) {
                 $split = preg_split('/[\s,]+/', $moreValidate[1]);
+
                 foreach($moreValidate as $v) {
                     // validate enum
                     if($v==='enum') {
@@ -52,6 +53,19 @@ class CustomHelper
                             }
                         }
                         if(count($fails) == count($split)) {
+                            $return[] = false;
+                        }
+                    }
+                    if($v==='minmax') {
+                        if(count($split)==2) {
+                            if($split[0]>strlen($value)){
+                                $return[] = 'errors.min'.$split[0];
+                            }
+                            elseif($split[1]<strlen($value)) {
+                                $return[] = 'errors.max'.$split[1];
+                            }
+                        }
+                        else {
                             $return[] = false;
                         }
                     }

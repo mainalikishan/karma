@@ -195,14 +195,16 @@ class IndProfileHandler
                 'updateType' => 'required|string',
                 'userId' => 'required|integer',
                 'token' => 'required',
-                'title' => 'required|string',
+                'title' => 'required|string|minmax=6,20',
                 'workType' => 'required|enum=company,freelancer',
                 'companyName' => 'optional',
                 'workCurrent' => 'required|string',
-                'workStart' => 'required',
-                'workEnd' => 'optional',
+                'workStartMonth' => 'required|integer',
+                'workStartYear' => 'required|integer',
+                'workEndMonth' => 'optional',
+                'workEndYear' => 'optional',
                 'workId' => 'optional'),
-            10);
+            12);
 
         // verify login info.
         $user = IndUser::loginCheck($post->token, $post->userId);
@@ -215,8 +217,8 @@ class IndProfileHandler
                 $experience->expType = $post->workType;
                 $experience->expCompany = ucwords($post->companyName);
                 $experience->expCurrent = $post->workCurrent;
-                $experience->expStartDate = $post->workStart;
-                $experience->expEndDate = $post->workEnd;
+                $experience->expStartDate = $post->workStartYear.'-'.$post->workStartMonth.'-00';
+                $experience->expEndDate = $post->workCurrent=='N'? $post->workEndYear.'-'.$post->workEndMonth.'-00': null;
             } else {
                 $experience = Experience::createExp(
                     $post->userId,
@@ -224,8 +226,8 @@ class IndProfileHandler
                     $post->workType,
                     ucwords($post->companyName),
                     $post->workCurrent,
-                    $post->workStart,
-                    $post->workEnd
+                    $post->workStartYear.'-'.$post->workStartMonth.'-00',
+                    $post->workCurrent=='N'? $post->workEndYear.'-'.$post->workEndMonth.'-00': null
                 );
             }
             $experience->save();
