@@ -26,5 +26,5 @@ return array(
     'duplicate_email'=>'Email already taken.',
     'min6' => 'must contain at-least 6 characters',
     'min20' => 'shouldn\'t contain more than 20 characters',
-
+    'date'=> 'is not a valid date'
 );
