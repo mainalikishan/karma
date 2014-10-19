@@ -13,6 +13,7 @@ use Karma\General\Country;
 use Karma\General\Address;
 use Karma\General\Profession;
 use Karma\General\Skill;
+use Carbon\Carbon;
 
 class IndUserCacheHandler
 {
@@ -139,8 +140,21 @@ class IndUserCacheHandler
                 return $data;
                 break;
             case "experience":
-                $data->expStartDate = $data->expStartDate->tz('UTC')->toFormattedDateString();
-                $data->expEndDate = $data->expEndDate->tz('UTC')->toFormattedDateString();
+                $data = $data->toArray();
+                $i=0;
+                foreach($data as $d) {
+                    $dt = Carbon::parse($d['expStartDate']);
+                    $data[$i]['expStartMonth'] = "$dt->month";
+                    $data[$i]['expStartYear'] = "$dt->year";
+                    $data[$i]['expStartDate'] = $dt->format('F\\, Y');
+                    $dt = Carbon::parse($d['expEndDate']);
+                    $data[$i]['expEndMonth'] = "$dt->month";
+                    $data[$i]['expEndYear'] = "$dt->year";
+                    $data[$i]['expEndDate'] = $dt->format('F\\, Y');
+                    $i++;
+                }
+
+
                 return $data;
                 break;
             case "education":

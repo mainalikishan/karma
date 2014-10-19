@@ -35,6 +35,9 @@ class CustomHelper
                 case "name":
                     $return[] = preg_match("/^[a-zA-Z ]*$/",$value)? 'true': 'errors.name';
                     break;
+                case "date":
+                    $return[] = preg_match("/^(19|20)\d\d[\-\/.](0[1-9]|1[012])[\-\/.](0[1-9]|[12][0-9]|3[01])$/",$value)? 'true': 'errors.date';
+                    break;
             }
 
             // validate more cases

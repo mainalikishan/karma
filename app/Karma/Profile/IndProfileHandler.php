@@ -195,7 +195,7 @@ class IndProfileHandler
                 'updateType' => 'required|string',
                 'userId' => 'required|integer',
                 'token' => 'required',
-                'title' => 'required|string|minmax=6,20',
+                'title' => 'required|string',
                 'workType' => 'required|enum=company,freelancer',
                 'companyName' => 'optional',
                 'workCurrent' => 'required|string',
@@ -217,8 +217,8 @@ class IndProfileHandler
                 $experience->expType = $post->workType;
                 $experience->expCompany = ucwords($post->companyName);
                 $experience->expCurrent = $post->workCurrent;
-                $experience->expStartDate = $post->workStartYear.'-'.$post->workStartMonth.'-00';
-                $experience->expEndDate = $post->workCurrent=='N'? $post->workEndYear.'-'.$post->workEndMonth.'-00': null;
+                $experience->expStartDate = $post->workStartYear.'-'.$post->workStartMonth.'-01';
+                $experience->expEndDate = $post->workCurrent=='N'? $post->workEndYear.'-'.$post->workEndMonth.'-01': null;
             } else {
                 $experience = Experience::createExp(
                     $post->userId,
@@ -226,8 +226,8 @@ class IndProfileHandler
                     $post->workType,
                     ucwords($post->companyName),
                     $post->workCurrent,
-                    $post->workStartYear.'-'.$post->workStartMonth.'-00',
-                    $post->workCurrent=='N'? $post->workEndYear.'-'.$post->workEndMonth.'-00': null
+                    $post->workStartYear.'-'.$post->workStartMonth.'-01',
+                    $post->workCurrent=='N'? $post->workEndYear.'-'.$post->workEndMonth.'-01': null
                 );
             }
             $experience->save();

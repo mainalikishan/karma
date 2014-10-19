@@ -38,7 +38,7 @@ class JobsHandler
                 'jobOpen' => 'required',
                 'jobAddressCoordinate' => 'required',
                 'jobSummary' => 'required',
-                'jobExpDate' => 'required'),
+                'jobExpDate' => 'required|date'),
             11);
         $userToken = $data->userToken;
         $userId = $data->jobUserId;
