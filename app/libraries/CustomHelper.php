@@ -8,36 +8,64 @@ class CustomHelper
     }
 
     public static function validate($toValidate, $value) {
+        $return = [];
         foreach($toValidate as $tv) {
             switch ($tv) {
                 case "required":
-                    return !empty($value)? true: false;
+                    $return[] = !empty($value)? 'true': 'errors.required';
                     break;
                 case "optional":
-                    return true;
+                    $return[] = 'true';
                     break;
                 case "string":
-                    return is_string($value)? true: false;
+                    $return[] = is_string($value)? 'true': 'errors.string';
                     break;
                 case "integer":
-                    return is_numeric($value)? true: false;
+                    $return[] = is_numeric($value)? 'true': 'errors.integer';
                     break;
                 case "array":
-                    return is_array($value)? true: false;
+                    $return[] = is_array($value)? 'true': 'errors.array';
                     break;
                 case "object":
-                    return is_object($value)? true: false;
+                    $return[] = is_object($value)? 'true': 'errors.object';
                     break;
                 case "email":
-                    return filter_var($value, FILTER_VALIDATE_EMAIL)? true: false;
+                    $return[] = filter_var($value, FILTER_VALIDATE_EMAIL)? 'true': 'errors.email';
                     break;
                 case "name":
-                    return preg_match("/^[a-zA-Z ]*$/",$value)? true: false;
+                    $return[] = preg_match("/^[a-zA-Z ]*$/",$value)? 'true': 'errors.name';
                     break;
-                default:
-                    return false;
+            }
+
+            // validate more cases
+            $moreValidate = (explode('=', $tv));
+            if(count($moreValidate)>1) {
+                $split = preg_split('/[\s,]+/', $moreValidate[1]);
+                foreach($moreValidate as $v) {
+                    // validate enum
+                    if($v==='enum') {
+                        $fails = [];
+                        foreach($split as $s) {
+                            if($value !== $s)
+                            {
+                                $fails[] = $s;
+                            }
+                        }
+                        if(count($fails) == count($split)) {
+                            $return[] = false;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        foreach($return as $r) {
+            if(($r !=='true') OR !$r) {
+                return $r;
             }
         }
+        return 'true';
     }
 
     public static function postCheck($post = [], $allowedPost = [], $allowedPostLength = '0')
@@ -49,8 +77,11 @@ class CustomHelper
                     list($post_key, $post_value, $allowedPost_key, $allowedPost_value) = $k;
                     $toValidate = (explode('|', $allowedPost_value));
                     $validate = self::validate($toValidate, $post_value);
-                    if($post_key !== $allowedPost_key OR !$validate) {
+                    if(($post_key !== $allowedPost_key) OR (!$validate)) {
                         throw new \Exception(\Lang::get('errors.invalid_post_request'));
+                    }
+                    if($validate!=='true') {
+                        throw new \Exception(\Lang::get('labels.'.$post_key).' '.\Lang::get($validate));
                     }
                 }
             }

@@ -17,4 +17,9 @@ return array(
     'invalid_email_address' => 'Invalid email address.',
     'invalid_code_email_address' => 'Invalid code or email address.',
     'job_not_found' => 'Job not found.',
+    'required' => 'is required',
+    'integer' => 'must be a number',
+    'string' => 'must be a sting',
+    'array' => 'must be an array',
+    'email' => 'is not a valid email'
 );

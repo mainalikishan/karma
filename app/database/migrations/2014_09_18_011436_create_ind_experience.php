@@ -20,8 +20,8 @@ class CreateIndExperience extends Migration {
             $table->enum('expType',array('company','freelancer'));
             $table->string('expCompany',100);
             $table->enum('expCurrent',array('Y','N'));
-            $table->date('expStartDate');
-            $table->date('expEndDate');
+            $table->string('expStartDate', 50);
+            $table->string('expEndDate', 50);
             $table->timestamp('expAddedDate');
             $table->timestamp('expUpdatedDate');
         });

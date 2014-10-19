@@ -15,6 +15,7 @@ use Karma\Users\IndUserRepository;
 use Karma\General\Address;
 use Karma\General\DummySkill;
 use Karma\General\DummyProfession;
+use Karma\General\Experience;
 
 class IndProfileHandler
 {
@@ -165,7 +166,7 @@ class IndProfileHandler
                 'userSummary' => $post->summary
             ));
 
-            // select profession id
+            // select
             $user = $this->indUser
                 ->select(array(
                     'userProfessionId',
@@ -188,6 +189,68 @@ class IndProfileHandler
 
     public function experience($post)
     {
+        // verify post request
+        \CustomHelper::postCheck($post,
+            array(
+                'updateType' => 'required|string',
+                'userId' => 'required|integer',
+                'token' => 'required',
+                'title' => 'required|string',
+                'workType' => 'required|enum=company,freelancer',
+                'companyName' => 'optional',
+                'workCurrent' => 'required|string',
+                'workStart' => 'required',
+                'workEnd' => 'optional',
+                'workId' => 'optional'),
+            10);
 
+        // verify login info.
+        $user = IndUser::loginCheck($post->token, $post->userId);
+
+        if ($user) {
+            $experience = Experience::selectExp($post->workId, $post->userId);
+
+            if ($experience) {
+                $experience->expTitle = ucwords($post->title);
+                $experience->expType = $post->workType;
+                $experience->expCompany = ucwords($post->companyName);
+                $experience->expCurrent = $post->workCurrent;
+                $experience->expStartDate = $post->workStart;
+                $experience->expEndDate = $post->workEnd;
+            } else {
+                $experience = Experience::createExp(
+                    $post->userId,
+                    ucwords($post->title),
+                    $post->workType,
+                    ucwords($post->companyName),
+                    $post->workCurrent,
+                    $post->workStart,
+                    $post->workEnd
+                );
+            }
+            $experience->save();
+
+            // select
+            $user = Experience::select(array(
+                    'expId',
+                    'expTitle',
+                    'expType',
+                    'expCompany',
+                    'expCurrent',
+                    'expStartDate',
+                    'expEndDate'
+                ))
+                ->where('expUserId', '=', $post->userId)
+                ->get();
+
+            // internal Log
+            IndInternalLogHandler::addInternalLog($post->userId);
+
+            // create cache for user
+            $return = $this->indUserCacheHandler->make($user, 'experience', $post->userId);
+            return $return;
+
+        }
+        throw new \Exception(\Lang::get('errors.invalid_token'));
     }
 }
