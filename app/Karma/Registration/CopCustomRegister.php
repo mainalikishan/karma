@@ -31,12 +31,12 @@ class CopCustomRegister implements CopUserRegisterInterface
     public function register($post, $address=false)
     {
         // check post array  fields
-        \CustomHelper::postCheck($post, array('userCompanyName',
-                'userEmail',
-                'userPassword',
-                'userOauthType',
-                'userOauthId',
-                'userAddressCoordinate'),
+        \CustomHelper::postCheck($post, array('userCompanyName'=>'required|string',
+                'userEmail'=>'required',
+                'userPassword'=>'required',
+                'userOauthType'=>'required',
+                'userOauthId'=>'required',
+                'userAddressCoordinate'=>'required'),
             6);
 
         // get four digit verification code

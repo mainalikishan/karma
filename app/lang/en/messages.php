@@ -5,6 +5,7 @@
  * Time: 10:59 AM
  */
 return array(
+    'registration_successful'=>'Registration successful.',
     'password_change_successful' => 'Password changed successfully.',
     'updated_successfully'=>"Updated Successfully.",
     'account_activation_successful'=>'Account activated successfully.',

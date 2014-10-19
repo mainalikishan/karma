@@ -12,10 +12,8 @@ class CopUserLoginController extends ApiController {
      */
     private $copLogInHandler;
 
-    function __construct(CopLoginValidate $copLoginValidate, CopLogInHandler $copLogInHandler )
+    function __construct(CopLogInHandler $copLogInHandler )
     {
-        $this->copLoginValidate = $copLoginValidate;
-
         $this->copLogInHandler = $copLogInHandler;
     }
 
@@ -24,13 +22,6 @@ class CopUserLoginController extends ApiController {
         $post = $this->postRequestHandler();
         if(is_object($post))
         {
-            try{
-              $this->copLoginValidate->validate($post);
-            }
-            catch(Laracasts\Validation\FormValidationException $e){
-                return $this->respondUnprocessableEntity($e->getErrors());
-            }
-
             try{
                $return = $this->copLogInHandler->login($post);
                return $this->respond($return);

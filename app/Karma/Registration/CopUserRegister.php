@@ -61,7 +61,13 @@ class CopUserRegister
             }
         }
 
+        if($this->copUser->checkEmail($post->userEmail)!==false)
+        {
+            return \Lang::get('errors.duplicate_email');
+        }
+
         $user = $this->$oauthType->register($post, $address);
+
         if ($user) {
             // select only what is needed
             $user = $this->copUser
@@ -91,8 +97,8 @@ class CopUserRegister
             CopInternalLogHandler::addInternalLog($user->userId,$post);
 
             // create cache for user
-            $return = $this->copUserCacheHandler->make($user, 'basic', $user->userId);
-            return $return;
+            $this->copUserCacheHandler->make($user, 'basic', $user->userId);
+            return \Lang::get('messages.registration_successful');
         }
     }
 

@@ -51,15 +51,16 @@ class CopProfileHandler
     public function updateProfile($data)
     {
 
+
         // check post array  fields
         \CustomHelper::postCheck($data,
-            array('userId',
-                'userToken',
-                'userCompanyName',
-                'userIndustryTypeId',
-                'userAddressCoordinate',
-                'userCompanyPhone',
-                'userSummary'),
+            array('userId'=>'required',
+                'userToken'=>'required',
+                'userCompanyName'=> 'required|string',
+                'userIndustryTypeId'=>'required|integer',
+                'userAddressCoordinate'=>'required',
+                'userCompanyPhone'=>'optional',
+                'userSummary'=>'optional'),
             7);
 
         //getting post value

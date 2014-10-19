@@ -14,10 +14,9 @@ class CopUserRegisterController extends ApiController {
      */
     private $copRegisterValidate;
 
-    function __construct(CopUserRegister $copUserRegister, CopRegisterValidate $copRegisterValidate)
+    function __construct(CopUserRegister $copUserRegister)
     {
         $this->copUserRegister = $copUserRegister;
-        $this->copRegisterValidate = $copRegisterValidate;
     }
 
     public function register()
@@ -25,13 +24,6 @@ class CopUserRegisterController extends ApiController {
 	   $post = $this->postRequestHandler();
         if(is_object($post))
         {
-            try{
-                $this->copRegisterValidate->validate($post);
-            }
-            catch(Laracasts\Validation\FormValidationException $e){
-                return $this->respondUnprocessableEntity($e->getErrors());
-            }
-
             try{
                 $user =  $this->copUserRegister->checkRegistration($post);
                 return $this->respond($user);

@@ -57,6 +57,7 @@ class CopUser extends \Eloquent
         return $user;
     }
 
+
     // updating login information
     public static function loginLog($userId, $logLoginAgent, $userLoginIp)
     {

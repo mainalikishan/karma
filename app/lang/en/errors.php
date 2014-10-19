@@ -22,5 +22,6 @@ return array(
     'integer' => 'must be a number',
     'string' => 'must be a sting',
     'array' => 'must be an array',
-    'email' => 'is not a valid email'
+    'email' => 'is not a valid email',
+    'duplicate_email'=>'Email already taken.'
 );
