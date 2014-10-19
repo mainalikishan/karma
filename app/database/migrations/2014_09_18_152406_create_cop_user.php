@@ -32,7 +32,7 @@ class CreateCopUser extends Migration {
             $table->integer('userLoginCount');
             $table->string('userLoginIp',20);
             $table->bigInteger('userOauthId');
-            $table->string('userOuthType',20);
+            $table->string('userOauthType',20);
             $table->enum('userStatus',array('Y','N'))->default('Y');
             $table->enum('userEmailVerification',array('Y','N'))->default('N');
             $table->integer('userEmailVerificationCode');
