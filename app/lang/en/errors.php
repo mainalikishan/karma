@@ -22,5 +22,7 @@ return array(
     'integer' => 'must be a number',
     'string' => 'must be a sting',
     'array' => 'must be an array',
-    'email' => 'is not a valid email'
+    'email' => 'is not a valid email',
+    'min6' => 'must contain at-least 6 characters',
+    'min20' => 'shouldn\'t contain more than 20 characters',
 );
