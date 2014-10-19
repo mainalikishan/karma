@@ -16,12 +16,15 @@ class CreateJob extends Migration {
         Schema::create('job',function(Blueprint $table){
             $table->bigIncrements('jobId');
             $table->bigInteger('jobUserId');
-            $table->integer('jobCountryId');
+            $table->char('jobCountryISO',3);
             $table->integer('jobAddressId');
+            $table->integer('jobProfessionId');
+            $table->string('jobAddressCoordinate',100);
             $table->integer('jobTypeId');
             $table->string('jobTitle',255);
             $table->integer('jobOpen');
             $table->text('jobSkills');
+            $table->text('jobSummary');
             $table->date('jobExpDate');
             $table->enum('jobExp',array('0','1','2','3','4','5'));
             $table->timestamp('jobAddedDate');

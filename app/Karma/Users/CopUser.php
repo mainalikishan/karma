@@ -38,38 +38,23 @@ class CopUser extends \Eloquent
     protected $CopUserRepository;
 
 
-    public static function getUser($username)
-    {
-        $user = \DB::table('cop_user')
-            ->select('userId', 'userIndustryTypeId', 'userCountryISO', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userStatus', 'userAccountStatus', 'userOuthType', 'userOauthId', 'userLoginCount', 'userEmailVerificationCode', 'userEmailVerification','userPassword')
-            ->where('userEmail', $username)
-            ->where('userAccountStatus', '<>', 'perDeactivate')
-            ->where('userStatus', 'Y')->first();
-        return $user;
-    }
+//    public static function getUser($username)
+//    {
+//        $user = \DB::table('cop_user')
+//            ->select('userId', 'userIndustryTypeId', 'userCountryISO', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userStatus', 'userAccountStatus', 'userOauthType', 'userOauthId', 'userLoginCount', 'userEmailVerificationCode', 'userEmailVerification', 'userPassword')
+//            ->where('userEmail', $username)
+//            ->where('userAccountStatus', '<>', 'perDeactivate')
+//            ->where('userStatus', 'Y')->first();
+//        return $user;
+//    }
 
-    public static function getUserById($userId)
+    public  function getUserById($userId)
     {
-        $user = \DB::table('cop_user')
-            ->select('userId', 'userIndustryTypeId', 'userCountryISO', 'userAddressId', 'userCompanyPhone', 'userCompanyName', 'userEmail', 'userSummary', 'userCoverPic', 'userProfilePic', 'userOuthType', 'userOauthId','userSummary')
-            ->where('userId', $userId)
-            ->where('userAccountStatus', '<>', 'perDeactivate')
+        $user = $this->where('userId',$userId)
+            ->where('userAccountStatus','<>','perDeactivate')
             ->where('userStatus', 'Y')
             ->first();
         return $user;
-    }
-
-    // updating login information
-    public static function updateUserLoginInfo($userId, $userLoginCount, $userLoginIp, $userToken)
-    {
-        \DB::table('cop_user')
-            ->where('userId', $userId)
-            ->update(array('userLoginCount' => $userLoginCount,
-                'userLoginIp' => $userLoginIp,
-                'userToken' => $userToken,
-                'userUpdatedDate' => date('Y-m-d H:i:s'),
-                'userAccountStatus' => 'Active'
-            ));
     }
 
     // updating login information
@@ -80,29 +65,6 @@ class CopUser extends \Eloquent
                 'loginUserId' => $userId,
                 'logLoginIp' => $userLoginIp,
                 'logAddedDate' => date('Y-m-d H:i:s')
-            ));
-    }
-
-    // updating user profile information
-    public static function updateUserProfileInfo($userId,
-                                                 $userToken,
-                                                 $userIndustryTypeId,
-                                                 $userCountryISO,
-                                                 $userAddressId,
-                                                 $userCompanyPhone,
-                                                 $userCompanyName,
-                                                 $userSummary)
-    {
-        \DB::table('cop_user')
-            ->where('userId', $userId)
-            ->where('userToken', $userToken)
-            ->update(array('userIndustryTypeId' => $userIndustryTypeId,
-                'userCountryISO' => $userCountryISO,
-                'userAddressId' => $userAddressId,
-                'userCompanyPhone' => $userCompanyPhone,
-                'userCompanyName' => $userCompanyName,
-                'userSummary' => $userSummary,
-                'userUpdatedDate' => date('Y-m-d H:i:s')
             ));
     }
 
@@ -128,7 +90,7 @@ class CopUser extends \Eloquent
 
     public function checkEmail($userEmail)
     {
-        $user = $this->select(array('userCompanyName','userEmail', 'userPasswordRequestVerificationCode','userId'))
+        $user = $this->select(array('userCompanyName', 'userEmail', 'userPasswordRequestVerificationCode', 'userId'))
             ->where(compact('userEmail'))
             ->first();
         if ($user) {
@@ -137,16 +99,14 @@ class CopUser extends \Eloquent
         return false;
     }
 
-    public function checkForgotPasswordCode($userEmail,$userPasswordRequestVerificationCode)
+    public function checkForgotPasswordCode($userEmail, $userPasswordRequestVerificationCode)
     {
-        $user = $this->select(array('userCompanyName','userEmail', 'userPasswordRequestVerificationCode','userId'))
-            ->where(compact('userEmail','userPasswordRequestVerificationCode'))
+        $user = $this->select(array('userCompanyName', 'userEmail', 'userPasswordRequestVerificationCode', 'userId'))
+            ->where(compact('userEmail', 'userPasswordRequestVerificationCode'))
             ->first();
         if ($user) {
             return $user;
         }
         return false;
     }
-
-
 }

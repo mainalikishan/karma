@@ -18,14 +18,13 @@ class JobsValidate extends FormValidator {
      */
     protected $rules = [
         'jobUserId' => 'required',
-        'jobCountryId' => 'required',
-        'jobAddressId' => 'required',
-        'jobSummary' => 'required',
         'jobTitle' => 'required',
         'jobTypeId' => 'required',
-        'jobOpen' => 'required',
+        'jobProfessionId'=>'required',
         'jobSkills' => 'required',
-        'jobExpDate' => 'required',
-        'jobExp' => 'required'
+        'jobExp' => 'required',
+        'jobOpen' => 'required',
+        'jobSummary' => 'required',
+        'jobExpDate' => 'required'
     ];
 } 

@@ -18,7 +18,8 @@ class CopProfileValidate extends FormValidator
      * @var array
      */
     protected $rules = [
-        'userCompanyName' => 'required'
+        'userCompanyName' => 'required',
+        'userIndustryTypeId' => 'required'
     ];
 
 }

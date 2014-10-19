@@ -7,6 +7,9 @@
 
 namespace Karma\Jobs;
 
+use Karma\General\Address;
+use Karma\Log\CopInternalLog\CopInternalLogHandler;
+
 
 class JobsHandler
 {
@@ -29,13 +32,13 @@ class JobsHandler
                 'jobUserId',
                 'jobTitle',
                 'jobTypeId',
-                'jobOpen',
-                'jobCountryId',
-                'jobAddressId',
+                'jobProfessionId',
                 'jobSkills',
+                'jobExp',
+                'jobOpen',
+                'jobAddressCoordinate',
                 'jobSummary',
-                'jobExpDate',
-                'jobExp'),
+                'jobExpDate'),
             11);
         $userToken = $data->userToken;
         $userId = $data->jobUserId;
@@ -46,12 +49,23 @@ class JobsHandler
         // add job if token id and user id is valid
         $job = $this->jobs;
 
+
+        $address = false;
+        if (isset($data->jobAddressCoordinate) && !empty($data->jobAddressCoordinate)) {
+            $address = \CustomHelper::getAddressFromApi($data->jobAddressCoordinate);
+            if ($address) {
+                $address = Address::makeAddress($address, $address->countryISO);
+            }
+        }
+
+        $job->jobCountryISO = $address ? $address->addressCountryISO : 0;
+        $job->jobAddressId = $address ? $address->addressId : 0;
+        $job->jobAddressCoordinate = $data->jobAddressCoordinate;
         $job->jobUserId = $data->jobUserId;
         $job->jobTitle = $data->jobTitle;
+        $job->jobProfessionId = $data->jobProfessionId;
         $job->jobTypeId = $data->jobTypeId;
         $job->jobOpen = $data->jobOpen;
-        $job->jobCountryId = $data->jobCountryId;
-        $job->jobAddressId = $data->jobAddressId;
         $job->jobSkills = $data->jobSkills;
         $job->jobSummary = $data->jobSummary;
         $job->jobExpDate = $data->jobExpDate;
@@ -59,6 +73,10 @@ class JobsHandler
 
         ///save
         $result = $job->save();
+
+        // add internal log
+        CopInternalLogHandler::addInternalLog($userId,$data);
+
         if ($result) {
             return \Lang::get('messages.job_store_successful');
         }
@@ -73,15 +91,15 @@ class JobsHandler
                 'jobUserId',
                 'jobTitle',
                 'jobTypeId',
-                'jobOpen',
-                'jobCountryId',
-                'jobAddressId',
+                'jobProfessionId',
                 'jobSkills',
-                'jobSummary',
-                'jobExpDate',
                 'jobExp',
-                'jobId'),
-            12);
+                'jobOpen',
+                'jobAddressCoordinate',
+                'jobSummary',
+                'jobExpDate'
+            ),
+            11);
         $userToken = $data->userToken;
         $userId = $data->jobUserId;
         $jobId = $data->jobId;
