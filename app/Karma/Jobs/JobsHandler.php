@@ -7,6 +7,7 @@
 
 namespace Karma\Jobs;
 
+use Karma\Cache\JobCacheHandler;
 use Karma\General\Address;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;
 
@@ -18,10 +19,16 @@ class JobsHandler
      * @var Jobs
      */
     private $jobs;
+    /**
+     * @var \Karma\Cache\JobCacheHandler
+     */
+    private $jobCacheHandler;
 
-    public function __construct(Jobs $jobs)
+
+    public function __construct(Jobs $jobs, JobCacheHandler $jobCacheHandler)
     {
         $this->jobs = $jobs;
+        $this->jobCacheHandler = $jobCacheHandler;
     }
 
     public function addJob($data)
@@ -33,13 +40,14 @@ class JobsHandler
                 'jobTitle' => 'required',
                 'jobTypeId' => 'required',
                 'jobProfessionId' => 'required',
-                'jobSkills' => 'required',
+                'jobSkills' => 'required|array',
                 'jobExp' => 'required',
                 'jobOpen' => 'required',
                 'jobAddressCoordinate' => 'required',
                 'jobSummary' => 'required',
                 'jobExpDate' => 'required|date'),
             11);
+
         $userToken = $data->userToken;
         $userId = $data->jobUserId;
 
@@ -66,20 +74,52 @@ class JobsHandler
         $job->jobProfessionId = $data->jobProfessionId;
         $job->jobTypeId = $data->jobTypeId;
         $job->jobOpen = $data->jobOpen;
-        $job->jobSkills = $data->jobSkills;
+        $job->jobSkills = implode(',', $data->jobSkills);
         $job->jobSummary = $data->jobSummary;
         $job->jobExpDate = $data->jobExpDate;
         $job->jobExp = $data->jobExp;
 
         ///save
         $result = $job->save();
-
-        // add internal log
-        CopInternalLogHandler::addInternalLog($userId, $data);
+        $jobId = $job->jobId;
 
         if ($result) {
+            // select only what is needed
+            $job = $this->jobs
+                ->select(array(
+                    'jobId',
+                    'jobUserId',
+                    'jobProfessionId',
+                    'jobCountryISO',
+                    'jobAddressId',
+                    'jobTypeId',
+                    'jobTitle',
+                    'jobOpen',
+                    'jobSkills',
+                    'jobSummary',
+                    'jobExp',
+                    'jobAddedDate',
+                    'jobExpDate',
+                    'jobViewCount',
+                    'jobAppCount',
+                    'jobShortListCount',
+                    'jobHireCount',
+                    'jobRejectCount',
+                    'jobDelete'
+                ))
+
+                ->where('jobId', '=', $jobId)
+                ->first();
+
+            // add internal log
+            CopInternalLogHandler::addInternalLog($userId, $data);
+
+            // create cache for user
+            $this->jobCacheHandler->make($job, $jobId, $userId);
+
             return \Lang::get('messages.job_store_successful');
         }
+
         throw new \Exception(\Lang::get('errors.something_went_wrong'));
     }
 
@@ -89,17 +129,18 @@ class JobsHandler
         \CustomHelper::postCheck($data,
             array('userToken' => 'required',
                 'jobUserId' => 'required',
+                'jobId' => 'required',
                 'jobTitle' => 'required',
                 'jobTypeId' => 'required',
                 'jobProfessionId' => 'required',
-                'jobSkills' => 'required',
+                'jobSkills' => 'required|array',
                 'jobExp' => 'required',
                 'jobOpen' => 'required',
                 'jobAddressCoordinate' => 'required',
                 'jobSummary' => 'required',
-                'jobExpDate' => 'required'
-            ),
-            11);
+                'jobExpDate' => 'required|date'),
+            12);
+
         $userToken = $data->userToken;
         $userId = $data->jobUserId;
         $jobId = $data->jobId;
@@ -110,23 +151,69 @@ class JobsHandler
         // add job if token id and user id is valid
         $job = $this->jobs
             ->where('jobDelete', '=', 'N')
+            ->where('jobUserId', '=', $userId)
             ->find($jobId);
 
         if ($job) {
+
+            $address = false;
+            if (isset($data->jobAddressCoordinate) && !empty($data->jobAddressCoordinate)) {
+                $address = \CustomHelper::getAddressFromApi($data->jobAddressCoordinate);
+                if ($address) {
+                    $address = Address::makeAddress($address, $address->countryISO);
+                }
+            }
+
+            $job->jobCountryISO = $address ? $address->addressCountryISO : 0;
+            $job->jobAddressId = $address ? $address->addressId : 0;
+            $job->jobAddressCoordinate = $data->jobAddressCoordinate;
             $job->jobUserId = $data->jobUserId;
             $job->jobTitle = $data->jobTitle;
+            $job->jobProfessionId = $data->jobProfessionId;
             $job->jobTypeId = $data->jobTypeId;
             $job->jobOpen = $data->jobOpen;
-            $job->jobCountryId = $data->jobCountryId;
-            $job->jobAddressId = $data->jobAddressId;
-            $job->jobSkills = $data->jobSkills;
+            $job->jobSkills = implode(',', $data->jobSkills);
             $job->jobSummary = $data->jobSummary;
             $job->jobExpDate = $data->jobExpDate;
             $job->jobExp = $data->jobExp;
             $job->jobId = $data->jobId;
         }
         $result = $job->save();
+
         if ($result) {
+            // select only what is needed
+            $job = $this->jobs
+                ->select(array(
+                    'jobId',
+                    'jobUserId',
+                    'jobProfessionId',
+                    'jobCountryISO',
+                    'jobAddressId',
+                    'jobTypeId',
+                    'jobTitle',
+                    'jobOpen',
+                    'jobSkills',
+                    'jobSummary',
+                    'jobExp',
+                    'jobAddedDate',
+                    'jobExpDate',
+                    'jobViewCount',
+                    'jobAppCount',
+                    'jobShortListCount',
+                    'jobHireCount',
+                    'jobRejectCount',
+                    'jobDelete'
+                ))
+
+                ->where('jobId', '=', $jobId)
+                ->first();
+
+            // add internal log
+            CopInternalLogHandler::addInternalLog($userId, $data);
+
+            // create cache for user
+            $this->jobCacheHandler->make($job, $jobId, $userId);
+
             return \Lang::get('messages.job_update_successful');
         }
         throw new \Exception(\Lang::get('errors.something_went_wrong'));

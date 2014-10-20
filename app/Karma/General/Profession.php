@@ -28,7 +28,7 @@ class Profession extends \Eloquent
         if($profession) {
             return $profession->professionName;
         }
-        throw new \Exception(\Lang::get('errors.invalid_skill_id'));
+        throw new \Exception(\Lang::get('errors.invalid_profession_id'));
     }
 
 } 

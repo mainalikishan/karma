@@ -56,7 +56,6 @@ class CopUserCacheHandler
         return $cache->save();
     }
 
-
     /**
      * @param array $data
      * @param $updateType

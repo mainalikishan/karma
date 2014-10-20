@@ -13,13 +13,13 @@ class CreateJobCache extends Migration {
 	public function up()
 	{
 		//
-
-        //
         Schema::create('job_cache',function(Blueprint $table){
             $table->increments('cacheId');
             $table->bigInteger('userId');
             $table->bigInteger('jobId');
-            $table->text('details');
+            $table->text('cacheDetails');
+            $table->timestamp('cacheAddedDate');
+            $table->timestamp('cacheUpdatedDate');
         });
 	}
 
@@ -33,5 +33,4 @@ class CreateJobCache extends Migration {
 		//
         Schema::drop('job_cache');
 	}
-
 }

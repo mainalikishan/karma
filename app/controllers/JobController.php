@@ -1,7 +1,7 @@
 <?php
 
+use Karma\Cache\JobCacheHandler;
 use Karma\Jobs\JobsHandler;
-use Karma\Jobs\JobsValidate;
 
 class JobController extends ApiController
 
@@ -10,10 +10,15 @@ class JobController extends ApiController
      * @var Karma\Jobs\JobsHandler
      */
     private $handler;
+    /**
+     * @var Karma\Cache\JobCacheHandler
+     */
+    private $jobCacheHandler;
 
-    public function __construct(JobsHandler $handler)
+    public function __construct(JobsHandler $handler, JobCacheHandler $jobCacheHandler)
     {
         $this->handler = $handler;
+        $this->jobCacheHandler = $jobCacheHandler;
     }
 
     /**
@@ -35,19 +40,17 @@ class JobController extends ApiController
         return $this->respondUnprocessableEntity();
     }
 
+
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return Response
+     * @return mixed
      */
-    public function edit()
+    public function selectJobCache()
     {
 
         $post = $this->postRequestHandler();
         if (is_object($post)) {
             try {
-                $return = $this->handler->detailsById($post);
+                $return = $this->jobCacheHandler->select($post);
                 return $this->respond($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
@@ -56,11 +59,9 @@ class JobController extends ApiController
         return $this->respondUnprocessableEntity();
     }
 
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     * @return Response
+     * @return mixed
      */
     public function update()
     {
@@ -77,11 +78,9 @@ class JobController extends ApiController
         return $this->respondUnprocessableEntity();
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
+     * @return mixed
      */
     public function destroy()
     {

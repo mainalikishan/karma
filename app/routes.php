@@ -15,6 +15,6 @@ Route::group(['prefix' => 'api/v1'], function(){
     //Jobs routs
     Route::post('jobs/store', 'JobController@store');
     Route::post('jobs/update', 'JobController@update');
-    Route::post('jobs/edit', 'JobController@edit');
+    Route::post('jobs/selectJobCache', 'JobController@selectJobCache');
     Route::post('jobs/destroy','JobController@destroy');
 });
