@@ -31,14 +31,15 @@ class Experience extends \Eloquent
 
     public static function createExp($expUserId, $expTitle, $expType, $expCompany, $expCurrent, $expStartDate, $expEndDate)
     {
-        $user = new static (compact('expUserId', 'expTitle', 'expType', 'expCompany', 'expCurrent', 'expStartDate', 'expEndDate'));
-        return $user;
+        $experience = new static (compact('expUserId', 'expTitle', 'expType', 'expCompany', 'expCurrent', 'expStartDate', 'expEndDate'));
+        return $experience;
     }
 
-    public static function selectExp($expId, $expUserId) {
+    public static function selectExp($expId, $expUserId)
+    {
         $experience = self::where(compact('expId', 'expUserId'))
             ->first();
-        if($experience) {
+        if ($experience) {
             return $experience;
         }
         return false;

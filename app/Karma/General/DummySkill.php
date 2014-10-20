@@ -28,11 +28,12 @@ class DummySkill extends \Eloquent
         return $dummySkill;
     }
 
-    public static function selectSkillName($skillId) {
+    public static function selectSkillName($skillId)
+    {
         $dummySkill = self::select(array('skillName'))
             ->where(compact('skillId'))
             ->first();
-        if($dummySkill) {
+        if ($dummySkill) {
             return $dummySkill->skillName;
         }
         throw new \Exception(\Lang::get('errors.invalid_skill_id'));

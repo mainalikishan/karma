@@ -21,7 +21,7 @@ class Gender extends \Eloquent
     // database table used by model
     protected $table = 'ind_gender';
 
-    public static function selectGenderName($genderId) {
+    public static function selectName($genderId) {
         $gender = self::select(array('genderName'))
             ->where(compact('genderId'))
             ->first();
