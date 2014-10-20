@@ -28,11 +28,12 @@ class DummyProfession extends \Eloquent
         return $dummyProfession;
     }
 
-    public static function selectProfessionName($skillId) {
+    public static function selectProfessionName($skillId)
+    {
         $dummyProfession = self::select(array('professionName'))
             ->where(compact('skillId'))
             ->first();
-        if($dummyProfession) {
+        if ($dummyProfession) {
             return $dummyProfession->skillName;
         }
         throw new \Exception(\Lang::get('errors.invalid_skill_id'));

@@ -15,7 +15,10 @@ use Karma\Users\IndUserRepository;
 use Karma\General\Address;
 use Karma\General\DummySkill;
 use Karma\General\DummyProfession;
+use Karma\General\DummyUniversity;
+use Karma\General\DummyDegree;
 use Karma\General\Experience;
+use Karma\General\Education;
 
 class IndProfileHandler
 {
@@ -62,7 +65,7 @@ class IndProfileHandler
                 'dynamicAddressCoordinate' => 'optional',
                 'fname' => 'required',
                 'lname' => 'required',
-                'dob'  => 'required'),
+                'dob' => 'required'),
             10);
 
         // verify login info.
@@ -153,15 +156,12 @@ class IndProfileHandler
             }
             $skillIds = implode(',', $userSkills);
 
-            if (!empty($post->professionId) && !is_numeric($post->professionId)) {
-                $profession = DummyProfession::registerProfession($post->professionId);
-            } else {
-                $profession = $post->professionId;
-            }
-
             // update info.
             $user->update(array(
-                'userProfessionId' => $profession,
+                'userProfessionId' =>
+                    (!empty($post->professionId) && !is_numeric($post->professionId))?
+                        DummyProfession::registerProfession($post->professionId):
+                        ucwords($post->professionId),
                 'userSkillIds' => $skillIds,
                 'userSummary' => $post->summary
             ));
@@ -197,13 +197,13 @@ class IndProfileHandler
                 'token' => 'required',
                 'title' => 'required|string',
                 'workType' => 'required|enum=company,freelancer',
-                'companyName' => 'optional',
+                'companyName' => 'optional|required=workType@company',
                 'workCurrent' => 'required|string',
                 'workStartMonth' => 'required|integer',
                 'workStartYear' => 'required|integer',
-                'workEndMonth' => 'optional',
-                'workEndYear' => 'optional',
-                'workId' => 'optional'),
+                'workEndMonth' => 'optional|required=workCurrent@N',
+                'workEndYear' => 'optional|required=workCurrent@N',
+                'workId' => 'optional|integer'),
             12);
 
         // verify login info.
@@ -217,8 +217,8 @@ class IndProfileHandler
                 $experience->expType = $post->workType;
                 $experience->expCompany = ucwords($post->companyName);
                 $experience->expCurrent = $post->workCurrent;
-                $experience->expStartDate = $post->workStartYear.'-'.$post->workStartMonth.'-01';
-                $experience->expEndDate = $post->workCurrent=='N'? $post->workEndYear.'-'.$post->workEndMonth.'-01': null;
+                $experience->expStartDate = $post->workStartYear . '-' . $post->workStartMonth . '-01';
+                $experience->expEndDate = $post->workCurrent == 'N' ? $post->workEndYear . '-' . $post->workEndMonth . '-01' : '0000-00-00';
             } else {
                 $experience = Experience::createExp(
                     $post->userId,
@@ -226,8 +226,8 @@ class IndProfileHandler
                     $post->workType,
                     ucwords($post->companyName),
                     $post->workCurrent,
-                    $post->workStartYear.'-'.$post->workStartMonth.'-01',
-                    $post->workCurrent=='N'? $post->workEndYear.'-'.$post->workEndMonth.'-01': null
+                    $post->workStartYear . '-' . $post->workStartMonth . '-01',
+                    $post->workCurrent == 'N' ? $post->workEndYear . '-' . $post->workEndMonth . '-01' : '0000-00-00'
                 );
             }
             $experience->save();
@@ -254,5 +254,65 @@ class IndProfileHandler
 
         }
         throw new \Exception(\Lang::get('errors.invalid_token'));
+    }
+
+    public function education($post)
+    {
+        // verify post request
+        \CustomHelper::postCheck($post,
+            array(
+                'updateType' => 'required|string',
+                'userId' => 'required|integer',
+                'token' => 'required',
+                'university' => 'required',
+                'degree' => 'required',
+                'passedYear' => 'required|integer',
+                'eduId' => 'optional|integer'),
+            7);
+
+        // verify login info.
+        $user = IndUser::loginCheck($post->token, $post->userId);
+        if ($user) {
+            $education = Education::selectEdu($post->eduId, $post->userId);
+
+            if ($education) {
+                $education->eduUniversityId = (!empty($post->university) && !is_numeric($post->university))?
+                    DummyUniversity::registerUniversity($post->university):
+                    ucwords($post->university);
+                $education->eduDegreeId = (!empty($post->degree) && !is_numeric($post->degree))?
+                    DummyDegree::registerDegree($post->degree):
+                    ucwords($post->degree);
+                $education->eduPassedYear = $post->passedYear;
+            } else {
+                $education = Education::createEdu(
+                    $post->userId,
+                    (!empty($post->university) && !is_numeric($post->university))?
+                        DummyUniversity::registerUniversity($post->university):
+                        ucwords($post->university),
+                    (!empty($post->degree) && !is_numeric($post->degree))?
+                        DummyDegree::registerDegree($post->degree):
+                        ucwords($post->degree),
+                    $post->passedYear
+                );
+            }
+            $education->save();
+
+            // select
+            $user = Education::select(array(
+                    'eduId',
+                    'eduUniversityId',
+                    'eduDegreeId',
+                    'eduPassedYear'
+                ))
+                ->where('eduUserId', '=', $post->userId)
+                ->get();
+
+            // internal Log
+            IndInternalLogHandler::addInternalLog($post->userId);
+
+            // create cache for user
+            $return = $this->indUserCacheHandler->make($user, 'education', $post->userId);
+            return $return;
+        }
     }
 }

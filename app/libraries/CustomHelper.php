@@ -72,6 +72,17 @@ class CustomHelper
                             $return[] = false;
                         }
                     }
+                    if($v==='required') {
+                        $split = preg_split('/[\s@]+/', $moreValidate[1]);
+                        if(count($split)==2 && isset($_POST[$split[0]])) {
+                            if( $_POST[$split[0]]==$split[1] && empty($value) ){
+                                $return[] = 'errors.required';
+                            }
+                        }
+                        else {
+                            $return[] = false;
+                        }
+                    }
                 }
             }
 
