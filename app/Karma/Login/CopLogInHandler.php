@@ -7,44 +7,54 @@
 
 namespace Karma\Login;
 
+use Karma\Cache\CopUserCache;
 use Karma\Log\CopActivityLog\CopActivityLogHandler;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;
 use Karma\Users\CopUser;
 
 class CopLogInHandler
 {
-
     /**
      * @var \Karma\Users\CopUser
      */
     private $copUser;
+    /**
+     * @var \Karma\Cache\CopUserCache
+     */
+    private $copUserCache;
 
-    public function __construct(CopUser $copUser)
+    public function __construct(CopUser $copUser, CopUserCache $copUserCache)
     {
-
         $this->copUser = $copUser;
+        $this->copUserCache = $copUserCache;
     }
 
     public function login($data)
     {
+        // check post array  fields
+        \CustomHelper::postCheck($data, array('userEmail' => 'required',
+                'userPassword' => 'required'),
+            2);
 
-        $user = CopUser:: getUser($data->userEmail);
-
+        $user = $this->copUser->getUser($data->userEmail);
         if ($user) {
             if (\Hash::check($data->userPassword, $user->userPassword)) {
+
                 //updating cop user table with login information
-                $userLoginCount = $user->userLoginCount + 1;
-                $userId = $user->userId;
-                $userLoginIp = \Request::getClientIp(true);
-                $userToken = \CustomHelper::generateToken($user->userEmail);
-                CopUser::updateUserLoginInfo($userId, $userLoginCount, $userLoginIp, $userToken);
+                $user->userLoginCount = $user->userLoginCount + 1;
+                $user->userId = $user->userId;
+                $user->userLoginIp = \Request::getClientIp(true);
+                $user->userToken = \CustomHelper::generateToken($user->userEmail);
+                $user->save();
 
                 // add internal log
-                CopInternalLogHandler::addInternalLog($userId);
-                CopActivityLogHandler::addActivityLog($userId,"log text");
-               return CopUser:: getUser($user->userEmail);
+                CopInternalLogHandler::addInternalLog($user->userId, $data);
+                CopActivityLogHandler::addActivityLog($user->userId, "log text");
+
+                //returns cache value
+                return $this->copUserCache->selectCacheValue($user->userId);
             }
         }
-        throw new \Exception('Invalid username or password');
+        return \Lang::get('errors.invalid_email_password_address');
     }
 } 

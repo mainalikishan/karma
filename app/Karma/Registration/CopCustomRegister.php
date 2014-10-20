@@ -33,7 +33,7 @@ class CopCustomRegister implements CopUserRegisterInterface
         // check post array  fields
         \CustomHelper::postCheck($post, array('userCompanyName'=>'required|string',
                 'userEmail'=>'required',
-                'userPassword'=>'required',
+                'userPassword'=>'required|minmax=6,20',
                 'userOauthType'=>'required',
                 'userOauthId'=>'required',
                 'userAddressCoordinate'=>'required'),

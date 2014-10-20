@@ -28,17 +28,17 @@ class JobsHandler
     {
         // check post array  fields
         \CustomHelper::postCheck($data,
-            array('userToken',
-                'jobUserId',
-                'jobTitle',
-                'jobTypeId',
-                'jobProfessionId',
-                'jobSkills',
-                'jobExp',
-                'jobOpen',
-                'jobAddressCoordinate',
-                'jobSummary',
-                'jobExpDate'),
+            array('userToken' => 'required',
+                'jobUserId' => 'required',
+                'jobTitle' => 'required',
+                'jobTypeId' => 'required',
+                'jobProfessionId' => 'required',
+                'jobSkills' => 'required',
+                'jobExp' => 'required',
+                'jobOpen' => 'required',
+                'jobAddressCoordinate' => 'required',
+                'jobSummary' => 'required',
+                'jobExpDate' => 'required|date'),
             11);
         $userToken = $data->userToken;
         $userId = $data->jobUserId;
@@ -75,7 +75,7 @@ class JobsHandler
         $result = $job->save();
 
         // add internal log
-        CopInternalLogHandler::addInternalLog($userId,$data);
+        CopInternalLogHandler::addInternalLog($userId, $data);
 
         if ($result) {
             return \Lang::get('messages.job_store_successful');
@@ -87,17 +87,17 @@ class JobsHandler
     {
         // check post array  fields
         \CustomHelper::postCheck($data,
-            array('userToken',
-                'jobUserId',
-                'jobTitle',
-                'jobTypeId',
-                'jobProfessionId',
-                'jobSkills',
-                'jobExp',
-                'jobOpen',
-                'jobAddressCoordinate',
-                'jobSummary',
-                'jobExpDate'
+            array('userToken' => 'required',
+                'jobUserId' => 'required',
+                'jobTitle' => 'required',
+                'jobTypeId' => 'required',
+                'jobProfessionId' => 'required',
+                'jobSkills' => 'required',
+                'jobExp' => 'required',
+                'jobOpen' => 'required',
+                'jobAddressCoordinate' => 'required',
+                'jobSummary' => 'required',
+                'jobExpDate' => 'required'
             ),
             11);
         $userToken = $data->userToken;

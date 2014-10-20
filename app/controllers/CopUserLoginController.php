@@ -4,10 +4,6 @@ use Karma\Validation\CopLoginValidate;
 class CopUserLoginController extends ApiController {
 
     /**
-     * @var Karma\Validation\CopLoginValidate
-     */
-    private $copLoginValidate;
-    /**
      * @var Karma\Login\CopLogInHandler
      */
     private $copLogInHandler;
