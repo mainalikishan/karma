@@ -64,7 +64,8 @@ class JobCacheHandler
         $data->jobAddressCoordinate = $address ? $address->addressCoordinate : '';
         $data->jobCountry = $country ? $country->countryName : '';
 
-        $data->profession = Profession::selectProfessionName($data->jobProfessionId);
+        $profession[] = array('id'=>$data->jobProfessionId,'name'=>Profession::selectProfessionName($data->jobProfessionId));
+        $data->profession =$profession;
 
         $skills = explode(',', $data->jobSkills);
         $jobSkills = [];
