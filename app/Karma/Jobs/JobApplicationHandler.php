@@ -62,7 +62,7 @@ class JobApplicationHandler
 
         //apply count
         if ($this->applyCount($data->appJobId, $data->appCopUserId, $userId) > 0) {
-            return Lang::get('errors.apply_already');
+            return Lang::get('errors.apply_jobapply_already');
         }
 
         // add job application if token id and user id is valid
@@ -92,9 +92,9 @@ class JobApplicationHandler
             CopInternalLogHandler::addInternalLog($userId, $data);
 
             // fire event when job apply. its notification to cop user form individual user
-            \Event::fire('job.apply', null);
+            \Event::fire('job.apply', $application);
 
-            return Lang::get('messages.job_apply_successful');
+            return Lang::get('messages.job_apply.job_apply_successful');
         }
 
         throw new \Exception(Lang::get('errors.something_went_wrong'));

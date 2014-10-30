@@ -64,9 +64,13 @@ class Jobs extends \Eloquent
 
     public static function jobTitleById($jobId)
     {
-        $job = self::select('jobTitle')
+        $job = self::select('jobTitle', 'jobSummary')
             ->where('jobId', $jobId)
             ->first();
-        return $job->jobTitle;
+        if ($job) {
+            return array("title"=>$job->jobTitle,'summary'=>$job->jobSummary);
+        } else {
+            return false;
+        }
     }
 } 

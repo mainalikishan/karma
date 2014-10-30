@@ -18,4 +18,5 @@ class JobApplication extends \Eloquent
     protected $table = 'job_app';
 
     protected $fillable = ['appCopUserId', 'appIndUserId', 'appJobId', 'appAddedDate'];
+
 } 

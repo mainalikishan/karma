@@ -82,4 +82,17 @@ class IndUser extends \Eloquent
         }
         return false;
     }
+
+    public static function selectNameEmail($userId)
+    {
+        $user = self::select(array('userFname', 'userLname', 'userEmail'))
+            ->where(compact('userId'))
+            ->first();
+        if ($user) {
+            return
+                array('name' => $user->userFname . ' ' . $user->userLname,
+                    'email' => $user->userEmail);
+        }
+        return false;
+    }
 } 

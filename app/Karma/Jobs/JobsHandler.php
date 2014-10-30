@@ -92,7 +92,7 @@ class JobsHandler
             // create cache for user
             $this->jobCacheHandler->make($job, $jobId, $userId);
 
-            return \Lang::get('messages.job_store_successful');
+            return \Lang::get('messages.job.job_store_successful');
         }
 
         throw new \Exception(\Lang::get('errors.something_went_wrong'));
@@ -163,7 +163,7 @@ class JobsHandler
             // create cache for user
             $this->jobCacheHandler->make($job, $jobId, $userId);
 
-            return \Lang::get('messages.job_update_successful');
+            return \Lang::get('messages.job.job_update_successful');
         }
         throw new \Exception(\Lang::get('errors.something_went_wrong'));
     }
@@ -219,7 +219,7 @@ class JobsHandler
 
             $result = $job->save();
             if ($result) {
-                return \Lang::get('messages.job_delete_successful');
+                return \Lang::get('messages.job.job_delete_successful');
             }
         }
         throw new \Exception(\Lang::get('errors.something_went_wrong'));

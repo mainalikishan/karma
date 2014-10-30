@@ -8,13 +8,24 @@
 namespace Karma\Jobs\Events;
 
 
+use Karma\Jobs\Mailer\JobApplyMailer;
+
 class JobApplyEventsHandler
 {
 
+    /**
+     * @var \Karma\Jobs\Mailer\JobApplyMailer
+     */
+    private $jobApplyMailer;
+
+    function __construct(JobApplyMailer $jobApplyMailer)
+    {
+        $this->jobApplyMailer = $jobApplyMailer;
+    }
+
     public function onJobApply($data)
     {
-        // $userOauthType = $data->userOauthType;
-        // $this->$userOauthType->sendWelcomeEmail($data);
+        $this->jobApplyMailer->sendEmail($data);
     }
 
     public function subscribe($events)
