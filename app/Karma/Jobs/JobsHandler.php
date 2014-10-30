@@ -85,39 +85,14 @@ class JobsHandler
 
         if ($result) {
             // select only what is needed
-            $job = $this->jobs
-                ->select(array(
-                    'jobId',
-                    'jobUserId',
-                    'jobProfessionId',
-                    'jobCountryISO',
-                    'jobAddressId',
-                    'jobTypeId',
-                    'jobTitle',
-                    'jobOpen',
-                    'jobSkills',
-                    'jobSummary',
-                    'jobExp',
-                    'jobAddedDate',
-                    'jobExpDate',
-                    'jobViewCount',
-                    'jobAppCount',
-                    'jobShortListCount',
-                    'jobHireCount',
-                    'jobRejectCount',
-                    'jobDelete'
-                ))
-
-                ->where('jobId', '=', $jobId)
-                ->first();
-
+            $job = $this->jobs->selectById($jobId);
             // add internal log
             CopInternalLogHandler::addInternalLog($userId, $data);
 
             // create cache for user
             $this->jobCacheHandler->make($job, $jobId, $userId);
 
-            return \Lang::get('messages.job_store_successful');
+            return \Lang::get('messages.job.job_store_successful');
         }
 
         throw new \Exception(\Lang::get('errors.something_went_wrong'));
@@ -182,39 +157,13 @@ class JobsHandler
 
         if ($result) {
             // select only what is needed
-            $job = $this->jobs
-                ->select(array(
-                    'jobId',
-                    'jobUserId',
-                    'jobProfessionId',
-                    'jobCountryISO',
-                    'jobAddressId',
-                    'jobTypeId',
-                    'jobTitle',
-                    'jobOpen',
-                    'jobSkills',
-                    'jobSummary',
-                    'jobExp',
-                    'jobAddedDate',
-                    'jobExpDate',
-                    'jobViewCount',
-                    'jobAppCount',
-                    'jobShortListCount',
-                    'jobHireCount',
-                    'jobRejectCount',
-                    'jobDelete'
-                ))
-
-                ->where('jobId', '=', $jobId)
-                ->first();
-
+            $job = $this->jobs->selectById($jobId);
             // add internal log
             CopInternalLogHandler::addInternalLog($userId, $data);
-
             // create cache for user
             $this->jobCacheHandler->make($job, $jobId, $userId);
 
-            return \Lang::get('messages.job_update_successful');
+            return \Lang::get('messages.job.job_update_successful');
         }
         throw new \Exception(\Lang::get('errors.something_went_wrong'));
     }
@@ -270,10 +219,9 @@ class JobsHandler
 
             $result = $job->save();
             if ($result) {
-                return \Lang::get('messages.job_delete_successful');
+                return \Lang::get('messages.job.job_delete_successful');
             }
         }
         throw new \Exception(\Lang::get('errors.something_went_wrong'));
     }
-
 }
