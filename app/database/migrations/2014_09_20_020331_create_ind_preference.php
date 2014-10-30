@@ -16,9 +16,7 @@ class CreateIndPreference extends Migration {
         Schema::create('ind_preference',function(Blueprint $table){
             $table->bigIncrements('preferenceId');
             $table->bigInteger('preferenceUserId');
-            $table->enum('preferenceWorkType',array('freelancer','company'));
-            $table->integer('preferenceSalaryMin');
-            $table->enum('preferenceSalaryType',array('Yearly','Monthly','Hourly'));
+            $table->text('preferenceData');
             $table->timestamp('preferenceAddedDate');
             $table->timestamp('preferenceUpdatedDate');
         });

@@ -65,8 +65,10 @@ class IndProfileHandler
                 'dynamicAddressCoordinate' => 'optional',
                 'fname' => 'required',
                 'lname' => 'required',
-                'dob' => 'required'),
-            10);
+                'birthDay' => 'required|integer',
+                'birthMonth' => 'required|integer',
+                'birthYear' => 'required|integer'),
+            12);
 
         // verify login info.
         $user = IndUser::loginCheck($post->token, $post->userId);
@@ -94,7 +96,7 @@ class IndProfileHandler
                         $user->userDynamicAddressCoordinate,
                 'userFname' => $post->fname,
                 'userLname' => $post->lname,
-                'userDOB' => $post->dob
+                'userDOB' => $post->birthYear.'-'.$post->birthMonth.'-'.$post->birthDay
             ));
 
             // select basic info
