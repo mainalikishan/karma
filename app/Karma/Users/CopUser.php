@@ -115,4 +115,17 @@ class CopUser extends \Eloquent
         }
         return false;
     }
+
+    public static function selectNameEmail($userId)
+    {
+        $user = self::select(array('userCompanyName', 'userEmail'))
+            ->where(compact('userId'))
+            ->first();
+        if ($user) {
+            return
+                array('name'=>$user->userCompanyName,
+                    'email'=>$user->userEmail);
+        }
+        return false;
+    }
 }

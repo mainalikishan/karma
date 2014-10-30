@@ -29,5 +29,6 @@ return array(
     'duplicate_email'=>'Email already taken.',
     'min6' => 'must contain at-least 6 characters',
     'max20' => 'shouldn\'t contain more than 20 characters',
-    'date'=> 'is not a valid date'
+    'date'=> 'is not a valid date',
+    'apply_already'=> 'Already apply'
 );

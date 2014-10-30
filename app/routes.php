@@ -17,4 +17,6 @@ Route::group(['prefix' => 'api/v1'], function(){
     Route::post('jobs/update', 'JobController@update');
     Route::post('jobs/selectJobCache', 'JobController@selectJobCache');
     Route::post('jobs/destroy','JobController@destroy');
+    //Jobs Application routs
+    Route::post('jobs/Application', 'JobApplicationController@apply');
 });

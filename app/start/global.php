@@ -20,9 +20,6 @@ ClassLoader::addDirectories(array(
     app_path().'/libraries',
 ));
 
-Event::subscribe('Karma\Registration\Events\CopUserRegisterEventsHandler');
-Event::subscribe('Karma\Profile\Events\CopUserPasswordCodeRequestEventsHandler');
-Event::subscribe('Karma\Profile\Events\CopUserPasswordCodeVerifyEventsHandler');
 
 /*
 |--------------------------------------------------------------------------
@@ -84,3 +81,4 @@ App::down(function()
 
 require app_path().'/filters.php';
 require app_path().'/constants.php';
+require app_path().'/events.php';

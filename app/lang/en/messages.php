@@ -13,4 +13,5 @@ return array(
     'job_store_successful'=>'Job added successfully',
     'job_update_successful'=>'Job updated successfully',
     'job_delete_successful'=>'Job deleted successfully',
+    'job_apply_successful'=>'Applied successfully',
 );

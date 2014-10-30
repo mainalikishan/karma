@@ -65,7 +65,7 @@ class JobCacheHandler
         $data->jobCountry = $country ? $country->countryName : '';
 
         $profession[] = array('id'=>$data->jobProfessionId,'name'=>Profession::selectProfessionName($data->jobProfessionId));
-        $data->profession =$profession;
+
 
         $skills = explode(',', $data->jobSkills);
         $jobSkills = [];
@@ -74,7 +74,8 @@ class JobCacheHandler
         }
         $data->jobSkills = $jobSkills;
 
-        $data->jobType = JobType::selectJobType($data->jobTypeId);
+        $data->jobType = array('id'=>$data->jobTypeId,'name'=>JobType::selectJobType($data->jobTypeId));
+
 
         $data->jobPostedDate = $address ? \CustomHelper::dateConvertTimezone(
             $data->jobAddedDate,

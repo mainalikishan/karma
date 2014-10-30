@@ -37,5 +37,4 @@ class CopUserRegisterEventsHandler {
     {
         $events->listen('copUser.register', 'Karma\Registration\Events\CopUserRegisterEventsHandler@onUserRegister');
     }
-
 }

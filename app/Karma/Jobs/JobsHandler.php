@@ -85,32 +85,7 @@ class JobsHandler
 
         if ($result) {
             // select only what is needed
-            $job = $this->jobs
-                ->select(array(
-                    'jobId',
-                    'jobUserId',
-                    'jobProfessionId',
-                    'jobCountryISO',
-                    'jobAddressId',
-                    'jobTypeId',
-                    'jobTitle',
-                    'jobOpen',
-                    'jobSkills',
-                    'jobSummary',
-                    'jobExp',
-                    'jobAddedDate',
-                    'jobExpDate',
-                    'jobViewCount',
-                    'jobAppCount',
-                    'jobShortListCount',
-                    'jobHireCount',
-                    'jobRejectCount',
-                    'jobDelete'
-                ))
-
-                ->where('jobId', '=', $jobId)
-                ->first();
-
+            $job = $this->jobs->selectById($jobId);
             // add internal log
             CopInternalLogHandler::addInternalLog($userId, $data);
 
@@ -182,35 +157,9 @@ class JobsHandler
 
         if ($result) {
             // select only what is needed
-            $job = $this->jobs
-                ->select(array(
-                    'jobId',
-                    'jobUserId',
-                    'jobProfessionId',
-                    'jobCountryISO',
-                    'jobAddressId',
-                    'jobTypeId',
-                    'jobTitle',
-                    'jobOpen',
-                    'jobSkills',
-                    'jobSummary',
-                    'jobExp',
-                    'jobAddedDate',
-                    'jobExpDate',
-                    'jobViewCount',
-                    'jobAppCount',
-                    'jobShortListCount',
-                    'jobHireCount',
-                    'jobRejectCount',
-                    'jobDelete'
-                ))
-
-                ->where('jobId', '=', $jobId)
-                ->first();
-
+            $job = $this->jobs->selectById($jobId);
             // add internal log
             CopInternalLogHandler::addInternalLog($userId, $data);
-
             // create cache for user
             $this->jobCacheHandler->make($job, $jobId, $userId);
 
@@ -275,5 +224,4 @@ class JobsHandler
         }
         throw new \Exception(\Lang::get('errors.something_went_wrong'));
     }
-
 }
