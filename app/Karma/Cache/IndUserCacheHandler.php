@@ -99,8 +99,8 @@ class IndUserCacheHandler
                 $gender = Gender::selectName($data->userGenderId);
                 $country = Country::selectCountryNameByISO($data->userCountryISO);
                 $address = Address::selectAddress($data->userAddressId);
-                $data->userGender = $gender;
-                $data->userAddress = $address ? $address->addressName : '';
+                $data->userGender = array('id' => $data->userGenderId, 'name' => $gender);
+                $data->userAddress = $address ? array('id' => $data->userAddressId, 'name' => $address->addressName) : '';
                 $data->userAddressCoordinate = $address ? $address->addressCoordinate : '';
                 $data->userCountry = $country ? $country->countryName : '';
                 $data->userRegistered = $address ? \CustomHelper::dateConvertTimezone(
@@ -110,7 +110,20 @@ class IndUserCacheHandler
                     $data->userRegDate,
                     'UTC',
                     'toFormattedDateString');
+                $dt = Carbon::parse($data->userDOB);
+                $data->userBirthDate = array(
+                    'day' => "$dt->day",
+                    'month' => "$dt->month",
+                    'year' => "$dt->year",
+                    'formattedDate' => \CustomHelper::dateConvertTimezone(
+                            $dt,
+                            'UTC',
+                            'toFormattedDateString')
+                );
                 unset(
+                $data->userAddressId,
+                $data->userGenderId,
+                $data->userDOB,
                 $data->userRegDate
                 );
                 return $data;
@@ -118,8 +131,8 @@ class IndUserCacheHandler
             case "whatIDo":
                 $data->userProfession =
                     is_numeric($data->userProfessionId) ?
-                        Profession::selectProfessionName($data->userProfessionId) :
-                        $data->userProfessionId;
+                        array('id' => $data->userProfessionId, 'name' => Profession::selectProfessionName($data->userProfessionId)) :
+                        array('id' => '0', 'name' => $data->userProfessionId);
                 $skills = explode(',', $data->userSkillIds);
                 $userSkills = [];
                 foreach ($skills as $skill) {
@@ -130,7 +143,10 @@ class IndUserCacheHandler
                     }
                 }
                 $data->userSkills = $userSkills;
-                unset($data->userSkillIds);
+                unset(
+                $data->userSkillIds,
+                $data->userProfessionId
+                );
                 return $data;
                 break;
             case "experience":
@@ -140,9 +156,9 @@ class IndUserCacheHandler
                     // start date
                     $dt = Carbon::parse($d['expStartDate']);
                     $data[$i]['expStarted'] = array(
-                        'expStartMonth' => "$dt->month",
-                        'expStartYear'  => "$dt->year",
-                        'expStartFormattedDate'  => $dt->format('F\\, Y')
+                        'month' => "$dt->month",
+                        'year' => "$dt->year",
+                        'formattedDate' => $dt->format('F\\, Y')
                     );
 
                     // end date
@@ -157,13 +173,13 @@ class IndUserCacheHandler
                         $expEndDate = "0";
                     }
                     $data[$i]['expEnded'] = array(
-                        'expEndMonth' => $expEndMonth,
-                        'expEndYear'  => $expEndYear,
-                        'expEndFormattedDate'  => $expEndDate
+                        'month' => $expEndMonth,
+                        'year' => $expEndYear,
+                        'formattedDate' => $expEndDate
                     );
                     unset(
-                        $data[$i]['expStartDate'],
-                        $data[$i]['expEndDate']
+                    $data[$i]['expStartDate'],
+                    $data[$i]['expEndDate']
                     );
                     $i++;
                 }
@@ -175,21 +191,29 @@ class IndUserCacheHandler
                 $i = 0;
                 foreach ($data as $d) {
                     $data[$i]['eduUniversity'] =
-                        is_numeric($d['eduUniversityId'])?
-                        array('id' => $d['eduUniversityId'], 'name' => University::selectName($d['eduUniversityId'])):
-                        array('id' => '0', 'name' => $d['eduUniversityId']);
+                        is_numeric($d['eduUniversityId']) ?
+                            array('id' => $d['eduUniversityId'], 'name' => University::selectName($d['eduUniversityId'])) :
+                            array('id' => '0', 'name' => $d['eduUniversityId']);
                     $data[$i]['eduDegree'] =
-                        is_numeric($d['eduDegreeId'])?
-                        array('id' => $d['eduDegreeId'], 'name' => Degree::selectName($d['eduDegreeId'])):
-                        array('id' => '0', 'name' => $d['eduDegreeId']);
+                        is_numeric($d['eduDegreeId']) ?
+                            array('id' => $d['eduDegreeId'], 'name' => Degree::selectName($d['eduDegreeId'])) :
+                            array('id' => '0', 'name' => $d['eduDegreeId']);
 
                     unset(
-                        $data[$i]['eduUniversityId'],
-                        $data[$i]['eduDegreeId']
+                    $data[$i]['eduUniversityId'],
+                    $data[$i]['eduDegreeId']
                     );
                     $i++;
                 }
 
+                return $data;
+                break;
+            case "preference":
+                $data = json_decode($data->preferenceData);
+                unset(
+                $data->preferenceUserId,
+                $data->preferenceData
+                );
                 return $data;
                 break;
             default:

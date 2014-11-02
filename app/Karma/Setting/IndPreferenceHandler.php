@@ -1,0 +1,72 @@
+<?php
+/**
+ * User: kishan
+ * Date: 10/29/14
+ * Time: 9:33 PM
+ */
+
+namespace Karma\Setting;
+
+use Karma\Cache\IndUserCacheHandler;
+use Karma\Log\IndInternalLog\IndInternalLogHandler;
+use Karma\Users\IndUser;
+
+class IndPreferenceHandler
+{
+
+    /**
+     * @var \Karma\Cache\IndUserCacheHandler
+     */
+    private $indUserCacheHandler;
+
+    public function __construct(IndUserCacheHandler $indUserCacheHandler)
+    {
+        $this->indUserCacheHandler = $indUserCacheHandler;
+    }
+
+    public function update($post)
+    {
+        // verify post request
+        \CustomHelper::postCheck($post,
+            array(
+                'userId' => 'required|integer',
+                'token' => 'required',
+                'workAs' => 'required|enum=Contractor,Freelancer,Consultant',
+                'currencyCode' => 'required',
+                'minSalary' => 'required|integer',
+                'salaryRule' => 'required|enum=Yearly,Monthly,Hourly'),
+            6);
+
+        // verify login info.
+        $user = IndUser::loginCheck($post->token, $post->userId);
+        if ($user) {
+            $preferenceData = json_encode(array(
+                'workAs' => $post->workAs,
+                'currencyCode' => $post->currencyCode,
+                'minSalary' => $post->minSalary,
+                'salaryRule' => $post->salaryRule
+            ));
+            $preference = Preference::selectPreferenceByUserId($post->userId);
+            if ($preference) {
+                $preference->preferenceUserId = $post->userId;
+                $preference->preferenceData = $preferenceData;
+            }
+            else {
+                $preference = Preference::createPreference($post->userId, $preferenceData);
+            }
+            $preference->save();
+
+            // lets re-select after insert or update
+            $preference = Preference::selectPreferenceByUserId($post->userId);
+
+            // internal Log
+            IndInternalLogHandler::addInternalLog($post->userId);
+
+            // create or update cache for user
+            $return = $this->indUserCacheHandler->make($preference, 'preference', $post->userId);
+            return $return;
+        }
+        throw new \Exception(\Lang::get('errors.invalid_token'));
+    }
+
+} 

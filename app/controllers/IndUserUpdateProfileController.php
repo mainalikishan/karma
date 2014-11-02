@@ -9,20 +9,13 @@ use Karma\Validation\IndProfileValidate;
  */
 class IndUserUpdateProfileController extends ApiController
 {
-
-    /**
-     * @var Karma\Validation\IndProfileValidate
-     */
-    private $indProfileValidate;
     /**
      * @var Karma\Profile\IndProfileHandler
      */
     private $indProfileHandler;
 
-    public function __construct(IndProfileValidate $indProfileValidate, IndProfileHandler $indProfileHandler)
+    public function __construct(IndProfileHandler $indProfileHandler)
     {
-
-        $this->indProfileValidate = $indProfileValidate;
         $this->indProfileHandler = $indProfileHandler;
     }
 
