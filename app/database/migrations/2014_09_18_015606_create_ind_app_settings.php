@@ -16,7 +16,7 @@ class CreateIndAppSettings extends Migration {
         Schema::create('ind_app_settings',function(Blueprint $table){
             $table->bigIncrements('settingId');
             $table->bigInteger('settingUserId');
-            $table->integer('settingLangId');
+            $table->char('settingLangCode',2)->default('en');
             $table->text('settingNotification');
             $table->timestamp('settingAddedDate');
             $table->timestamp('settingUpdatedDate');

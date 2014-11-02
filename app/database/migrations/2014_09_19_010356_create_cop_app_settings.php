@@ -16,7 +16,7 @@ class CreateCopAppSettings extends Migration {
         Schema::create('cop_app_settings',function(Blueprint $table){
             $table->increments('settingId');
             $table->bigInteger('settinguserId');
-            $table->integer('settingLangId');
+            $table->char('settingLangCode',2)->default('en');
             $table->text('settingNotification');
             $table->timestamp('settingAddedDate');
             $table->timestamp('settingUpdatedDate');
