@@ -69,7 +69,7 @@ class IndAppSettingHandler
             $appSetting = IndAppSetting::selectAppSettingByUserId($post->userId);
 
             // internal Log
-            IndInternalLogHandler::addInternalLog($post->userId);
+            IndInternalLogHandler::addInternalLog($post->userId, $post);
 
             // create or update cache for user
             $return = $this->indUserCacheHandler->make($appSetting, 'setting', $post->userId);

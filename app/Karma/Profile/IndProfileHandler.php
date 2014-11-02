@@ -120,7 +120,7 @@ class IndProfileHandler
                 ->first();
 
             // internal Log
-            IndInternalLogHandler::addInternalLog($user->userId);
+            IndInternalLogHandler::addInternalLog($user->userId, $post);
 
             // create cache for user
             $return = $this->indUserCacheHandler->make($user, 'basic', $user->userId);
@@ -179,7 +179,7 @@ class IndProfileHandler
                 ->first();
 
             // internal Log
-            IndInternalLogHandler::addInternalLog($post->userId);
+            IndInternalLogHandler::addInternalLog($post->userId, $post);
 
             // create cache for user
             $return = $this->indUserCacheHandler->make($user, 'whatIDo', $post->userId);
@@ -248,7 +248,7 @@ class IndProfileHandler
                 ->get();
 
             // internal Log
-            IndInternalLogHandler::addInternalLog($post->userId);
+            IndInternalLogHandler::addInternalLog($post->userId, $post);
 
             // create cache for user
             $return = $this->indUserCacheHandler->make($user, 'experience', $post->userId);
@@ -310,7 +310,7 @@ class IndProfileHandler
                 ->get();
 
             // internal Log
-            IndInternalLogHandler::addInternalLog($post->userId);
+            IndInternalLogHandler::addInternalLog($post->userId, $post);
 
             // create cache for user
             $return = $this->indUserCacheHandler->make($user, 'education', $post->userId);

@@ -59,7 +59,7 @@ class IndPreferenceHandler
             $preference = IndPreference::selectPreferenceByUserId($post->userId);
 
             // internal Log
-            IndInternalLogHandler::addInternalLog($post->userId);
+            IndInternalLogHandler::addInternalLog($post->userId, $post);
 
             // create or update cache for user
             $return = $this->indUserCacheHandler->make($preference, 'preference', $post->userId);

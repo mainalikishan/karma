@@ -37,7 +37,7 @@ class IndUserCacheHandler
      */
     private function cacheKeys()
     {
-        return array('basic', 'whatIDo', 'experience', 'education', 'preference', 'setting', 'privacy', 'countries', 'currencies');
+        return array('basic', 'whatIDo', 'experience', 'education', 'preference', 'setting', 'privacy');
     }
 
 
@@ -230,6 +230,9 @@ class IndUserCacheHandler
                 unset(
                     $data->settingUserId
                 );
+                return $data;
+                break;
+            case "privacy":
                 return $data;
                 break;
             default:
