@@ -33,4 +33,29 @@ class IndNotificationHandler
             $indNotifications->save();
         }
     }
+
+    public function updateStatus($data)
+    {
+        // check post array  fields
+        \CustomHelper::postCheck($data,
+            array('userToken' => 'required',
+                'indUserId' => 'required'
+            ),
+            2);
+
+        $userToken = $data->userToken;
+        $userId = $data->indUserId;
+
+        //checking for valid token id and user id
+
+        \ IndUser::loginCheck($userToken, $userId);
+
+        $notifications = $this->copNotification->checkStatus($userId);
+        foreach ($notifications as $notification) {
+            $notification->notificationId = $notification->notificationId;
+            $notification->notificationView = 'Y';
+            $notification->notificationUpdatedDate = Carbon::now();
+            $notification->save();
+        }
+    }
 }

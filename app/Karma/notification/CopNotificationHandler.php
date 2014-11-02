@@ -33,4 +33,28 @@ class CopNotificationHandler
             $copNotifications->save();
         }
     }
+
+    public function updateStatus($data)
+    {
+        // check post array  fields
+        \CustomHelper::postCheck($data,
+            array('userToken' => 'required',
+                'copUserId' => 'required'
+            ),
+            2);
+
+        $userToken = $data->userToken;
+        $userId = $data->copUserId;
+
+        //checking for valid token id and user id
+        \CopUserLoginCheck::loginCheck($userToken, $userId);
+
+        $notifications = $this->copNotification->checkStatus($userId);
+        foreach ($notifications as $notification) {
+            $notification->notificationId = $notification->notificationId;
+            $notification->notificationView = 'Y';
+            $notification->notificationUpdatedDate = Carbon::now();
+            $notification->save();
+        }
+    }
 }

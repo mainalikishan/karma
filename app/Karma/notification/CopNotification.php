@@ -42,4 +42,11 @@ class CopNotification extends \Eloquent
             'notificationUpdatedDate'));
         return $result;
     }
+
+    function checkStatus($userId)
+    {
+        return $notifications = $this->where('notificationUserId', $userId)
+            ->where('notificationView', 'N')
+            ->get();
+    }
 } 
