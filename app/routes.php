@@ -5,6 +5,7 @@ Route::group(['prefix' => 'api/v1'], function(){
     Route::post('induser/login', 'IndUserRegisterController@login');
     Route::post('induser/updateProfile', 'IndUserUpdateProfileController@updateProfile');
     Route::post('induser/setting/updatePreference', 'IndUserSettingController@updatePreference');
+    Route::post('induser/setting/updateAppSetting', 'IndUserSettingController@updateAppSetting');
     // Corporate User routes
     Route::post('copuser/register', 'CopUserRegisterController@register');
     Route::post('copuser/login', 'CopUserLoginController@login');

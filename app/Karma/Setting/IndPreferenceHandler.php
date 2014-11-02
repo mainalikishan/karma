@@ -46,18 +46,17 @@ class IndPreferenceHandler
                 'minSalary' => $post->minSalary,
                 'salaryRule' => $post->salaryRule
             ));
-            $preference = Preference::selectPreferenceByUserId($post->userId);
+            $preference = IndPreference::selectPreferenceByUserId($post->userId);
             if ($preference) {
-                $preference->preferenceUserId = $post->userId;
                 $preference->preferenceData = $preferenceData;
             }
             else {
-                $preference = Preference::createPreference($post->userId, $preferenceData);
+                $preference = IndPreference::createPreference($post->userId, $preferenceData);
             }
             $preference->save();
 
             // lets re-select after insert or update
-            $preference = Preference::selectPreferenceByUserId($post->userId);
+            $preference = IndPreference::selectPreferenceByUserId($post->userId);
 
             // internal Log
             IndInternalLogHandler::addInternalLog($post->userId);

@@ -37,7 +37,7 @@ class IndUserCacheHandler
      */
     private function cacheKeys()
     {
-        return array('basic', 'whatIDo', 'experience', 'education', 'preference', 'setting');
+        return array('basic', 'whatIDo', 'experience', 'education', 'preference', 'setting', 'privacy', 'countries', 'currencies');
     }
 
 
@@ -177,13 +177,13 @@ class IndUserCacheHandler
                         'year' => $expEndYear,
                         'formattedDate' => $expEndDate
                     );
+                    $data[$i]['expCurrent'] = $data[$i]['expCurrent'] == 'Y' ? true : false;
                     unset(
                     $data[$i]['expStartDate'],
                     $data[$i]['expEndDate']
                     );
                     $i++;
                 }
-
                 return $data;
                 break;
             case "education":
@@ -205,14 +205,30 @@ class IndUserCacheHandler
                     );
                     $i++;
                 }
-
                 return $data;
                 break;
             case "preference":
-                $data = json_decode($data->preferenceData);
+                $preferences = json_decode($data->preferenceData, true);
+                foreach ($preferences as $key => $p) {
+                    if ($key == 'workAs') {
+                        $preferences[$key] = \Lang::get('labels.preference.' . $p . '');
+                    } elseif ($key == 'salaryRule') {
+                        $preferences[$key] = \Lang::get('labels.preference.' . $p . '');
+                    } else {
+                        $preferences[$key] = $p;
+                    }
+                }
+                $data->preferences = $preferences;
                 unset(
                 $data->preferenceUserId,
                 $data->preferenceData
+                );
+                return $data;
+                break;
+            case "setting":
+                $data->settingNotification = json_decode($data->settingNotification);
+                unset(
+                    $data->settingUserId
                 );
                 return $data;
                 break;

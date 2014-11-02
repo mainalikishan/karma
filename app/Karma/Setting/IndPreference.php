@@ -8,7 +8,7 @@
 namespace Karma\Setting;
 
 
-class Preference extends \Eloquent
+class IndPreference extends \Eloquent
 {
     const CREATED_AT = 'preferenceAddedDate';
     const UPDATED_AT = 'preferenceUpdatedDate';
@@ -31,7 +31,7 @@ class Preference extends \Eloquent
     public static function selectPreferenceByUserId($preferenceUserId)
     {
         $preference =
-            self::select(array('preferenceUserId', 'preferenceData'))
+            self::select(array('preferenceId', 'preferenceUserId', 'preferenceData'))
             ->where(compact('preferenceUserId'))
             ->first();
         if ($preference) {
