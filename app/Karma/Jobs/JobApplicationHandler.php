@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Lang;
 use Karma\Cache\JobCacheHandler;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;
+use Karma\notification\CopNotificationHandler;
+use Karma\Users\IndUser;
 
 class JobApplicationHandler
 {
@@ -29,13 +31,19 @@ class JobApplicationHandler
      * @var \Karma\Cache\JobCacheHandler
      */
     private $jobCacheHandler;
+    /**
+     * @var \Karma\notification\CopNotificationHandler
+     */
+    private $copNotificationHandler;
 
     function __construct(JobApplication $jobApplication,
-                         Jobs $jobs, JobCacheHandler $jobCacheHandler)
+                         Jobs $jobs, JobCacheHandler $jobCacheHandler,
+                         CopNotificationHandler $copNotificationHandler)
     {
         $this->jobApplication = $jobApplication;
         $this->jobs = $jobs;
         $this->jobCacheHandler = $jobCacheHandler;
+        $this->copNotificationHandler = $copNotificationHandler;
     }
 
     public function apply($data)
@@ -62,7 +70,7 @@ class JobApplicationHandler
 
         //apply count
         if ($this->applyCount($data->appJobId, $data->appCopUserId, $userId) > 0) {
-            return Lang::get('errors.apply_jobapply_already');
+            return Lang::get('errors.apply_job.apply_already');
         }
 
         // add job application if token id and user id is valid
@@ -91,8 +99,17 @@ class JobApplicationHandler
             // add internal log
             CopInternalLogHandler::addInternalLog($userId, $data);
 
+            // add notification
+            $indUser = IndUser::selectNameEmail($userId);
+            $jobTitle = Jobs::jobTitleById($data->appJobId);
+            $jobTitle=$jobTitle['title'];
+
+            $notificationDetails = '<strong>'.$indUser['name'].'</strong> applied on you job: "'.$jobTitle.'"';
+
+            $this->copNotificationHandler->addNotification($userId, $notificationDetails, '_JOB_APPLY_', $data->appJobId);
+
             // fire event when job apply. its notification to cop user form individual user
-            \Event::fire('job.apply', $application);
+           // \Event::fire('job.apply', $application);
 
             return Lang::get('messages.job_apply.job_apply_successful');
         }
