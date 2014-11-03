@@ -10,6 +10,9 @@ namespace Karma\Cache;
 use Karma\General\Country;
 use Karma\General\Address;
 use Karma\General\IndustryType;
+use Karma\Log\CopInternalLog\CopInternalLogHandler;
+use Karma\Log\ProfileViewLog\CopProfileViewLogHandler;
+use Karma\Users\IndUser;
 
 class CopUserCacheHandler
 {
@@ -91,7 +94,7 @@ class CopUserCacheHandler
             case "basic":
                 $country = Country::selectCountryNameByISO($data->userCountryISO);
                 $address = Address::selectAddress($data->userAddressId);
-                $industryType = ($data->userIndustryTypeId>0)?IndustryType::selectGenderName($data->userIndustryTypeId):0;
+                $industryType = ($data->userIndustryTypeId > 0) ? IndustryType::selectGenderName($data->userIndustryTypeId) : 0;
                 $data->industryType = $industryType;
                 $data->userAddress = $address ? $address->addressName : '';
                 $data->userAddressCoordinate = $address ? $address->addressCoordinate : '';
@@ -124,5 +127,57 @@ class CopUserCacheHandler
             default:
                 return $data;
         }
+    }
+
+    public function viewProfile($data)
+    {
+        // check post array  fields
+        \CustomHelper::postCheck($data,
+            array('userToken' => 'required',
+                'viewerId' => 'required',
+                'userId' => 'required',
+                'type' => 'required'
+            ),
+            4);
+
+        $userToken = $data->userToken;
+        $viewerId = $data->viewerId;
+        $userId = $data->userId;
+        $type = $data->type;
+
+
+        //add internal log
+        CopInternalLogHandler::addInternalLog($userId,$data);
+
+
+        if ($type == 'indUser') {
+            //checking for valid token id and user id
+            IndUser::loginCheck($userToken, $viewerId);
+            $result = $this->copUserCache
+                ->select('cacheValue')
+                ->where('cacheUserId', $userId)
+                ->first();
+
+            //add profile view log
+            CopProfileViewLogHandler::addProfileViewLog($viewerId,$userId,'ind');
+
+            return ($result) ? json_decode($result->cacheValue) :\Lang::get('error.profile.profile_not_found');
+
+        } else if ($type == 'copUser') {
+            //checking for valid token id and user id
+            \CopUserLoginCheck::loginCheck($userToken, $viewerId);
+            $result = $this->copUserCache
+                ->select('cacheValue')
+                ->where('cacheUserId', $userId)
+                ->first();
+
+            //add profile view log
+            CopProfileViewLogHandler::addProfileViewLog($viewerId,$userId,'cop');
+
+            return ($result) ? json_decode($result->cacheValue) : \Lang::get('error.profile.profile_not_found');
+        }
+
+        return \Lang::get('error.profile.profile_not_found');
+
     }
 }

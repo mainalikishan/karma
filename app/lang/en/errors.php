@@ -33,5 +33,9 @@ return [
 
     'apply_job' => [
         'apply_already' => 'Already apply'
+    ],
+
+    'profile' =>[
+        'profile_not_found'=>'This link is temporarily unavailable'
     ]
 ];

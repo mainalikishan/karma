@@ -99,7 +99,7 @@ class JobApplicationHandler
             // add internal log
             CopInternalLogHandler::addInternalLog($userId, $data);
 
-            // add notification
+            // add Notification
             $indUser = IndUser::selectNameEmail($userId);
             $jobTitle = Jobs::jobTitleById($data->appJobId);
             $jobTitle=$jobTitle['title'];
@@ -108,7 +108,7 @@ class JobApplicationHandler
 
             $this->copNotificationHandler->addNotification($userId, $notificationDetails, '_JOB_APPLY_', $data->appJobId);
 
-            // fire event when job apply. its notification to cop user form individual user
+            // fire event when job apply. its Notification to cop user form individual user
            // \Event::fire('job.apply', $application);
 
             return Lang::get('messages.job_apply.job_apply_successful');

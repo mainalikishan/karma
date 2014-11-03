@@ -15,7 +15,11 @@ Route::group(['prefix' => 'api/v1'], function() {
     Route::post('copuser/accountActivation', 'CopUserActivationController@accountActivation');
     Route::post('copuser/forgotPasswordCodeRequest', 'CopUserForgotPasswordController@codeRequest');
     Route::post('copuser/forgotPasswordCodeVerify', 'CopUserForgotPasswordController@codeVerify');
+<<<<<<< HEAD
     Route::post('copuser/setting/updateAppSetting', 'CopUserSettingController@updateAppSetting');
+=======
+    Route::post('copuser/profile', 'CopProfileController@view');
+>>>>>>> 936b25cdfe0059d45e177927cdb07d9f927f576e
     //Jobs routs
     Route::post('jobs/store', 'JobController@store');
     Route::post('jobs/update', 'JobController@update');
@@ -23,7 +27,7 @@ Route::group(['prefix' => 'api/v1'], function() {
     Route::post('jobs/destroy','JobController@destroy');
     //Jobs Application routs
     Route::post('jobs/Application', 'JobApplicationController@apply');
-    //notification
-    Route::post('copuser/notification','CopNotificationController@updateStatus');
-    Route::post('induser/notification','IndNotificationController@updateStatus');
+    //Notification
+    Route::post('copuser/Notification','CopNotificationController@updateStatus');
+    Route::post('induser/Notification','IndNotificationController@updateStatus');
 });

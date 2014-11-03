@@ -5,7 +5,7 @@
  * Time: 11:55 AM
  */
 
-namespace Karma\notification;
+namespace Karma\Notification;
 
 
 class IndNotification extends \Eloquent

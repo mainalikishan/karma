@@ -16,7 +16,7 @@ class CreateIndAppSettings extends Migration {
         Schema::create('ind_app_settings',function(Blueprint $table){
             $table->bigIncrements('settingId');
             $table->bigInteger('settingUserId');
-            $table->text('settingNotification');
+            $table->text('settings');
             $table->timestamp('settingAddedDate');
             $table->timestamp('settingUpdatedDate');
         });
@@ -31,6 +31,5 @@ class CreateIndAppSettings extends Migration {
         //
         Schema::drop('ind_app_settings');
     }
-
 
 }

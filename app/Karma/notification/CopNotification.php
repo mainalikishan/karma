@@ -5,7 +5,7 @@
  * Time: 9:01 AM
  */
 
-namespace Karma\notification;
+namespace Karma\Notification;
 
 
 class CopNotification extends \Eloquent

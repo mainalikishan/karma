@@ -12,11 +12,10 @@ class CreateCopAppSettings extends Migration {
 	 */
     public function up()
     {
-        //
         Schema::create('cop_app_settings',function(Blueprint $table){
             $table->increments('settingId');
             $table->bigInteger('settinguserId');
-            $table->text('settingNotification');
+            $table->text('settings');
             $table->timestamp('settingAddedDate');
             $table->timestamp('settingUpdatedDate');
         });
