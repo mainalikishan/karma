@@ -33,5 +33,4 @@ class CreateIndAppSettings extends Migration {
         Schema::drop('ind_app_settings');
     }
 
-
 }

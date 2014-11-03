@@ -15,9 +15,11 @@ class CreateCopProfileViewLog extends Migration {
 		//
         Schema::create('cop_profile_view_log',function(Blueprint $table){
             $table->bigIncrements('logId');
-            $table->bigInteger('logCopId');
-            $table->bigInteger('logIndId');
+            $table->bigInteger('logViewerId');
+            $table->bigInteger('logUserId');
+            $table->enum('logUserType',array('cop','ind'));
             $table->timestamp('logAddedDate');
+            $table->timestamp('logUpdatedDate');
         });
 	}
 

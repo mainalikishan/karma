@@ -78,7 +78,6 @@ class JobController extends ApiController
         return $this->respondUnprocessableEntity();
     }
 
-
     /**
      * @return mixed
      */

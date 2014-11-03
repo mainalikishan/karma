@@ -15,10 +15,11 @@ class CreateIndProfieViewLog extends Migration {
 		//
         Schema::create('ind_profile_view_log',function(Blueprint $table){
             $table->bigIncrements('logId');
+            $table->bigInteger('logViewerId');
             $table->bigInteger('logUserId');
-            $table->bigInteger('userId');
-            $table->enum('logViewType',array('cop','ind'));
+            $table->enum('logUserType',array('cop','ind'));
             $table->timestamp('logAddedDate');
+            $table->timestamp('logUpdatedDate');
         });
 	}
 

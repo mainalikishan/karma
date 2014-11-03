@@ -12,7 +12,6 @@ class CreateCopAppSettings extends Migration {
 	 */
     public function up()
     {
-        //
         Schema::create('cop_app_settings',function(Blueprint $table){
             $table->increments('settingId');
             $table->bigInteger('settinguserId');
