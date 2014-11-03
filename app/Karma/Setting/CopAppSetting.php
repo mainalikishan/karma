@@ -2,13 +2,13 @@
 /**
  * User: kishan
  * Date: 11/2/14
- * Time: 10:25 AM
+ * Time: 10:12 PM
  */
 
 namespace Karma\Setting;
 
 
-class IndAppSetting extends \Eloquent
+class CopAppSetting extends \Eloquent
 {
     const CREATED_AT = 'settingAddedDate';
     const UPDATED_AT = 'settingUpdatedDate';
@@ -20,7 +20,7 @@ class IndAppSetting extends \Eloquent
     );
 
     // database table used by model
-    protected $table = 'ind_app_settings';
+    protected $table = 'cop_app_settings';
 
     public static function createAppSetting($settingUserId, $settings)
     {

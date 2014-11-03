@@ -9,6 +9,7 @@ namespace Karma\Registration;
 use Karma\Cache\IndUserCacheHandler;
 use Karma\General\Address;
 use Karma\General\Country;
+use Karma\Setting\IndDefaultSetting;
 use Karma\Users\IndUser;
 
 
@@ -38,12 +39,17 @@ class IndUserRegister
      * @var \Karma\Cache\IndUserCacheHandler
      */
     private $indUserCacheHandler;
+    /**
+     * @var \Karma\Setting\IndDefaultSetting
+     */
+    private $indDefaultSetting;
 
     public function __construct(IndFacebookRegister $indFacebookRegister,
                                 IndTwitterRegister $indTwitterRegister,
                                 IndLinkedinRegister $indLinkedinRegister,
                                 IndUser $indUser,
-                                IndUserCacheHandler $indUserCacheHandler)
+                                IndUserCacheHandler $indUserCacheHandler,
+                                IndDefaultSetting $indDefaultSetting)
     {
 
         $this->indFacebookRegister = $indFacebookRegister;
@@ -51,6 +57,7 @@ class IndUserRegister
         $this->indLinkedinRegister = $indLinkedinRegister;
         $this->indUser = $indUser;
         $this->indUserCacheHandler = $indUserCacheHandler;
+        $this->indDefaultSetting = $indDefaultSetting;
     }
 
     public function checkRegistration($post)
@@ -72,30 +79,34 @@ class IndUserRegister
         }
 
         // check for login/register
-        $user = $this->$oauthType->register($post, $address);
+        $register = $this->$oauthType->register($post, $address);
 
-        // select only what is needed
-        $user = $this->indUser
-            ->select(array(
-                'userId',
-                'userGenderId',
-                'userCountryISO',
-                'userAddressId',
-                'userAddressCoordinate',
-                'userDynamicAddressCoordinate',
-                'userFname',
-                'userLname',
-                'userEmail',
-                'userDOB',
-                'userOauthId',
-                'userOauthType',
-                'userPic',
-                'userRegDate'))
-            ->where('userId', '=', $user->userId)
-            ->first();
+        if ($register['action'] == 'register') {
+            // select only what is needed
+            $user = $register['user'];
+            $user = $this->indUser
+                ->select(array(
+                    'userId',
+                    'userGenderId',
+                    'userCountryISO',
+                    'userAddressId',
+                    'userAddressCoordinate',
+                    'userDynamicAddressCoordinate',
+                    'userFname',
+                    'userLname',
+                    'userEmail',
+                    'userDOB',
+                    'userOauthId',
+                    'userOauthType',
+                    'userPic',
+                    'userRegDate'))
+                ->where('userId', '=', $user->userId)
+                ->first();
 
-        // create cache for user
-        $return = $this->indUserCacheHandler->make($user, 'basic', $user->userId);
-        return $return;
+            // create cache for user
+            $this->indUserCacheHandler->make($user, 'basic', $user->userId);
+            $this->indDefaultSetting->init($user->userId);
+        }
+        return true;
     }
 } 

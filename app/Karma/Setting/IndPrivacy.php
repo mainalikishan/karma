@@ -22,20 +22,20 @@ class IndPrivacy extends \Eloquent
     // database table used by model
     protected $table = 'ind_privacy';
 
-    public static function createPrivacy($settingUserId, $settingLangId, $settingNotification)
+    public static function createPrivacy($privacyUserId, $privacyData)
     {
-        $appSetting = new static (compact('settingUserId', 'settingLangId', 'settingNotification'));
-        return $appSetting;
+        $privacy = new static (compact('privacyUserId', 'privacyData'));
+        return $privacy;
     }
 
-    public static function selectPrivacyByUserId($settingUserId)
+    public static function selectPrivacyByUserId($privacyUserId)
     {
-        $appSetting =
-            self::select(array('settingId', 'settingUserId', 'settingLangId', 'settingNotification'))
-                ->where(compact('settingUserId'))
+        $privacy =
+            self::select(array('privacyId', 'privacyUserId', 'privacyData'))
+                ->where(compact('privacyUserId'))
                 ->first();
-        if ($appSetting) {
-            return $appSetting;
+        if ($privacy) {
+            return $privacy;
         }
         return false;
     }

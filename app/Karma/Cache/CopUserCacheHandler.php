@@ -111,6 +111,16 @@ class CopUserCacheHandler
                 );
                 return $data;
                 break;
+            case "setting":
+                $data = json_decode($data->settings);
+                unset(
+                $data->settingId,
+                $data->settingUserId,
+                $data->settingUpdatedDate,
+                $data->settingAddedDate
+                );
+                return $data;
+                break;
             default:
                 return $data;
         }

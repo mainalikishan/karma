@@ -40,11 +40,13 @@ class IndFacebookRegister implements IndUserRegisterInterface
         $user = $this->indUser->isRegisted($post->oauthId, self::oauthType);
 
         if ($user) {
+            $action = 'login';
             $user->userLastLogin = date('Y-m-d H:i:s');
             $user->userLoginCount = $user->userLoginCount + 1;
             $user->userLastLoginIp = \Request::getClientIp(true);
             $user->userDynamicAddressCoordinate = $post->addressCoordinate;
         } else {
+            $action = 'register';
             $user = $this->indUser->register(
                 $post->genderId,
                 $address? $address->addressCountryISO : 0,
@@ -74,6 +76,6 @@ class IndFacebookRegister implements IndUserRegisterInterface
 
         $this->indUserRepository->save($user);
 
-        return $user;
+        return array('action'=>$action, 'user'=>$user);
     }
 }

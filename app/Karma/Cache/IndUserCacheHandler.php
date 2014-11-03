@@ -218,21 +218,21 @@ class IndUserCacheHandler
                         $preferences[$key] = $p;
                     }
                 }
-                $data->preferences = $preferences;
-                unset(
-                $data->preferenceUserId,
-                $data->preferenceData
-                );
+                $data = $preferences;
                 return $data;
                 break;
             case "setting":
-                $data->settingNotification = json_decode($data->settingNotification);
+                $data = json_decode($data->settings);
                 unset(
-                    $data->settingUserId
+                $data->settingId,
+                $data->settingUserId,
+                $data->settingUpdatedDate,
+                $data->settingAddedDate
                 );
                 return $data;
                 break;
             case "privacy":
+                $data = json_decode($data->privacyData);
                 return $data;
                 break;
             default:

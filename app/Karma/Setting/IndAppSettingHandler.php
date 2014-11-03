@@ -43,9 +43,8 @@ class IndAppSettingHandler
             array(
                 'userId' => 'required|integer',
                 'token' => 'required',
-                'langID' => 'required|integer',
                 'notifications' => 'required|array'),
-            4);
+            3);
 
         // verify login info.
         $user = IndUser::loginCheck($post->token, $post->userId);
@@ -55,13 +54,15 @@ class IndAppSettingHandler
                 list($notificationLabel, $notificationRule) = $k;
                 $notifications[] = array("$notificationLabel" => $notificationRule);
             }
+            $notifications = json_encode(array('notification'=>$notifications));
 
             $appSetting = IndAppSetting::selectAppSettingByUserId($post->userId);
             if ($appSetting) {
-                $appSetting->settingLangId = $post->langID;
-                $appSetting->settingNotification = json_encode($notifications);
+                $appSetting->settings = $notifications;
             } else {
-                $appSetting = IndAppSetting::createAppSetting($post->userId, $post->langID, json_encode($notifications));
+                $appSetting = IndAppSetting::createAppSetting(
+                    $post->userId,
+                    $notifications);
             }
             $appSetting->save();
 
