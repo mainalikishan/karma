@@ -10,6 +10,7 @@ namespace Karma\Cache;
 use Karma\General\Country;
 use Karma\General\Address;
 use Karma\General\IndustryType;
+use Karma\Log\CopInternalLog\CopInternalLogHandler;
 use Karma\Log\ProfileViewLog\CopProfileViewLogHandler;
 use Karma\Users\IndUser;
 
@@ -133,6 +134,11 @@ class CopUserCacheHandler
         $viewerId = $data->viewerId;
         $userId = $data->userId;
         $type = $data->type;
+
+
+        //add internal log
+        CopInternalLogHandler::addInternalLog($userId,$data);
+
 
         if ($type == 'indUser') {
             //checking for valid token id and user id

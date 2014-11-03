@@ -5,7 +5,7 @@
  * Time: 9:56 AM
  */
 
-namespace Karma\notification;
+namespace Karma\Notification;
 
 use Carbon\Carbon;
 

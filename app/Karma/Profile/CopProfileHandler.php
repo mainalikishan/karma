@@ -129,6 +129,7 @@ class CopProfileHandler
             ))
             ->where('userId', '=', $userId)
             ->first();
+
         // add internal log
         CopInternalLogHandler::addInternalLog($userId);
 
