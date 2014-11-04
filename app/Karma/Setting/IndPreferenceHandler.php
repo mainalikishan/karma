@@ -34,8 +34,9 @@ class IndPreferenceHandler
                 'workAs' => 'required|enum=Contractor,Freelancer,Consultant',
                 'currencyCode' => 'required',
                 'minSalary' => 'required|integer',
-                'salaryRule' => 'required|enum=Yearly,Monthly,Hourly'),
-            6);
+                'salaryRule' => 'required|enum=Yearly,Monthly,Hourly',
+                'langCode'=> 'required|string'),
+            7);
 
         // verify login info.
         $user = IndUser::loginCheck($post->token, $post->userId);
@@ -44,7 +45,8 @@ class IndPreferenceHandler
                 'workAs' => $post->workAs,
                 'currencyCode' => $post->currencyCode,
                 'minSalary' => $post->minSalary,
-                'salaryRule' => $post->salaryRule
+                'salaryRule' => $post->salaryRule,
+                'langCode' => $post->langCode
             ));
             $preference = IndPreference::selectPreferenceByUserId($post->userId);
             if ($preference) {

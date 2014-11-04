@@ -114,6 +114,9 @@ class CopUserCacheHandler
                 );
                 return $data;
                 break;
+            case "preference":
+                return json_decode($data->preferenceData, true);
+                break;
             case "setting":
                 $data = json_decode($data->settings);
                 unset(
@@ -147,7 +150,7 @@ class CopUserCacheHandler
 
 
         //add internal log
-        CopInternalLogHandler::addInternalLog($userId,$data);
+        CopInternalLogHandler::addInternalLog($userId, $data);
 
 
         if ($type == 'indUser') {
@@ -159,9 +162,9 @@ class CopUserCacheHandler
                 ->first();
 
             //add profile view log
-            CopProfileViewLogHandler::addProfileViewLog($viewerId,$userId,'ind');
+            CopProfileViewLogHandler::addProfileViewLog($viewerId, $userId, 'ind');
 
-            return ($result) ? json_decode($result->cacheValue) :\Lang::get('error.profile.profile_not_found');
+            return ($result) ? json_decode($result->cacheValue) : \Lang::get('error.profile.profile_not_found');
 
         } else if ($type == 'copUser') {
             //checking for valid token id and user id
@@ -172,7 +175,7 @@ class CopUserCacheHandler
                 ->first();
 
             //add profile view log
-            CopProfileViewLogHandler::addProfileViewLog($viewerId,$userId,'cop');
+            CopProfileViewLogHandler::addProfileViewLog($viewerId, $userId, 'cop');
 
             return ($result) ? json_decode($result->cacheValue) : \Lang::get('error.profile.profile_not_found');
         }

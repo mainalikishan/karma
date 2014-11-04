@@ -52,6 +52,10 @@ class ApiController extends BaseController
         return $this->setStatusCode(500)->respondWithError($message);
     }
 
+    public function respondSuccess($message = '')
+    {
+        return $this->setStatusCode(200)->respondWithSuccess($message);
+    }
 
     /**
      * @param $data
@@ -63,6 +67,16 @@ class ApiController extends BaseController
         return Response::json($data, $this->getStatusCode(), $headers);
     }
 
+    public function respondWithSuccess($message)
+    {
+        return $this->respond([
+            'success' => [
+                'message' => $message,
+                'statusCode' => $this->getStatusCode(),
+            ]
+        ]);
+    }
+
 
     /**
      * @param $message
@@ -72,7 +86,7 @@ class ApiController extends BaseController
     {
         return $this->respond([
             'error' => [
-                'messgae' => $message,
+                'message' => $message,
                 'status_code' => $this->getStatusCode()
             ]
         ]);

@@ -20,7 +20,7 @@ class CopPreference extends \Eloquent
     );
 
     // database table used by model
-    protected $table = 'ind_preference';
+    protected $table = 'cop_preference';
 
     public static function createPreference($preferenceUserId, $preferenceData)
     {
