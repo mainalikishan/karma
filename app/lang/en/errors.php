@@ -36,6 +36,7 @@ return [
     ],
 
     'profile' =>[
-        'profile_not_found'=>'This link is temporarily unavailable'
+        'profile_not_found'=>'This link is temporarily unavailable',
+        'already_reported'=>'Already reported'
     ]
 ];

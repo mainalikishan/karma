@@ -18,6 +18,7 @@ Route::group(['prefix' => 'api/v1'], function() {
     Route::post('copuser/forgotPasswordCodeRequest', 'CopUserForgotPasswordController@codeRequest');
     Route::post('copuser/forgotPasswordCodeVerify', 'CopUserForgotPasswordController@codeVerify');
     Route::post('copuser/profile', 'CopProfileController@view');
+    Route::post('copuser/profile/report', 'CopProfileController@report');
     Route::post('copuser/setting/updateAppSetting', 'CopUserSettingController@updateAppSetting');
     Route::post('copuser/setting/updatePreference', 'CopUserSettingController@updatePreference');
     //Jobs routs
