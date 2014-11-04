@@ -51,10 +51,11 @@ class CopNotificationHandler
 
         $notifications = $this->copNotification->checkStatus($userId);
         foreach ($notifications as $notification) {
-            $notification->notificationId = $notification->notificationId;
+            $notification->notificationId ;
             $notification->notificationView = 'Y';
             $notification->notificationUpdatedDate = Carbon::now();
             $notification->save();
         }
+        return true;
     }
 }

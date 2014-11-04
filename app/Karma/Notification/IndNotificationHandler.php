@@ -52,10 +52,11 @@ class IndNotificationHandler
 
         $notifications = $this->indNotification->checkStatus($userId);
         foreach ($notifications as $notification) {
-            $notification->notificationId = $notification->notificationId;
+            $notification->notificationId;
             $notification->notificationView = 'Y';
             $notification->notificationUpdatedDate = Carbon::now();
             $notification->save();
         }
+        return true;
     }
 }

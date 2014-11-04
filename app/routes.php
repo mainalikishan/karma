@@ -29,6 +29,6 @@ Route::group(['prefix' => 'api/v1'], function() {
     //Jobs Application routs
     Route::post('jobs/Application', 'JobApplicationController@apply');
     //Notification
-    Route::post('copuser/Notification','CopNotificationController@updateStatus');
-    Route::post('induser/Notification','IndNotificationController@updateStatus');
+    Route::post('copuser/notification','CopNotificationController@updateStatus');
+    Route::post('induser/notification','IndNotificationController@updateStatus');
 });
