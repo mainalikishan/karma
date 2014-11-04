@@ -53,7 +53,7 @@ class CopUserForgotPasswordController extends ApiController
             try {
                 $return = $this->copUserForgotPasswordRequestHandler->codeRequest($post);
                 \Event::fire('copUser.requestCode', $return);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }
@@ -76,7 +76,7 @@ class CopUserForgotPasswordController extends ApiController
             try {
                 $return = $this->copUserForgotPasswordVerifyHandler->verifyCode($post);
                 \Event::fire('copUser.verifyCode', $return);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }

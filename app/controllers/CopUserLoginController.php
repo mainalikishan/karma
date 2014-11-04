@@ -20,7 +20,7 @@ class CopUserLoginController extends ApiController {
         {
             try{
                $return = $this->copLogInHandler->login($post);
-               return $this->respond($return);
+               return $this->respondSuccess($return);
             }
             catch(Exception $e){
                 return $this->respondUnprocessableEntity($e->getMessage());

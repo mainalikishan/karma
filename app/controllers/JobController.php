@@ -32,7 +32,7 @@ class JobController extends ApiController
         if (is_object($post)) {
             try {
                 $return = $this->handler->addJob($post);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }
@@ -51,7 +51,7 @@ class JobController extends ApiController
         if (is_object($post)) {
             try {
                 $return = $this->jobCacheHandler->select($post);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }
@@ -70,7 +70,7 @@ class JobController extends ApiController
 
             try {
                 $return = $this->handler->updateJob($post);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }
@@ -87,7 +87,7 @@ class JobController extends ApiController
         if (is_object($post)) {
             try {
                 $return = $this->handler->destroy($post);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }

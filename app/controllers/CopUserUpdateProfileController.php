@@ -27,7 +27,7 @@ class CopUserUpdateProfileController extends ApiController
 
             try {
                 $return = $this->copProfileHandler->updateProfile($post);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }

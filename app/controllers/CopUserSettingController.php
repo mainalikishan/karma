@@ -34,7 +34,7 @@ class CopUserSettingController extends ApiController
         if (is_object($post)) {
             try {
                 $return = $this->copPreferenceHandler->update($post);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }
@@ -49,7 +49,7 @@ class CopUserSettingController extends ApiController
         if (is_object($post)) {
             try {
                 $return = $this->copAppSettingHandler->update($post);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }

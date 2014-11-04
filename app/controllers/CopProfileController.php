@@ -27,7 +27,7 @@ class CopProfileController extends ApiController {
         if (is_object($post)) {
             try {
                 $return = $this->copUserCacheHandler->viewProfile($post);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }
@@ -41,7 +41,7 @@ class CopProfileController extends ApiController {
         if (is_object($post)) {
             try {
                 $return = $this->copReportLogHandler->addReportLog($post);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }

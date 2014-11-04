@@ -1,6 +1,6 @@
 <?php
 
-use Karma\notification\IndNotificationHandler;
+use Karma\Notification\IndNotificationHandler;
 
 class IndNotificationController extends ApiController
 

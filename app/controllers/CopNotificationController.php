@@ -1,6 +1,6 @@
 <?php
 
-use Karma\notification\CopNotificationHandler;
+use Karma\Notification\CopNotificationHandler;
 
 class CopNotificationController extends ApiController
 
@@ -29,7 +29,7 @@ class CopNotificationController extends ApiController
         if (is_object($post)) {
             try {
                 $return = $this->copNotificationHandler->updateStatus($post);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }

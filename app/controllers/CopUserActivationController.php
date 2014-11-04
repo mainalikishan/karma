@@ -37,7 +37,7 @@ class CopUserActivationController extends ApiController
 
             try {
                 $return = $this->copAccountActivationHandler->accountActivation($post);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
 
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());

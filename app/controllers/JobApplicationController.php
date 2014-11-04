@@ -28,7 +28,7 @@ class JobApplicationController extends ApiController
             try {
 
                 $return = $this->applicationHandler->apply($post);
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }

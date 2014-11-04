@@ -43,7 +43,7 @@ class IndUserUpdateProfileController extends ApiController
                     default:
                         return $this->respondUnprocessableEntity();
                 }
-                return $this->respond($return);
+                return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
             }

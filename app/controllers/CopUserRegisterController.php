@@ -26,7 +26,7 @@ class CopUserRegisterController extends ApiController {
         {
             try{
                 $user =  $this->copUserRegister->checkRegistration($post);
-                return $this->respond($user);
+                return $this->respondSuccess($user);
             }
             catch(Exception $e){
                 return $this->respondUnprocessableEntity($e->getMessage());
