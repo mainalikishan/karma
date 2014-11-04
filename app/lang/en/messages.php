@@ -21,5 +21,8 @@ return [
 
     'job_apply' => [
         'job_apply_successful' => 'Applied successfully',
+    ],
+    'profile'=>[
+        'received_report'=>'We have received your report'
     ]
 ];

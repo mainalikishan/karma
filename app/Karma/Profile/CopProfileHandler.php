@@ -107,28 +107,7 @@ class CopProfileHandler
 
 
         // select only what is needed
-        $user = $this->copUser
-            ->select(array(
-                'userId',
-                'userIndustryTypeId',
-                'userCountryISO',
-                'userAddressId',
-                'userAddressCoordinate',
-                'userDynamicAddressCoordinate',
-                'userCompanyPhone',
-                'userCompanyName',
-                'userEmail',
-                'userCoverPic',
-                'userProfilePic',
-                'userSummary',
-                'userRegDate',
-                'userUpdatedDate',
-                'userOauthId',
-                'userOauthType',
-                'userToken'
-            ))
-            ->where('userId', '=', $userId)
-            ->first();
+        $user = $this->copUser->selectById($userId);
 
         // add internal log
         CopInternalLogHandler::addInternalLog($userId);

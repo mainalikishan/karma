@@ -28,7 +28,7 @@ class IndNotificationController extends ApiController
         $post = $this->postRequestHandler();
         if (is_object($post)) {
             try {
-                $return=$this->copNotificationHandler->updateStatus($post);
+                $return=$this->indNotificationHandler->updateStatus($post);
                 return $this->respond($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());

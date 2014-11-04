@@ -128,4 +128,39 @@ class CopUser extends \Eloquent
         }
         return false;
     }
+    public function updateReport($userId)
+    {
+        $user = $this->select(array('userReportCount','userId'))->where(compact('userId'))->first();
+        if ($user) {
+            $user->userReportCount = $user->userReportCount+1;
+            $user->save();
+        }
+        return false;
+    }
+
+    public function selectById($userId)
+    {
+        // select only what is needed
+        return $user = $this->select(array(
+                'userId',
+                'userIndustryTypeId',
+                'userCountryISO',
+                'userAddressId',
+                'userAddressCoordinate',
+                'userDynamicAddressCoordinate',
+                'userCompanyPhone',
+                'userCompanyName',
+                'userEmail',
+                'userCoverPic',
+                'userProfilePic',
+                'userSummary',
+                'userRegDate',
+                'userUpdatedDate',
+                'userOauthId',
+                'userOauthType',
+                'userToken'
+            ))
+            ->where('userId', '=', $userId)
+            ->first();
+    }
 }

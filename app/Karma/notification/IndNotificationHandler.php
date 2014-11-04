@@ -27,7 +27,7 @@ class IndNotificationHandler
     {
 
         $date = Carbon::now();
-        $indNotifications = $this->copNotification->createNotification($userId, $details, $type, $targetId, $date, $date);
+        $indNotifications = $this->indNotification->createNotification($userId, $details, $type, $targetId, $date, $date);
 
         if ($indNotifications) {
             $indNotifications->save();
@@ -50,7 +50,7 @@ class IndNotificationHandler
 
         \ IndUser::loginCheck($userToken, $userId);
 
-        $notifications = $this->copNotification->checkStatus($userId);
+        $notifications = $this->indNotification->checkStatus($userId);
         foreach ($notifications as $notification) {
             $notification->notificationId = $notification->notificationId;
             $notification->notificationView = 'Y';
