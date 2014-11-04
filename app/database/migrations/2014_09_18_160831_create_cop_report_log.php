@@ -17,8 +17,10 @@ class CreateCopReportLog extends Migration {
             $table->bigIncrements('logId');
             $table->bigInteger('logUserId');
             $table->bigInteger('logReportById');
+            $table->enum('logUserType',array('ind','cop'));
             $table->text('logText');
             $table->timestamp('logAddedDate');
+            $table->timestamp('logUpdatedDate');
         });
 	}
 
