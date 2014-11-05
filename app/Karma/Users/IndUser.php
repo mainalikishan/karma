@@ -95,4 +95,14 @@ class IndUser extends \Eloquent
         }
         return false;
     }
+
+    public function updateReport($userId)
+    {
+        $user = $this->select(array('userReportCount', 'userId'))->where(compact('userId'))->first();
+        if ($user) {
+            $user->userReportCount = $user->userReportCount + 1;
+            $user->save();
+        }
+        return false;
+    }
 } 

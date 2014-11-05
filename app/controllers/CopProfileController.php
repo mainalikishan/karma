@@ -15,7 +15,8 @@ class CopProfileController extends ApiController {
      */
     private $copReportLogHandler;
 
-    function __construct(CopUserCacheHandler $copUserCacheHandler, CopReportLogHandler $copReportLogHandler)
+    function __construct(CopUserCacheHandler $copUserCacheHandler,
+                         CopReportLogHandler $copReportLogHandler)
     {
         $this->copUserCacheHandler = $copUserCacheHandler;
         $this->copReportLogHandler = $copReportLogHandler;

@@ -8,24 +8,25 @@
 namespace Karma\Log\ReportLog;
 
 
-class CopReportLog  extends \Eloquent{
+class IndReportLog extends \Eloquent
+{
 
     const CREATED_AT = 'logAddedDate';
-    const UPDATED_AT  = 'logUpdatedDate';
+    const UPDATED_AT = 'logUpdatedDate';
 
     protected $primaryKey = 'logId';
 
-    protected $fillable = ['logUserId', 'logReportById', 'logText','logUserType'];
+    protected $fillable = ['logUserId', 'logReportById', 'logText', 'logUserType'];
 
     //database table cop_report_log
-    protected $table = 'cop_report_log';
+    protected $table = 'ind_report_log';
 
 
-    public function isReport($logUserId,$logReportById,$type)
+    public function isReport($logUserId, $logReportById, $type)
     {
-       return  $user = $this->where('logUserId',$logUserId)
-            ->where('logReportById',$logReportById)
-           ->where('logUserType',$type)
+        return $user = $this->where('logUserId', $logUserId)
+            ->where('logReportById', $logReportById)
+            ->where('logUserType', $type)
             ->count();
     }
 }
