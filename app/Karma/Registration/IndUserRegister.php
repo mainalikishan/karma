@@ -8,7 +8,6 @@ namespace Karma\Registration;
 
 use Karma\Cache\IndUserCacheHandler;
 use Karma\General\Address;
-use Karma\General\Country;
 use Karma\Setting\IndDefaultSetting;
 use Karma\Users\IndUser;
 
