@@ -9,7 +9,6 @@ namespace Karma\Profile;
 
 
 use Karma\Users\CopUser;
-use Karma\Users\CopUserRepository;
 
 class CopAccountActivationHandler
 {
@@ -18,20 +17,10 @@ class CopAccountActivationHandler
      * @var \Karma\Users\CopUser
      */
     private $copUser;
-    /**
-     * @var \Karma\Users\CopUserRepository
-     */
-    private $copUserRepository;
 
-    /**
-     * @param CopUser $copUser
-     * @param CopUserRepository $copUserRepository
-     */
-    function __construct(CopUser $copUser,
-                         CopUserRepository $copUserRepository)
+    public function __construct(CopUser $copUser)
     {
         $this->copUser = $copUser;
-        $this->copUserRepository = $copUserRepository;
     }
 
     /**
@@ -52,7 +41,7 @@ class CopAccountActivationHandler
         if ($user) {
             $user->userId = $user->userId;
             $user->userEmailVerification = 'Y';
-            $this->copUserRepository->save($user);
+            $user->save();
             return \Lang::get('messages.account_activation_successful');
         }
         throw new \Exception('errors.invalid_activation_code');

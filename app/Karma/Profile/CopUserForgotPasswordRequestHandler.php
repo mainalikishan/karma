@@ -9,7 +9,6 @@ namespace Karma\Profile;
 
 
 use Karma\Users\CopUser;
-use Karma\Users\CopUserRepository;
 
 class CopUserForgotPasswordRequestHandler
 {
@@ -18,19 +17,14 @@ class CopUserForgotPasswordRequestHandler
      * @var \Karma\Users\CopUser
      */
     private $copUser;
-    /**
-     * @var \Karma\Users\CopUserRepository
-     */
-    private $copUserRepository;
+
 
     /**
      * @param CopUser $copUser
-     * @param CopUserRepository $copUserRepository
      */
-    function __construct(CopUser $copUser, CopUserRepository $copUserRepository)
+    public function __construct(CopUser $copUser)
     {
         $this->copUser = $copUser;
-        $this->copUserRepository = $copUserRepository;
     }
 
     /**
@@ -50,7 +44,7 @@ class CopUserForgotPasswordRequestHandler
         if ($user) {
             $user->userId = $user->userId;
             $user->userPasswordRequestVerificationCode = $activationCode;
-            $this->copUserRepository->save($user);
+            $user->save();
             return array('user' => $user, 'success' => \Lang::get('messages.profile.password_verification_code_sent'));
         }
         throw new \Exception(\Lang::get('errors.profile.invalid_email_address'));
