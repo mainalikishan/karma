@@ -7,7 +7,6 @@
 
 namespace Karma\Profile;
 
-
 use Karma\Cache\IndUserCacheHandler;
 use Karma\Log\IndInternalLog\IndInternalLogHandler;
 use Karma\Users\IndUser;

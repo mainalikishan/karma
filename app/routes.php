@@ -1,7 +1,7 @@
 <?php
 
-Route::group(['prefix' => 'api/v1'], function() {
-    // Individual User routes
+Route::group(['prefix' => 'api/v1'], function () {
+    // Individual User
     Route::post('induser/login', 'IndUserRegisterController@login');
     Route::post('induser/updateProfile', 'IndUserUpdateProfileController@updateProfile');
     Route::post('induser/setting/updatePreference', 'IndUserSettingController@updatePreference');
@@ -9,12 +9,15 @@ Route::group(['prefix' => 'api/v1'], function() {
     Route::post('induser/setting/updateAccountStatus', 'IndUserSettingController@updateAccountStatus');
     Route::post('induser/setting/updatePrivacy', 'IndUserSettingController@updatePrivacy');
     Route::post('induser/profile/report', 'IndProfileController@report');
+    Route::post('induser/profile/updateBasic', 'IndProfileController@updateBasic');
+    Route::post('induser/profile/updateWhatIDo', 'IndProfileController@updateWhatIDo');
+    Route::post('induser/profile/updateExperience', 'IndProfileController@updateExperience');
+    Route::post('induser/profile/updateEducation', 'IndProfileController@updateEducation');
 
-    // Corporate User routes
+    // Corporate User
     Route::post('copuser/register', 'CopUserRegisterController@register');
     Route::post('copuser/login', 'CopUserLoginController@login');
     Route::post('copuser/updateProfile', 'CopUserUpdateProfileController@updateProfile');
-    Route::post('copuser/changePassword', 'CopUserChangePasswordController@changePassword');
     Route::post('copuser/accountActivation', 'CopUserActivationController@accountActivation');
     Route::post('copuser/forgotPasswordCodeRequest', 'CopUserForgotPasswordController@codeRequest');
     Route::post('copuser/forgotPasswordCodeVerify', 'CopUserForgotPasswordController@codeVerify');
@@ -24,14 +27,17 @@ Route::group(['prefix' => 'api/v1'], function() {
     Route::post('copuser/setting/updatePreference', 'CopUserSettingController@updatePreference');
     Route::post('copuser/setting/updateAccountStatus', 'CopUserSettingController@updateAccountStatus');
     Route::post('copuser/setting/updatePassword', 'CopUserSettingController@updatePassword');
-    //Jobs routs
+
+    // Jobs
     Route::post('jobs/store', 'JobController@store');
     Route::post('jobs/update', 'JobController@update');
     Route::post('jobs/selectJobCache', 'JobController@selectJobCache');
-    Route::post('jobs/destroy','JobController@destroy');
-    //Jobs Application routs
+    Route::post('jobs/destroy', 'JobController@destroy');
+
+    // Jobs Application
     Route::post('jobs/Application', 'JobApplicationController@apply');
+
     //Notification
-    Route::post('copuser/notification','CopNotificationController@updateStatus');
-    Route::post('induser/notification','IndNotificationController@updateStatus');
+    Route::post('copuser/notification', 'CopNotificationController@updateStatus');
+    Route::post('induser/notification', 'IndNotificationController@updateStatus');
 });
