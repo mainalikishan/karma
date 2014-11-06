@@ -14,11 +14,19 @@ class CopChangeLogHandler {
      */
     private $copChangeLog;
 
+    /**
+     * @param CopChangeLog $copChangeLog
+     */
     function __construct(CopChangeLog $copChangeLog)
     {
         $this->copChangeLog = $copChangeLog;
     }
 
+    /**
+     * @param $userId
+     * @param $key
+     * @param $value
+     */
     public function addChangeLog($userId,$key,$value)
     {
         $this->copChangeLog->create(array(

@@ -36,6 +36,12 @@ class JobApplicationHandler
      */
     private $copNotificationHandler;
 
+    /**
+     * @param JobApplication $jobApplication
+     * @param Jobs $jobs
+     * @param JobCacheHandler $jobCacheHandler
+     * @param CopNotificationHandler $copNotificationHandler
+     */
     function __construct(JobApplication $jobApplication,
                          Jobs $jobs, JobCacheHandler $jobCacheHandler,
                          CopNotificationHandler $copNotificationHandler)
@@ -46,6 +52,11 @@ class JobApplicationHandler
         $this->copNotificationHandler = $copNotificationHandler;
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     * @throws \Exception
+     */
     public function apply($data)
     {
         // check post array  fields
@@ -118,6 +129,12 @@ class JobApplicationHandler
     }
 
 
+    /**
+     * @param $jobId
+     * @param $copUserId
+     * @param $indUserId
+     * @return mixed
+     */
     private function applyCount($jobId, $copUserId, $indUserId)
     {
         return $this->jobApplication

@@ -22,12 +22,21 @@ class CopCustomRegister implements CopUserRegisterInterface
      */
     private $copUser;
 
+    /**
+     * @param CopUserRepository $copUserRepository
+     * @param CopUser $copUser
+     */
     public function __construct(CopUserRepository $copUserRepository, CopUser $copUser)
     {
         $this->copUserRepository = $copUserRepository;
         $this->copUser = $copUser;
     }
 
+    /**
+     * @param $post
+     * @param bool $address
+     * @return CopUser
+     */
     public function register($post, $address=false)
     {
         // check post array  fields

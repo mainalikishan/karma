@@ -25,6 +25,11 @@ class CopUserSettingController extends ApiController
      */
     private $copAccountSettingHandler;
 
+    /**
+     * @param CopAppSettingHandler $copAppSettingHandler
+     * @param CopPreferenceHandler $copPreferenceHandler
+     * @param CopAccountSettingHandler $copAccountSettingHandler
+     */
     public function __construct(
         CopAppSettingHandler $copAppSettingHandler,
         CopPreferenceHandler $copPreferenceHandler,
@@ -35,6 +40,9 @@ class CopUserSettingController extends ApiController
         $this->copAccountSettingHandler = $copAccountSettingHandler;
     }
 
+    /**
+     * @return mixed
+     */
     public function updatePreference()
     {
         $post = $this->postRequestHandler();
@@ -50,6 +58,9 @@ class CopUserSettingController extends ApiController
         return $this->respondUnprocessableEntity();
     }
 
+    /**
+     * @return mixed
+     */
     public function updateAppSetting()
     {
         $post = $this->postRequestHandler();
@@ -65,6 +76,9 @@ class CopUserSettingController extends ApiController
         return $this->respondUnprocessableEntity();
     }
 
+    /**
+     * @return mixed
+     */
     public function updateAccountStatus()
     {
         $post = $this->postRequestHandler();
@@ -80,6 +94,9 @@ class CopUserSettingController extends ApiController
         return $this->respondUnprocessableEntity();
     }
 
+    /**
+     * @return mixed
+     */
     public function updatePassword()
     {
         $post = $this->postRequestHandler();

@@ -12,6 +12,9 @@ class CopUserPasswordCodeVerify {
     private $toEmail = '';
     private $name = '';
 
+    /**
+     * @param $data
+     */
     public function sendEmail($data)
     {
         $this->toEmail = $data->email;

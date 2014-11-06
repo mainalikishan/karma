@@ -14,11 +14,18 @@ class IndInternalLogHandler {
      */
     private $indInternalLog;
 
+    /**
+     * @param IndInternalLog $indInternalLog
+     */
     function __construct(IndInternalLog $indInternalLog)
     {
         $this->indInternalLog = $indInternalLog;
     }
 
+    /**
+     * @param $userId
+     * @param bool $post
+     */
     public static function addInternalLog($userId,$post=false)
     {
         $currentUrl = $uri = \ Request::url();

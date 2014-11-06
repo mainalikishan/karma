@@ -23,12 +23,20 @@ class CopLogInHandler
      */
     private $copUserCache;
 
+    /**
+     * @param CopUser $copUser
+     * @param CopUserCache $copUserCache
+     */
     public function __construct(CopUser $copUser, CopUserCache $copUserCache)
     {
         $this->copUser = $copUser;
         $this->copUserCache = $copUserCache;
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function login($data)
     {
         // check post array  fields

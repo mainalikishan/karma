@@ -183,5 +183,4 @@ class IndProfileController extends ApiController
         }
         return $this->respondUnprocessableEntity();
     }
-
 }

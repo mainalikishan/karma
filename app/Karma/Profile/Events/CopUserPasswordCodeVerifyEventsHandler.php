@@ -16,18 +16,27 @@ class CopUserPasswordCodeVerifyEventsHandler {
      */
     private $copUserPasswordCodeVerify;
 
+    /**
+     * @param CopUserPasswordCodeVerify $copUserPasswordCodeVerify
+     */
     function __construct(CopUserPasswordCodeVerify $copUserPasswordCodeVerify)
     {
 
         $this->copUserPasswordCodeVerify = $copUserPasswordCodeVerify;
     }
 
+    /**
+     * @param $data
+     */
     public function onCodeVerify($data)
     {
 
         $this->copUserPasswordCodeVerify->sendEmail($data);
     }
 
+    /**
+     * @param $events
+     */
     public function subscribe($events)
     {
         $events->listen('copUser.verifyCode', 'Karma\Profile\Events\CopUserPasswordCodeVerifyEventsHandler@onCodeVerify');

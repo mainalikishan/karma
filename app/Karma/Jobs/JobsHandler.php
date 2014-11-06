@@ -25,12 +25,21 @@ class JobsHandler
     private $jobCacheHandler;
 
 
+    /**
+     * @param Jobs $jobs
+     * @param JobCacheHandler $jobCacheHandler
+     */
     public function __construct(Jobs $jobs, JobCacheHandler $jobCacheHandler)
     {
         $this->jobs = $jobs;
         $this->jobCacheHandler = $jobCacheHandler;
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     * @throws \Exception
+     */
     public function addJob($data)
     {
         // check post array  fields
@@ -98,6 +107,11 @@ class JobsHandler
         throw new \Exception(\Lang::get('errors.something_went_wrong'));
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     * @throws \Exception
+     */
     public function updateJob($data)
     {
         // check post array  fields
@@ -168,6 +182,11 @@ class JobsHandler
         throw new \Exception(\Lang::get('errors.something_went_wrong'));
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     * @throws \Exception
+     */
     function detailsById($data)
     {
         // check post array  fields
@@ -193,6 +212,11 @@ class JobsHandler
         throw new \Exception(\Lang::get('errors.job_not_found'));
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     * @throws \Exception
+     */
     public function destroy($data)
     {
         // check post array  fields

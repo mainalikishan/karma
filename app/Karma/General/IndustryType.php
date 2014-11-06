@@ -19,7 +19,6 @@ class IndustryType extends  \Eloquent{
 
     protected $table = 'industry_type';
 
-
     /**
      * @param $industryTypeId
      * @return mixed

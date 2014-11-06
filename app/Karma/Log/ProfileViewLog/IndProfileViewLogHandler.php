@@ -18,12 +18,20 @@ class IndProfileViewLogHandler
      */
     private $indProfileViewLog;
 
+    /**
+     * @param IndProfileViewLog $indProfileViewLog
+     */
     function __construct(IndProfileViewLog $indProfileViewLog)
     {
 
         $this->indProfileViewLog = $indProfileViewLog;
     }
 
+    /**
+     * @param $logViewerId
+     * @param $logUserId
+     * @param $logUserType
+     */
     public static function addProfileViewLog($logViewerId, $logUserId, $logUserType)
     {
 

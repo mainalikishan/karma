@@ -38,6 +38,10 @@ class CopUser extends \Eloquent
     protected $CopUserRepository;
 
 
+    /**
+     * @param $username
+     * @return mixed
+     */
     public  function getUser($username)
     {
         $user = $this->select('userId',
@@ -65,6 +69,10 @@ class CopUser extends \Eloquent
         return $user;
     }
 
+    /**
+     * @param $userId
+     * @return mixed
+     */
     public  function getUserById($userId)
     {
         $user = $this->where('userId',$userId)
@@ -74,6 +82,10 @@ class CopUser extends \Eloquent
         return $user;
     }
 
+    /**
+     * @param $userId
+     * @return bool
+     */
     public function fetchPassword($userId)
     {
         $user = $this->select(array('userId', 'userPassword'))->where(compact('userId'))->first();
@@ -83,9 +95,16 @@ class CopUser extends \Eloquent
         return false;
     }
 
+    /**
+     * @param $userEmail
+     * @param $userEmailVerificationCode
+     * @return bool
+     */
     public function checkActivationCode($userEmail, $userEmailVerificationCode)
     {
-        $user = $this->select(array('userEmail', 'userEmailVerificationCode', 'userId'))
+        $user = $this->select(array('userEmail',
+            'userEmailVerificationCode',
+            'userId'))
             ->where(compact('userEmail', 'userEmailVerificationCode'))
             ->first();
         if ($user) {
@@ -94,9 +113,16 @@ class CopUser extends \Eloquent
         return false;
     }
 
+    /**
+     * @param $userEmail
+     * @return bool
+     */
     public function checkEmail($userEmail)
     {
-        $user = $this->select(array('userCompanyName', 'userEmail', 'userPasswordRequestVerificationCode', 'userId'))
+        $user = $this->select(array('userCompanyName',
+            'userEmail',
+            'userPasswordRequestVerificationCode',
+            'userId'))
             ->where(compact('userEmail'))
             ->first();
         if ($user) {
@@ -105,10 +131,19 @@ class CopUser extends \Eloquent
         return false;
     }
 
+    /**
+     * @param $userEmail
+     * @param $userPasswordRequestVerificationCode
+     * @return bool
+     */
     public function checkForgotPasswordCode($userEmail, $userPasswordRequestVerificationCode)
     {
-        $user = $this->select(array('userCompanyName', 'userEmail', 'userPasswordRequestVerificationCode', 'userId'))
-            ->where(compact('userEmail', 'userPasswordRequestVerificationCode'))
+        $user = $this->select(array('userCompanyName',
+            'userEmail',
+            'userPasswordRequestVerificationCode',
+            'userId'))
+            ->where(compact('userEmail',
+                'userPasswordRequestVerificationCode'))
             ->first();
         if ($user) {
             return $user;
@@ -116,6 +151,10 @@ class CopUser extends \Eloquent
         return false;
     }
 
+    /**
+     * @param $userId
+     * @return array|bool
+     */
     public static function selectNameEmail($userId)
     {
         $user = self::select(array('userCompanyName', 'userEmail'))
@@ -128,6 +167,11 @@ class CopUser extends \Eloquent
         }
         return false;
     }
+
+    /**
+     * @param $userId
+     * @return bool
+     */
     public function updateReport($userId)
     {
         $user = $this->select(array('userReportCount','userId'))->where(compact('userId'))->first();
@@ -138,6 +182,10 @@ class CopUser extends \Eloquent
         return false;
     }
 
+    /**
+     * @param $userId
+     * @return mixed
+     */
     public function selectById($userId)
     {
         // select only what is needed
@@ -164,6 +212,11 @@ class CopUser extends \Eloquent
             ->first();
     }
 
+    /**
+     * @param $userToken
+     * @param $userId
+     * @return bool
+     */
     public static function loginCheck($userToken, $userId)
     {
         $user = self::where(compact('userToken', 'userId'))->first();

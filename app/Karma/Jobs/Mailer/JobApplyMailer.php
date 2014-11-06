@@ -21,6 +21,9 @@ class JobApplyMailer
     private $jobTitle = '';
     private $jobSummary = '';
 
+    /**
+     * @param $data
+     */
     public function sendEmail($data)
     {
 

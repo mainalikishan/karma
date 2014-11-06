@@ -14,14 +14,20 @@ class CopInternalLogHandler {
      */
     private $copInternalLog;
 
+    /**
+     * @param CopInternalLog $copInternalLog
+     */
     function __construct(CopInternalLog $copInternalLog)
     {
         $this->copInternalLog = $copInternalLog;
     }
 
+    /**
+     * @param $userId
+     * @param bool $post
+     */
     public static function addInternalLog($userId,$post=false)
     {
-
 
         $currentUrl = $uri = \ Request::url();;
         $IP = \Request::getClientIp(true);

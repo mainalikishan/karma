@@ -12,6 +12,9 @@ class CopUserPasswordCodeRequest {
     private $toEmail = '';
     private $name = '';
 
+    /**
+     * @param $data
+     */
     public function sendEmail($data)
     {
         $this->toEmail = $data->userEmail;

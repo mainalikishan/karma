@@ -18,9 +18,21 @@ class Jobs extends \Eloquent
     //database table used
     protected $table = 'job';
 
-    protected $fillable = ['jobUserId', 'jobTitle', 'jobTypeId', 'jobOpen', 'jobCountryId', 'jobAddressId', 'jobSkills', 'jobExpDate', 'jobExp'];
+    protected $fillable = ['jobUserId',
+        'jobTitle',
+        'jobTypeId',
+        'jobOpen',
+        'jobCountryId',
+        'jobAddressId',
+        'jobSkills',
+        'jobExpDate',
+        'jobExp'];
 
 
+    /**
+     * @param $jobId
+     * @return mixed
+     */
     public function selectById($jobId)
     {
         return $this->select(array(
@@ -48,6 +60,11 @@ class Jobs extends \Eloquent
             ->first();
     }
 
+    /**
+     * @param $copUserId
+     * @param $jobId
+     * @return mixed
+     */
     public function isJobExists($copUserId, $jobId)
     {
         return $this->where('jobUserId', $copUserId)
@@ -55,6 +72,11 @@ class Jobs extends \Eloquent
             ->count();
     }
 
+    /**
+     * @param $copUserId
+     * @param $jobId
+     * @return mixed
+     */
     public function updateApplyCount($copUserId, $jobId)
     {
         return $job = $this->where('jobUserId', $copUserId)
@@ -62,13 +84,17 @@ class Jobs extends \Eloquent
             ->first();
     }
 
+    /**
+     * @param $jobId
+     * @return array|bool
+     */
     public static function jobTitleById($jobId)
     {
         $job = self::select('jobTitle', 'jobSummary')
             ->where('jobId', $jobId)
             ->first();
         if ($job) {
-            return array("title"=>$job->jobTitle,'summary'=>$job->jobSummary);
+            return array("title" => $job->jobTitle, 'summary' => $job->jobSummary);
         } else {
             return false;
         }

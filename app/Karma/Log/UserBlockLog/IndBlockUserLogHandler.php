@@ -23,7 +23,6 @@ class IndBlockUserLogHandler
      * @var IndBlockUserLog
      */
     private $indBlockUserLog;
-
     function __construct(IndBlockUserLog $indBlockUserLog,
                          CopUser $copUser)
     {
@@ -31,6 +30,10 @@ class IndBlockUserLogHandler
         $this->indBlockUserLog = $indBlockUserLog;
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function addBlockLog($data)
     {
         // check post array  fields
@@ -95,6 +98,10 @@ class IndBlockUserLogHandler
         return \Lang::get('errors.something_went_wrong');
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function updateBlockLog($data)
     {
         // check post array  fields

@@ -18,16 +18,25 @@ class JobApplyEventsHandler
      */
     private $jobApplyMailer;
 
+    /**
+     * @param JobApplyMailer $jobApplyMailer
+     */
     function __construct(JobApplyMailer $jobApplyMailer)
     {
         $this->jobApplyMailer = $jobApplyMailer;
     }
 
+    /**
+     * @param $data
+     */
     public function onJobApply($data)
     {
         $this->jobApplyMailer->sendEmail($data);
     }
 
+    /**
+     * @param $events
+     */
     public function subscribe($events)
     {
         $events->listen('job.apply', 'Karma\Jobs\Events\JobApplyEventsHandler@onJobApply');

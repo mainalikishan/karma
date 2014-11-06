@@ -24,6 +24,10 @@ class CopBlockUserLogHandler
      */
     private $copBlockUserLog;
 
+    /**
+     * @param CopBlockUserLog $copBlockUserLog
+     * @param CopUser $copUser
+     */
     function __construct(CopBlockUserLog $copBlockUserLog,
                          CopUser $copUser)
     {
@@ -31,6 +35,10 @@ class CopBlockUserLogHandler
         $this->copBlockUserLog = $copBlockUserLog;
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function addBlockLog($data)
     {
         // check post array  fields
@@ -95,6 +103,10 @@ class CopBlockUserLogHandler
         return \Lang::get('errors.something_went_wrong');
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function updateBlockLog($data)
     {
         // check post array  fields

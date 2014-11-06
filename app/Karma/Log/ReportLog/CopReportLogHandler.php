@@ -29,6 +29,11 @@ class CopReportLogHandler
      */
     private $copUserCacheHandler;
 
+    /**
+     * @param CopReportLog $copReportLog
+     * @param CopUser $copUser
+     * @param CopUserCacheHandler $copUserCacheHandler
+     */
     function __construct(CopReportLog $copReportLog,
                          CopUser $copUser,
                          CopUserCacheHandler $copUserCacheHandler)
@@ -38,6 +43,10 @@ class CopReportLogHandler
         $this->copUserCacheHandler = $copUserCacheHandler;
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function addReportLog($data)
     {
         // check post array  fields

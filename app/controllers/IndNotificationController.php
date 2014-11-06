@@ -6,12 +6,14 @@ class IndNotificationController extends ApiController
 
 {
 
-
     /**
      * @var Karma\notification\IndNotificationHandler
      */
     private $indNotificationHandler;
 
+    /**
+     * @param IndNotificationHandler $indNotificationHandler
+     */
     public function __construct(IndNotificationHandler $indNotificationHandler)
     {
 

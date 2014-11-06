@@ -17,16 +17,20 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::post('induser/profile/unBlock', 'IndProfileController@unBlockUser');
 
     // Corporate User
-    Route::post('copuser/register', 'CopUserRegisterController@register');
+
     Route::post('copuser/login', 'CopUserLoginController@login');
-    Route::post('copuser/updateProfile', 'CopUserUpdateProfileController@updateProfile');
-    Route::post('copuser/accountActivation', 'CopUserActivationController@accountActivation');
-    Route::post('copuser/forgotPasswordCodeRequest', 'CopUserForgotPasswordController@codeRequest');
-    Route::post('copuser/forgotPasswordCodeVerify', 'CopUserForgotPasswordController@codeVerify');
+
+    Route::post('copuser/register', 'CopUserRegisterController@register');
+    Route::post('copuser/accountActivation', 'CopUserRegisterController@accountActivation');
+
     Route::post('copuser/profile', 'CopProfileController@view');
+    Route::post('copuser/profile/updateProfile', 'CopProfileController@updateProfile');
+    Route::post('copuser/profile/forgotPasswordCodeRequest', 'CopProfileController@codeRequest');
+    Route::post('copuser/profile/forgotPasswordCodeVerify', 'CopProfileController@codeVerify');
     Route::post('copuser/profile/report', 'CopProfileController@report');
     Route::post('copuser/profile/block', 'CopProfileController@blockUser');
     Route::post('copuser/profile/unBlock', 'CopProfileController@unBlockUser');
+
     Route::post('copuser/setting/updateAppSetting', 'CopUserSettingController@updateAppSetting');
     Route::post('copuser/setting/updatePreference', 'CopUserSettingController@updatePreference');
     Route::post('copuser/setting/updateAccountStatus', 'CopUserSettingController@updateAccountStatus');

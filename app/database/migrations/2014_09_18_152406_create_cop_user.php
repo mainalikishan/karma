@@ -35,8 +35,8 @@ class CreateCopUser extends Migration {
             $table->string('userOauthType',20);
             $table->enum('userStatus',array('Y','N'))->default('Y');
             $table->enum('userEmailVerification',array('Y','N'))->default('N');
-            $table->integer('userEmailVerificationCode');
-            $table->integer('userPasswordRequestVerificationCode');
+            $table->char('userEmailVerificationCode',4);
+            $table->char('userPasswordRequestVerificationCode',4);
             $table->enum('userAccountStatus',array('Active','perDeactivate','tempDeactivate'))->default('Active');
             $table->integer('userReportCount');
         });

@@ -23,28 +23,37 @@ class CopUserForgotPasswordRequestHandler
      */
     private $copUserRepository;
 
+    /**
+     * @param CopUser $copUser
+     * @param CopUserRepository $copUserRepository
+     */
     function __construct(CopUser $copUser, CopUserRepository $copUserRepository)
     {
         $this->copUser = $copUser;
         $this->copUserRepository = $copUserRepository;
     }
 
+    /**
+     * @param $post
+     * @return array
+     * @throws \Exception
+     */
     public function codeRequest($post)
     {
         $email = $post->userEmail;
 
         // get four digit verification code;
-        $activationCode =  \CustomHelper::generateRandomDigitCode();
+        $activationCode = \CustomHelper::generateRandomDigitCode();
 
-        \CustomHelper::postCheck($post, array('userEmail'), 1);
+        \CustomHelper::postCheck($post, array('userEmail' => 'required'), 1);
         $user = $this->copUser->checkEmail($email);
         if ($user) {
             $user->userId = $user->userId;
             $user->userPasswordRequestVerificationCode = $activationCode;
             $this->copUserRepository->save($user);
-            return $user;
+            return array('user' => $user, 'success' => \Lang::get('messages.profile.password_verification_code_sent'));
         }
-        throw new \Exception(\Lang::get('errors.invalid_email_address'));
+        throw new \Exception(\Lang::get('errors.profile.invalid_email_address'));
 
     }
 } 
