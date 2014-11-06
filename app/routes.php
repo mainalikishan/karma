@@ -3,7 +3,6 @@
 Route::group(['prefix' => 'api/v1'], function () {
     // Individual User
     Route::post('induser/login', 'IndUserRegisterController@login');
-    Route::post('induser/updateProfile', 'IndUserUpdateProfileController@updateProfile');
     Route::post('induser/setting/updatePreference', 'IndUserSettingController@updatePreference');
     Route::post('induser/setting/updateAppSetting', 'IndUserSettingController@updateAppSetting');
     Route::post('induser/setting/updateAccountStatus', 'IndUserSettingController@updateAccountStatus');
@@ -17,7 +16,6 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::post('induser/profile/unBlock', 'IndProfileController@unBlockUser');
 
     // Corporate User
-
     Route::post('copuser/login', 'CopUserLoginController@login');
 
     Route::post('copuser/register', 'CopUserRegisterController@register');

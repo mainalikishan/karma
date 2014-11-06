@@ -10,7 +10,6 @@ namespace Karma\Setting;
 
 use Karma\Users\CopUser;
 use Karma\Log\CopChangeLog\CopChangeLogHandler;
-use Karma\Users\CopUserRepository;
 
 class CopAccountSettingHandler
 {
@@ -19,10 +18,6 @@ class CopAccountSettingHandler
      */
     private $copUser;
     /**
-     * @var \Karma\Users\CopUserRepository
-     */
-    private $copUserRepository;
-    /**
      * @var \Karma\Log\CopChangeLog\CopChangeLogHandler
      */
     private $copChangeLogHandler;
@@ -30,16 +25,13 @@ class CopAccountSettingHandler
 
     /**
      * @param CopUser $copUser
-     * @param CopUserRepository $copUserRepository
      * @param CopChangeLogHandler $copChangeLogHandler
      */
     public function __construct(
         CopUser $copUser,
-        CopUserRepository $copUserRepository,
         CopChangeLogHandler $copChangeLogHandler)
     {
         $this->copUser = $copUser;
-        $this->copUserRepository = $copUserRepository;
         $this->copChangeLogHandler = $copChangeLogHandler;
     }
 
@@ -106,7 +98,7 @@ class CopAccountSettingHandler
                 } else if ($newPassword === $confirmPassword) {
                     // update password
                     $user->userPassword = \Hash::make($newPassword);
-                    $this->copUserRepository->save($user);
+                    $user->save();
 
                     $this->copChangeLogHandler->addChangeLog($userId, 'PASSWORD', $user->userPassword);
                     return \Lang::get('messages.password_change_successful');

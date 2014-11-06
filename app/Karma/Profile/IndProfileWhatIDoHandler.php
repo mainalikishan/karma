@@ -10,7 +10,6 @@ namespace Karma\Profile;
 use Karma\Cache\IndUserCacheHandler;
 use Karma\Log\IndInternalLog\IndInternalLogHandler;
 use Karma\Users\IndUser;
-use Karma\Users\IndUserRepository;
 use Karma\General\DummySkill;
 use Karma\General\DummyProfession;
 
@@ -21,10 +20,6 @@ class IndProfileWhatIDoHandler implements IndProfileInterface
      */
     private $indUser;
     /**
-     * @var \Karma\Users\IndUserRepository
-     */
-    private $indUserRepository;
-    /**
      * @var \Karma\Cache\IndUserCacheHandler
      */
     private $indUserCacheHandler;
@@ -32,15 +27,12 @@ class IndProfileWhatIDoHandler implements IndProfileInterface
 
     /**
      * @param IndUser $indUser
-     * @param IndUserRepository $indUserRepository
      * @param IndUserCacheHandler $indUserCacheHandler
      */
     public function __construct(IndUser $indUser,
-                                IndUserRepository $indUserRepository,
                                 IndUserCacheHandler $indUserCacheHandler)
     {
         $this->indUser = $indUser;
-        $this->indUserRepository = $indUserRepository;
         $this->indUserCacheHandler = $indUserCacheHandler;
     }
 
