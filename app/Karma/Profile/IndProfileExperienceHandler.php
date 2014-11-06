@@ -20,17 +20,26 @@ class IndProfileExperienceHandler implements IndProfileInterface
      */
     private $indUserCacheHandler;
 
+
+    /**
+     * @param IndUserCacheHandler $indUserCacheHandler
+     */
     public function __construct(IndUserCacheHandler $indUserCacheHandler)
     {
         $this->indUserCacheHandler = $indUserCacheHandler;
     }
 
+
+    /**
+     * @param $post
+     * @return mixed
+     * @throws \Exception
+     */
     public function update($post)
     {
         // verify post request
         \CustomHelper::postCheck($post,
             array(
-                'updateType' => 'required|string',
                 'userId' => 'required|integer',
                 'token' => 'required',
                 'title' => 'required|string',
@@ -42,7 +51,7 @@ class IndProfileExperienceHandler implements IndProfileInterface
                 'workEndMonth' => 'optional|required=workCurrent@N',
                 'workEndYear' => 'optional|required=workCurrent@N',
                 'workId' => 'optional|integer'),
-            12);
+            11);
 
         // verify login info.
         $user = IndUser::loginCheck($post->token, $post->userId);
@@ -72,7 +81,6 @@ class IndProfileExperienceHandler implements IndProfileInterface
 
             // select
             $user = Experience::select(array(
-                'expId',
                 'expTitle',
                 'expType',
                 'expCompany',

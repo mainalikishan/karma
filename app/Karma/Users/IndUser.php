@@ -42,9 +42,7 @@ class IndUser extends \Eloquent
         'userAccountStatus'
     );
 
-    // database table used by model
     protected $table = 'ind_user';
-
 
     /**
      * @return static
@@ -72,6 +70,12 @@ class IndUser extends \Eloquent
         return false;
     }
 
+
+    /**
+     * @param $userToken
+     * @param $userId
+     * @return bool
+     */
     public static function loginCheck($userToken, $userId)
     {
         $user = self::where(compact('userToken', 'userId'))->first();
@@ -83,6 +87,11 @@ class IndUser extends \Eloquent
         return false;
     }
 
+
+    /**
+     * @param $userId
+     * @return array|bool
+     */
     public static function selectNameEmail($userId)
     {
         $user = self::select(array('userFname', 'userLname', 'userEmail'))
@@ -96,6 +105,11 @@ class IndUser extends \Eloquent
         return false;
     }
 
+
+    /**
+     * @param $userId
+     * @return bool
+     */
     public function updateReport($userId)
     {
         $user = $this->select(array('userReportCount', 'userId'))->where(compact('userId'))->first();

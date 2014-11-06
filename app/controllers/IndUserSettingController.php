@@ -30,6 +30,13 @@ class IndUserSettingController extends ApiController
      */
     private $indAccountSettingHandler;
 
+
+    /**
+     * @param IndPreferenceHandler $indPreferenceHandler
+     * @param IndAppSettingHandler $indAppSettingHandler
+     * @param IndPrivacyHandler $indPrivacyHandler
+     * @param IndAccountSettingHandler $indAccountSettingHandler
+     */
     public function __construct(
         IndPreferenceHandler $indPreferenceHandler,
         IndAppSettingHandler $indAppSettingHandler,
@@ -43,6 +50,10 @@ class IndUserSettingController extends ApiController
         $this->indAccountSettingHandler = $indAccountSettingHandler;
     }
 
+
+    /**
+     * @return mixed
+     */
     public function updatePreference()
     {
         $post = $this->postRequestHandler();
@@ -58,6 +69,10 @@ class IndUserSettingController extends ApiController
         return $this->respondUnprocessableEntity();
     }
 
+
+    /**
+     * @return mixed
+     */
     public function updateAppSetting()
     {
         $post = $this->postRequestHandler();
@@ -73,6 +88,10 @@ class IndUserSettingController extends ApiController
         return $this->respondUnprocessableEntity();
     }
 
+
+    /**
+     * @return mixed
+     */
     public function updateAccountStatus()
     {
         $post = $this->postRequestHandler();
@@ -88,6 +107,10 @@ class IndUserSettingController extends ApiController
         return $this->respondUnprocessableEntity();
     }
 
+
+    /**
+     * @return mixed
+     */
     public function updatePrivacy()
     {
         $post = $this->postRequestHandler();

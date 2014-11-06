@@ -26,15 +26,31 @@ class Experience extends \Eloquent
         'expEndDate'
     );
 
-    // database table used by model
     protected $table = 'ind_experience';
 
+
+    /**
+     * @param $expUserId
+     * @param $expTitle
+     * @param $expType
+     * @param $expCompany
+     * @param $expCurrent
+     * @param $expStartDate
+     * @param $expEndDate
+     * @return static
+     */
     public static function createExp($expUserId, $expTitle, $expType, $expCompany, $expCurrent, $expStartDate, $expEndDate)
     {
         $experience = new static (compact('expUserId', 'expTitle', 'expType', 'expCompany', 'expCurrent', 'expStartDate', 'expEndDate'));
         return $experience;
     }
 
+
+    /**
+     * @param $expId
+     * @param $expUserId
+     * @return bool
+     */
     public static function selectExp($expId, $expUserId)
     {
         $experience = self::where(compact('expId', 'expUserId'))

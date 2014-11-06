@@ -18,9 +18,14 @@ class Gender extends \Eloquent
         'genderName'
     );
 
-    // database table used by model
     protected $table = 'ind_gender';
 
+
+    /**
+     * @param $genderId
+     * @return mixed
+     * @throws \Exception
+     */
     public static function selectName($genderId) {
         $gender = self::select(array('genderName'))
             ->where(compact('genderId'))

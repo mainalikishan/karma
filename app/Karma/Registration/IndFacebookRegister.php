@@ -23,6 +23,11 @@ class IndFacebookRegister implements IndUserRegisterInterface
      */
     private $indUser;
 
+
+    /**
+     * @param IndUserRepository $indUserRepository
+     * @param IndUser $indUser
+     */
     public function __construct(IndUserRepository $indUserRepository, IndUser $indUser)
     {
         $this->indUserRepository = $indUserRepository;

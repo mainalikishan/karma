@@ -11,7 +11,11 @@ use Karma\Users\IndUser;
 
 class IndAccountSettingHandler
 {
-
+    /**
+     * @param $post
+     * @return bool
+     * @throws \Exception
+     */
     public function updateAccountStatus($post)
     {
         // verify post request

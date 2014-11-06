@@ -17,9 +17,14 @@ class IndustryType extends  \Eloquent{
         'industryTypeName'
     );
 
-    // database table used by model
     protected $table = 'industry_type';
 
+
+    /**
+     * @param $industryTypeId
+     * @return mixed
+     * @throws \Exception
+     */
     public static function selectGenderName($industryTypeId) {
         $industryType = self::select(array('industryTypeName'))
             ->where(compact('industryTypeId'))

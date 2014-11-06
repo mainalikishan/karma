@@ -18,6 +18,10 @@ class CopAppSettingHandler
      */
     private $copUserCacheHandler;
 
+
+    /**
+     * @return array
+     */
     private function notifications()
     {
         return array(
@@ -27,11 +31,20 @@ class CopAppSettingHandler
         );
     }
 
+
+    /**
+     * @param CopUserCacheHandler $copUserCacheHandler
+     */
     public function __construct(CopUserCacheHandler $copUserCacheHandler)
     {
         $this->copUserCacheHandler = $copUserCacheHandler;
     }
 
+
+    /**
+     * @param $post
+     * @return mixed
+     */
     public function update($post)
     {
         // verify post request

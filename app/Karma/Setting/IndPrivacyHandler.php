@@ -20,11 +20,21 @@ class IndPrivacyHandler
      */
     private $indUserCacheHandler;
 
+
+    /**
+     * @param IndUserCacheHandler $indUserCacheHandler
+     */
     public function __construct(IndUserCacheHandler $indUserCacheHandler)
     {
         $this->indUserCacheHandler = $indUserCacheHandler;
     }
 
+
+    /**
+     * @param $post
+     * @return mixed
+     * @throws \Exception
+     */
     public function update($post)
     {
         // verify post request

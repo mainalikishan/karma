@@ -2,11 +2,22 @@
 
 class CustomHelper
 {
+
+    /**
+     * @param $param
+     * @return mixed
+     */
     public static function generateToken($param)
     {
         return Hash::make($param . time() . rand(1, 999));
     }
 
+
+    /**
+     * @param $toValidate
+     * @param $value
+     * @return string
+     */
     public static function validate($toValidate, $value) {
         $return = [];
         foreach($toValidate as $tv) {
@@ -96,6 +107,14 @@ class CustomHelper
         return 'true';
     }
 
+
+    /**
+     * @param array $post
+     * @param array $allowedPost
+     * @param string $allowedPostLength
+     * @return bool
+     * @throws Exception
+     */
     public static function postCheck($post = [], $allowedPost = [], $allowedPostLength = '0')
     {
         $post = (array)$post;
@@ -126,6 +145,11 @@ class CustomHelper
         throw new \Exception(\Lang::get('errors.invalid_post_request'));
     }
 
+
+    /**
+     * @param int $length
+     * @return int|string
+     */
     public static function generateRandomDigitCode($length = 4)
     {
         $numbers = '0123456789';
@@ -144,6 +168,12 @@ class CustomHelper
         }
     }
 
+
+    /**
+     * @param null $coordinate
+     * @param string $radius
+     * @return bool|object
+     */
     public static function getAddressFromApi($coordinate = null, $radius = '500')
     {
         $client = new \GuzzleHttp\Client();
@@ -187,11 +217,23 @@ class CustomHelper
         return false;
     }
 
+
+    /**
+     * @param $dt
+     * @param $timezone
+     * @param $format
+     * @return mixed
+     */
     public static function dateConvertTimezone($dt, $timezone, $format)
     {
         return $dt->tz($timezone)->$format();
     }
 
+
+    /**
+     * @param int $length
+     * @return string
+     */
     public static function generateRandomCharacters($length = 6)
     {
         $characters = '23456789abcdefghijkmnpqrstuvwxyz';
@@ -203,6 +245,11 @@ class CustomHelper
         return $randomCharacter;
     }
 
+
+    /**
+     * @param $arr
+     * @return bool
+     */
     public static function isAssoc($arr)
     {
         return array_keys($arr) !== range(0, count($arr) - 1);

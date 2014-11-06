@@ -17,14 +17,14 @@ use Karma\Users\IndUser;
 class CopUserCacheHandler
 {
 
-    /**
-     * @var CopUserCache
-     */
     private $copUserCache;
 
+
+    /**
+     * @param CopUserCache $copUserCache
+     */
     public function __construct(CopUserCache $copUserCache)
     {
-
         $this->copUserCache = $copUserCache;
     }
 
@@ -88,6 +88,12 @@ class CopUserCacheHandler
         }
     }
 
+
+    /**
+     * @param array $data
+     * @param $updateType
+     * @return array|mixed
+     */
     public function buildUpdateType($data = [], $updateType)
     {
         switch ($updateType) {
@@ -132,6 +138,11 @@ class CopUserCacheHandler
         }
     }
 
+
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function viewProfile($data)
     {
         // check post array  fields

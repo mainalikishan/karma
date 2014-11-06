@@ -18,9 +18,13 @@ class DummyUniversity extends \Eloquent
         'universityName'
     );
 
-    // database table used by model
     protected $table = 'dummy_university';
 
+
+    /**
+     * @param $universityName
+     * @return static
+     */
     public static function createUniversity($universityName)
     {
         $universityName = ucwords($universityName);
@@ -28,6 +32,12 @@ class DummyUniversity extends \Eloquent
         return $dummyUniversity;
     }
 
+
+    /**
+     * @param $universityId
+     * @return mixed
+     * @throws \Exception
+     */
     public static function selectName($universityId)
     {
         $dummyUniversity = self::select(array('universityName'))
@@ -39,6 +49,11 @@ class DummyUniversity extends \Eloquent
         throw new \Exception(\Lang::get('errors.invalid_university_id'));
     }
 
+
+    /**
+     * @param $universityName
+     * @return mixed
+     */
     public static function registerUniversity($universityName)
     {
         $dummyUniversity = self::select(array('universityName'))

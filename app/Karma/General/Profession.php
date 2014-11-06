@@ -18,9 +18,14 @@ class Profession extends \Eloquent
         'professionName'
     );
 
-    // database table used by model
     protected $table = 'profession';
 
+
+    /**
+     * @param $professionId
+     * @return mixed
+     * @throws \Exception
+     */
     public static function selectProfessionName($professionId) {
         $profession = self::select(array('professionName'))
             ->where(compact('professionId'))

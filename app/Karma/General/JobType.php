@@ -17,9 +17,14 @@ class JobType extends \Eloquent
         'jobTypeName'
     );
 
-    // database table used by model
     protected $table = 'job_type';
 
+
+    /**
+     * @param $jobTypeId
+     * @return mixed
+     * @throws \Exception
+     */
     public static function selectJobType($jobTypeId)
     {
         $jobType = self::select(array('jobTypeName'))

@@ -19,9 +19,12 @@ class IndUserCache extends \Eloquent
         'cacheValue'
     );
 
-    // database table used by model
     protected $table = 'ind_user_cache';
 
+
+    /**
+     * @return static
+     */
     public function createCache()
     {
         $args = func_get_args();
@@ -30,6 +33,11 @@ class IndUserCache extends \Eloquent
         return $cache;
     }
 
+
+    /**
+     * @param $cacheUserId
+     * @return bool
+     */
     public function isCached($cacheUserId)
     {
         $cache = $this->where(compact('cacheUserId'))->first();
@@ -39,6 +47,11 @@ class IndUserCache extends \Eloquent
         return false;
     }
 
+
+    /**
+     * @param $userId
+     * @return mixed
+     */
     public function selectCacheValue($userId)
     {
         $select = $this

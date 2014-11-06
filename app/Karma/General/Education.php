@@ -23,15 +23,28 @@ class Education extends \Eloquent
         'eduPassedYear'
     );
 
-    // database table used by model
     protected $table = 'ind_education';
 
+
+    /**
+     * @param $eduUserId
+     * @param $eduUniversityId
+     * @param $eduDegreeId
+     * @param $eduPassedYear
+     * @return static
+     */
     public static function createEdu($eduUserId, $eduUniversityId, $eduDegreeId, $eduPassedYear)
     {
         $education = new static (compact('eduUserId', 'eduUniversityId', 'eduDegreeId', 'eduPassedYear'));
         return $education;
     }
 
+
+    /**
+     * @param $eduId
+     * @param $eduUserId
+     * @return bool
+     */
     public static function selectEdu($eduId, $eduUserId)
     {
         $education = self::where(compact('eduId', 'eduUserId'))

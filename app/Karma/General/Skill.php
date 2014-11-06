@@ -18,9 +18,14 @@ class Skill extends \Eloquent
         'skillName'
     );
 
-    // database table used by model
     protected $table = 'skill';
 
+
+    /**
+     * @param $skillId
+     * @return mixed
+     * @throws \Exception
+     */
     public static function selectSkillName($skillId) {
         $skill = self::select(array('skillName'))
             ->where(compact('skillId'))

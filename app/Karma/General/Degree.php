@@ -20,9 +20,14 @@ class Degree extends \Eloquent
         'degreeName'
     );
 
-    // database table used by model
     protected $table = 'degree';
 
+
+    /**
+     * @param $degreeId
+     * @return mixed
+     * @throws \Exception
+     */
     public static function selectName($degreeId)
     {
         $degree = self::select(array('degreeName'))

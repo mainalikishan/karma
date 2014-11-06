@@ -18,11 +18,19 @@ class IndDefaultSetting
      */
     private $indUserCacheHandler;
 
-    function __construct(IndUserCacheHandler $indUserCacheHandler)
+
+    /**
+     * @param IndUserCacheHandler $indUserCacheHandler
+     */
+    public function __construct(IndUserCacheHandler $indUserCacheHandler)
     {
         $this->indUserCacheHandler = $indUserCacheHandler;
     }
 
+
+    /**
+     * @param $userId
+     */
     public function init($userId)
     {
         $this->appSettings($userId);
@@ -30,6 +38,10 @@ class IndDefaultSetting
         $this->privacy($userId);
     }
 
+
+    /**
+     * @param $userId
+     */
     private function appSettings($userId)
     {
         $notifications = array(
@@ -46,6 +58,10 @@ class IndDefaultSetting
         $this->indUserCacheHandler->make($appSetting, 'setting', $userId);
     }
 
+
+    /**
+     * @param $userId
+     */
     private function preference($userId)
     {
         $preferenceData = array(
@@ -61,6 +77,10 @@ class IndDefaultSetting
         $this->indUserCacheHandler->make($preference, 'preference', $userId);
     }
 
+
+    /**
+     * @param $userId
+     */
     private function privacy($userId)
     {
         $privacyData = array(

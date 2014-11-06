@@ -52,6 +52,11 @@ class ApiController extends BaseController
         return $this->setStatusCode(500)->respondWithError($message);
     }
 
+
+    /**
+     * @param string $message
+     * @return mixed
+     */
     public function respondSuccess($message = '')
     {
         return $this->setStatusCode(200)->respondWithSuccess($message);

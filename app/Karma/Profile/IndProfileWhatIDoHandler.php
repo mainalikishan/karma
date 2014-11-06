@@ -29,6 +29,12 @@ class IndProfileWhatIDoHandler implements IndProfileInterface
      */
     private $indUserCacheHandler;
 
+
+    /**
+     * @param IndUser $indUser
+     * @param IndUserRepository $indUserRepository
+     * @param IndUserCacheHandler $indUserCacheHandler
+     */
     public function __construct(IndUser $indUser,
                                 IndUserRepository $indUserRepository,
                                 IndUserCacheHandler $indUserCacheHandler)
@@ -38,18 +44,23 @@ class IndProfileWhatIDoHandler implements IndProfileInterface
         $this->indUserCacheHandler = $indUserCacheHandler;
     }
 
+
+    /**
+     * @param $post
+     * @return mixed
+     * @throws \Exception
+     */
     public function update($post)
     {
         // verify post request
         \CustomHelper::postCheck($post,
             array(
-                'updateType' => 'required|string',
                 'userId' => 'required|integer',
                 'token' => 'required',
                 'professionId' => 'required',
                 'skills' => 'required|array',
                 'summary' => 'required'),
-            6);
+            5);
 
         // verify login info.
         $user = IndUser::loginCheck($post->token, $post->userId);

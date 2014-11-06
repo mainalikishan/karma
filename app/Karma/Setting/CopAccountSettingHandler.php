@@ -28,6 +28,11 @@ class CopAccountSettingHandler
     private $copChangeLogHandler;
 
 
+    /**
+     * @param CopUser $copUser
+     * @param CopUserRepository $copUserRepository
+     * @param CopChangeLogHandler $copChangeLogHandler
+     */
     public function __construct(
         CopUser $copUser,
         CopUserRepository $copUserRepository,
@@ -38,6 +43,12 @@ class CopAccountSettingHandler
         $this->copChangeLogHandler = $copChangeLogHandler;
     }
 
+
+    /**
+     * @param $post
+     * @return bool
+     * @throws \Exception
+     */
     public function updateAccountStatus($post)
     {
         // verify post request
@@ -57,6 +68,12 @@ class CopAccountSettingHandler
         throw new \Exception(\Lang::get('errors.invalid_token'));
     }
 
+
+    /**
+     * @param $data
+     * @return mixed
+     * @throws \Exception
+     */
     public function changePassword($data)
     {
         // check post array  fields

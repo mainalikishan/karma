@@ -19,15 +19,25 @@ class IndPreference extends \Eloquent
         'preferenceData'
     );
 
-    // database table used by model
     protected $table = 'ind_preference';
 
+
+    /**
+     * @param $preferenceUserId
+     * @param $preferenceData
+     * @return static
+     */
     public static function createPreference($preferenceUserId, $preferenceData)
     {
         $preference = new static (compact('preferenceUserId', 'preferenceData'));
         return $preference;
     }
 
+
+    /**
+     * @param $preferenceUserId
+     * @return bool
+     */
     public static function selectPreferenceByUserId($preferenceUserId)
     {
         $preference =

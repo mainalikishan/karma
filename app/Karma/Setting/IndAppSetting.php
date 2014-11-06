@@ -19,15 +19,25 @@ class IndAppSetting extends \Eloquent
         'settings'
     );
 
-    // database table used by model
     protected $table = 'ind_app_settings';
 
+
+    /**
+     * @param $settingUserId
+     * @param $settings
+     * @return static
+     */
     public static function createAppSetting($settingUserId, $settings)
     {
         $appSetting = new static (compact('settingUserId', 'settings'));
         return $appSetting;
     }
 
+
+    /**
+     * @param $settingUserId
+     * @return bool
+     */
     public static function selectAppSettingByUserId($settingUserId)
     {
         $appSetting =

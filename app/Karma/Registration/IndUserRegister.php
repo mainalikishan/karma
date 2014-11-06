@@ -44,6 +44,15 @@ class IndUserRegister
      */
     private $indDefaultSetting;
 
+
+    /**
+     * @param IndFacebookRegister $indFacebookRegister
+     * @param IndTwitterRegister $indTwitterRegister
+     * @param IndLinkedinRegister $indLinkedinRegister
+     * @param IndUser $indUser
+     * @param IndUserCacheHandler $indUserCacheHandler
+     * @param IndDefaultSetting $indDefaultSetting
+     */
     public function __construct(IndFacebookRegister $indFacebookRegister,
                                 IndTwitterRegister $indTwitterRegister,
                                 IndLinkedinRegister $indLinkedinRegister,
@@ -60,6 +69,12 @@ class IndUserRegister
         $this->indDefaultSetting = $indDefaultSetting;
     }
 
+
+    /**
+     * @param $post
+     * @return bool
+     * @throws \Exception
+     */
     public function checkRegistration($post)
     {
         $oauthType = $post->oauthType;

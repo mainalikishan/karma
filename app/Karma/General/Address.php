@@ -21,15 +21,27 @@ class Address extends \Eloquent
         'addressTimeZone'
     );
 
-    // database table used by model
     protected $table = 'address';
 
+
+    /**
+     * @param $addressCountryISO
+     * @param $addressName
+     * @param $addressCoordinate
+     * @param $addressTimeZone
+     * @return static
+     */
     public static function createAddress($addressCountryISO, $addressName, $addressCoordinate, $addressTimeZone)
     {
         $address = new static (compact('addressCountryISO', 'addressName', 'addressCoordinate', 'addressTimeZone'));
         return $address;
     }
 
+
+    /**
+     * @param $addressId
+     * @return bool
+     */
     public static function selectAddress($addressId)
     {
         $address = self::select(array('addressName', 'addressCoordinate', 'addressTimeZone'))
@@ -41,6 +53,12 @@ class Address extends \Eloquent
         return false;
     }
 
+
+    /**
+     * @param $data
+     * @param $country
+     * @return Address
+     */
     public static function makeAddress($data, $country)
     {
         $address = self::select(array('addressId', 'addressCountryISO'))

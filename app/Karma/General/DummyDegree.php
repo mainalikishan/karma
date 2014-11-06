@@ -18,9 +18,13 @@ class DummyDegree extends \Eloquent
         'degreeName'
     );
 
-    // database table used by model
     protected $table = 'dummy_degree';
 
+
+    /**
+     * @param $degreeName
+     * @return static
+     */
     public static function createDegree($degreeName)
     {
         $degreeName = ucwords($degreeName);
@@ -28,6 +32,12 @@ class DummyDegree extends \Eloquent
         return $dummyDegree;
     }
 
+
+    /**
+     * @param $universityId
+     * @return mixed
+     * @throws \Exception
+     */
     public static function selectName($universityId)
     {
         $dummyDegree = self::select(array('degreeName'))
@@ -39,6 +49,11 @@ class DummyDegree extends \Eloquent
         throw new \Exception(\Lang::get('errors.invalid_university_id'));
     }
 
+
+    /**
+     * @param $degreeName
+     * @return mixed
+     */
     public static function registerDegree($degreeName)
     {
         $dummyDegree = self::select(array('degreeName'))

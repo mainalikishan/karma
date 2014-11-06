@@ -19,15 +19,10 @@ use Carbon\Carbon;
 
 class IndUserCacheHandler
 {
-
-    /**
-     * @var IndUserCache
-     */
     private $indUserCache;
 
     public function __construct(IndUserCache $indUserCache)
     {
-
         $this->indUserCache = $indUserCache;
     }
 
@@ -92,6 +87,12 @@ class IndUserCacheHandler
         }
     }
 
+
+    /**
+     * @param array $data
+     * @param $updateType
+     * @return array
+     */
     public function buildUpdateType($data = [], $updateType)
     {
         switch ($updateType) {

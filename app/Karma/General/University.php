@@ -18,9 +18,14 @@ class University extends \Eloquent
         'universityName'
     );
 
-    // database table used by model
     protected $table = 'university';
 
+
+    /**
+     * @param $universityId
+     * @return mixed
+     * @throws \Exception
+     */
     public static function selectName($universityId) {
         $university = self::select(array('universityName'))
             ->where(compact('universityId'))

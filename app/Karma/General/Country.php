@@ -19,9 +19,13 @@ class Country  extends \Eloquent
         'countryCode'
     );
 
-    // database table used by model
     protected $table = 'country';
 
+
+    /**
+     * @param $countryCode
+     * @return bool
+     */
     public static function selectCountryNameByISO($countryCode) {
         $countryCode = strtoupper($countryCode);
         $country = self::select(array('idCountry', 'countryCode', 'countryName'))

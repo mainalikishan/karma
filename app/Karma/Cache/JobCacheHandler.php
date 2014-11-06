@@ -18,17 +18,19 @@ use Carbon\Carbon;
 class JobCacheHandler
 {
 
-    /**
-     * @var JobCache
-     */
     private $jobCache;
 
-    function __construct(JobCache $jobCache)
+    public function __construct(JobCache $jobCache)
     {
         $this->jobCache = $jobCache;
     }
 
-
+    /**
+     * @param array $data
+     * @param $jobId
+     * @param $userId
+     * @return mixed
+     */
     public function create($data = [], $jobId, $userId)
     {
         $data = $this->build($data);
@@ -55,6 +57,11 @@ class JobCacheHandler
         }
     }
 
+
+    /**
+     * @param array $data
+     * @return array
+     */
     public function build($data = [])
     {
         $country = Country::selectCountryNameByISO($data->jobCountryISO);
@@ -97,7 +104,12 @@ class JobCacheHandler
         return $data;
     }
 
-    function select($data)
+
+    /**
+     * @param $data
+     * @return mixed
+     */
+    public function select($data)
     {
 
         // check post array  fields

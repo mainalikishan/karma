@@ -22,24 +22,32 @@ class IndProfileEducationHandler implements IndProfileInterface
      */
     private $indUserCacheHandler;
 
+
+    /**
+     * @param IndUserCacheHandler $indUserCacheHandler
+     */
     public function __construct(IndUserCacheHandler $indUserCacheHandler)
     {
         $this->indUserCacheHandler = $indUserCacheHandler;
     }
 
+
+    /**
+     * @param $post
+     * @return mixed
+     */
     public function update($post)
     {
         // verify post request
         \CustomHelper::postCheck($post,
             array(
-                'updateType' => 'required|string',
                 'userId' => 'required|integer',
                 'token' => 'required',
                 'university' => 'required',
                 'degree' => 'required',
                 'passedYear' => 'required|integer',
                 'eduId' => 'optional|integer'),
-            7);
+            6);
 
         // verify login info.
         $user = IndUser::loginCheck($post->token, $post->userId);
@@ -70,7 +78,6 @@ class IndProfileEducationHandler implements IndProfileInterface
 
             // select
             $user = Education::select(array(
-                'eduId',
                 'eduUniversityId',
                 'eduDegreeId',
                 'eduPassedYear'

@@ -47,7 +47,6 @@ class IndProfileBasicHandler implements IndProfileInterface
         // verify post request
         \CustomHelper::postCheck($post,
             array(
-                'updateType' => 'required|string',
                 'userId' => 'required|integer',
                 'token' => 'required',
                 'genderId' => 'required',
@@ -59,7 +58,7 @@ class IndProfileBasicHandler implements IndProfileInterface
                 'birthDay' => 'required|integer',
                 'birthMonth' => 'required|integer',
                 'birthYear' => 'required|integer'),
-            12);
+            11);
 
         // verify login info.
         $user = IndUser::loginCheck($post->token, $post->userId);

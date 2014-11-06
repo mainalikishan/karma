@@ -22,9 +22,12 @@ class JobCache extends \Eloquent
         'cacheDetails'
     );
 
-    // database table used by model
     protected $table = 'job_cache';
 
+
+    /**
+     * @return static
+     */
     public function createCache()
     {
         $args = func_get_args();
@@ -33,6 +36,11 @@ class JobCache extends \Eloquent
         return $cache;
     }
 
+
+    /**
+     * @param $jobId
+     * @return bool
+     */
     public function isCached($jobId)
     {
         $cache = $this->where(compact('jobId'))->first();
@@ -42,6 +50,11 @@ class JobCache extends \Eloquent
         return false;
     }
 
+
+    /**
+     * @param $jobId
+     * @return mixed
+     */
     public function selectCacheValue($jobId)
     {
         $select = $this
@@ -51,6 +64,12 @@ class JobCache extends \Eloquent
         return json_decode($select->cacheDetails);
     }
 
+
+    /**
+     * @param $userId
+     * @param $jobId
+     * @return mixed
+     */
     public function selectCacheValueById($userId,$jobId)
     {
         $select = $this
@@ -61,6 +80,11 @@ class JobCache extends \Eloquent
         return json_decode($select->cacheDetails);
     }
 
+
+    /**
+     * @param $userId
+     * @return mixed
+     */
     public function selectAllCacheValue($userId)
     {
         $select = $this

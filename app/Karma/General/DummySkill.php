@@ -18,9 +18,13 @@ class DummySkill extends \Eloquent
         'skillName'
     );
 
-    // database table used by model
     protected $table = 'dummy_skill';
 
+
+    /**
+     * @param $skillName
+     * @return static
+     */
     public static function createSkill($skillName)
     {
         $skillName = ucwords($skillName);
@@ -28,6 +32,12 @@ class DummySkill extends \Eloquent
         return $dummySkill;
     }
 
+
+    /**
+     * @param $skillId
+     * @return mixed
+     * @throws \Exception
+     */
     public static function selectSkillName($skillId)
     {
         $dummySkill = self::select(array('skillName'))
@@ -39,6 +49,11 @@ class DummySkill extends \Eloquent
         throw new \Exception(\Lang::get('errors.invalid_skill_id'));
     }
 
+
+    /**
+     * @param $skillName
+     * @return mixed
+     */
     public static function registerSkill($skillName)
     {
         $dummySkill = self::select(array('skillName'))

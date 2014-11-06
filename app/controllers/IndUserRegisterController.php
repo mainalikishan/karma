@@ -9,7 +9,11 @@ class IndUserRegisterController extends ApiController
      */
     private $indUserRegister;
 
-    function __construct(IndUserRegister $indUserRegister)
+
+    /**
+     * @param IndUserRegister $indUserRegister
+     */
+    public function __construct(IndUserRegister $indUserRegister)
     {
         $this->indUserRegister = $indUserRegister;
     }
