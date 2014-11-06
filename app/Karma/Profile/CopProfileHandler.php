@@ -50,17 +50,15 @@ class CopProfileHandler
 
     public function updateProfile($data)
     {
-
-
         // check post array  fields
         \CustomHelper::postCheck($data,
-            array('userId'=>'required',
-                'userToken'=>'required',
-                'userCompanyName'=> 'required|string',
-                'userIndustryTypeId'=>'required|integer',
-                'userAddressCoordinate'=>'required',
-                'userCompanyPhone'=>'optional',
-                'userSummary'=>'optional'),
+            array('userId' => 'required',
+                'userToken' => 'required',
+                'userCompanyName' => 'required|string',
+                'userIndustryTypeId' => 'required|integer',
+                'userAddressCoordinate' => 'required',
+                'userCompanyPhone' => 'optional',
+                'userSummary' => 'optional'),
             7);
 
         //getting post value
@@ -74,7 +72,6 @@ class CopProfileHandler
         $users = $this->copUser->getUserById($userId);
         // return $users;
 
-
         // add company filed value change log to change log table
         foreach ($this->updateKeys() as $key => $value) {
 
@@ -84,7 +81,6 @@ class CopProfileHandler
         }
 
         // update copUser table if token id and user id is valid
-
         $address = false;
         if (isset($data->userAddressCoordinate) && !empty($data->userAddressCoordinate)) {
             $address = \CustomHelper::getAddressFromApi($data->userAddressCoordinate);

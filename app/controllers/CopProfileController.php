@@ -1,7 +1,6 @@
 <?php
 
 use Karma\Cache\CopUserCacheHandler;
-use Karma\Log\ReportLog\CopReportLog;
 use Karma\Log\ReportLog\CopReportLogHandler;
 use Karma\Log\UserBlockLog\CopBlockUserLogHandler;
 use Karma\Profile\CopProfileHandler;

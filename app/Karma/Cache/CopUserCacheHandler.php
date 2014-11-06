@@ -18,6 +18,9 @@ use Karma\Users\IndUser;
 class CopUserCacheHandler
 {
 
+    /**
+     * @var CopUserCache
+     */
     private $copUserCache;
     /**
      * @var \Karma\Log\UserBlockLog\CopBlockUserLog
@@ -27,6 +30,7 @@ class CopUserCacheHandler
 
     /**
      * @param CopUserCache $copUserCache
+     * @param CopBlockUserLog $copBlockUserLog
      */
     public function __construct(CopUserCache $copUserCache,
                                 CopBlockUserLog $copBlockUserLog)
@@ -173,10 +177,16 @@ class CopUserCacheHandler
             //checking for valid token id and user id
             IndUser::loginCheck($userToken, $viewerId);
 
-            //check user block
+            //check user profile blocked by me (can not access my profile by him/her )
             $block = $this->copBlockUserLog->isBlock($blockUserId = $viewerId, $blockByUserId = $userId, $type = 'ind');
             if ($block > 1) {
-                return \Lang::get('error.profile.profile_not_found');
+                return \Lang::get('errors.profile.profile_not_found');
+            }
+
+            //check user profile blocked by me (can not access his/her profile )
+            $block = $this->copBlockUserLog->isBlock($blockUserId = $userId, $blockByUserId = $viewerId, $type = 'ind');
+            if ($block > 1) {
+                return \Lang::get('errors.profile.profile_not_found');
             }
 
             $result = $this->copUserCache
@@ -193,10 +203,16 @@ class CopUserCacheHandler
             //checking for valid token id and user id
             \CopUserLoginCheck::loginCheck($userToken, $viewerId);
 
-            //check user block
+            //check user profile blocked by me (can not access my profile by him/her)
             $block = $this->copBlockUserLog->isBlock($blockUserId = $viewerId, $blockByUserId = $userId, $type = 'cop');
             if ($block > 1) {
-                return \Lang::get('error.profile.profile_not_found');
+                return \Lang::get('errors.profile.profile_not_found');
+            }
+
+            //check user profile blocked by me (can not access his/her profile )
+            $block = $this->copBlockUserLog->isBlock($blockUserId = $userId, $blockByUserId = $viewerId, $type = 'cop');
+            if ($block > 1) {
+                return \Lang::get('errors.profile.profile_not_found');
             }
 
             $result = $this->copUserCache
