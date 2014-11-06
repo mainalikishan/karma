@@ -1,6 +1,5 @@
 <?php
 use Karma\Login\CopLogInHandler;
-use Karma\Validation\CopLoginValidate;
 class CopUserLoginController extends ApiController {
 
     /**
