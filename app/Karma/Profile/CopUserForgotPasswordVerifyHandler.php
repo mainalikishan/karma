@@ -8,7 +8,6 @@
 namespace Karma\Profile;
 
 use Karma\Users\CopUser;
-use Karma\Users\CopUserRepository;
 
 class CopUserForgotPasswordVerifyHandler
 {
@@ -17,19 +16,14 @@ class CopUserForgotPasswordVerifyHandler
      * @var \Karma\Users\CopUser
      */
     private $copUser;
-    /**
-     * @var \Karma\Users\CopUserRepository
-     */
-    private $copUserRepository;
+
 
     /**
      * @param CopUser $copUser
-     * @param CopUserRepository $copUserRepository
      */
-    function __construct(CopUser $copUser, CopUserRepository $copUserRepository)
+    public function __construct(CopUser $copUser)
     {
         $this->copUser = $copUser;
-        $this->copUserRepository = $copUserRepository;
     }
 
     /**
@@ -52,7 +46,7 @@ class CopUserForgotPasswordVerifyHandler
             $user->userId = $user->userId;
             $user->userPassword = \Hash::Make($newPassword);
             $user->userPasswordRequestVerificationCode=0;
-            $this->copUserRepository->save($user);
+            $user->save();
             $newPassword = array('password'=>$newPassword,'name'=>$user->userCompanyName,'email'=>$email);
             $obj_merged = (object) array_merge((array) $newPassword);
             return array('user' => $obj_merged, 'success' => \Lang::get('messages.profile.password_verification_successful'));
