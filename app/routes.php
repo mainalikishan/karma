@@ -22,6 +22,8 @@ Route::group(['prefix' => 'api/v1'], function() {
     Route::post('copuser/profile/report', 'CopProfileController@report');
     Route::post('copuser/setting/updateAppSetting', 'CopUserSettingController@updateAppSetting');
     Route::post('copuser/setting/updatePreference', 'CopUserSettingController@updatePreference');
+    Route::post('copuser/setting/updateAccountStatus', 'CopUserSettingController@updateAccountStatus');
+    Route::post('copuser/setting/updatePassword', 'CopUserSettingController@updatePassword');
     //Jobs routs
     Route::post('jobs/store', 'JobController@store');
     Route::post('jobs/update', 'JobController@update');

@@ -2,7 +2,7 @@
 use Karma\Setting\IndAppSettingHandler;
 use Karma\Setting\IndPreferenceHandler;
 use Karma\Setting\IndPrivacyHandler;
-use Karma\Setting\IndUserAccountSettingHandler;
+use Karma\Setting\IndAccountSettingHandler;
 
 /**
  * User: kishan
@@ -26,21 +26,21 @@ class IndUserSettingController extends ApiController
      */
     private $indPrivacyHandler;
     /**
-     * @var Karma\Setting\IndUserAccountSettingHandler
+     * @var Karma\Setting\IndAccountSettingHandler
      */
-    private $indUserAccountSettingHandler;
+    private $indAccountSettingHandler;
 
     public function __construct(
         IndPreferenceHandler $indPreferenceHandler,
         IndAppSettingHandler $indAppSettingHandler,
         IndPrivacyHandler $indPrivacyHandler,
-        IndUserAccountSettingHandler $indUserAccountSettingHandler
+        IndAccountSettingHandler $indAccountSettingHandler
     )
     {
         $this->indPreferenceHandler = $indPreferenceHandler;
         $this->indAppSettingHandler = $indAppSettingHandler;
         $this->indPrivacyHandler = $indPrivacyHandler;
-        $this->indUserAccountSettingHandler = $indUserAccountSettingHandler;
+        $this->indAccountSettingHandler = $indAccountSettingHandler;
     }
 
     public function updatePreference()
@@ -78,7 +78,7 @@ class IndUserSettingController extends ApiController
         $post = $this->postRequestHandler();
         if (is_object($post)) {
             try {
-                $return = $this->indUserAccountSettingHandler->updateAccountStatus($post);
+                $return = $this->indAccountSettingHandler->updateAccountStatus($post);
                 return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());

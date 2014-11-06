@@ -9,7 +9,7 @@ namespace Karma\Setting;
 
 use Karma\Users\IndUser;
 
-class IndUserAccountSettingHandler
+class IndAccountSettingHandler
 {
 
     public function updateAccountStatus($post)

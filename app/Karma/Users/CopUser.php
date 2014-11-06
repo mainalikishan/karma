@@ -163,4 +163,15 @@ class CopUser extends \Eloquent
             ->where('userId', '=', $userId)
             ->first();
     }
+
+    public static function loginCheck($userToken, $userId)
+    {
+        $user = self::where(compact('userToken', 'userId'))->first();
+        if ($user) {
+            if ($userId == $user->userId && $userToken == $user->userToken) {
+                return $user;
+            }
+        }
+        return false;
+    }
 }
