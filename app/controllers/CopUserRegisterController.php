@@ -23,7 +23,7 @@ class CopUserRegisterController extends ApiController
      * @param CopUserRegister $copUserRegister
      * @param CopAccountActivationHandler $copAccountActivationHandler
      */
-    function __construct(CopUserRegister $copUserRegister,
+    public function __construct(CopUserRegister $copUserRegister,
                          CopAccountActivationHandler $copAccountActivationHandler)
     {
         $this->copUserRegister = $copUserRegister;
