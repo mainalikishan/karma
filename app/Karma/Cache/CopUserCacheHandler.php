@@ -12,20 +12,27 @@ use Karma\General\Address;
 use Karma\General\IndustryType;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;
 use Karma\Log\ProfileViewLog\CopProfileViewLogHandler;
+use Karma\Log\UserBlockLog\CopBlockUserLog;
 use Karma\Users\IndUser;
 
 class CopUserCacheHandler
 {
 
     private $copUserCache;
+    /**
+     * @var \Karma\Log\UserBlockLog\CopBlockUserLog
+     */
+    private $copBlockUserLog;
 
 
     /**
      * @param CopUserCache $copUserCache
      */
-    public function __construct(CopUserCache $copUserCache)
+    public function __construct(CopUserCache $copUserCache,
+                                CopBlockUserLog $copBlockUserLog)
     {
         $this->copUserCache = $copUserCache;
+        $this->copBlockUserLog = $copBlockUserLog;
     }
 
 
@@ -138,7 +145,6 @@ class CopUserCacheHandler
         }
     }
 
-
     /**
      * @param $data
      * @return mixed
@@ -163,10 +169,16 @@ class CopUserCacheHandler
         //add internal log
         CopInternalLogHandler::addInternalLog($userId, $data);
 
-
         if ($type == 'indUser') {
             //checking for valid token id and user id
             IndUser::loginCheck($userToken, $viewerId);
+
+            //check user block
+            $block = $this->copBlockUserLog->isBlock($blockUserId = $viewerId, $blockByUserId = $userId, $type = 'ind');
+            if ($block > 1) {
+                return \Lang::get('error.profile.profile_not_found');
+            }
+
             $result = $this->copUserCache
                 ->select('cacheValue')
                 ->where('cacheUserId', $userId)
@@ -180,6 +192,13 @@ class CopUserCacheHandler
         } else if ($type == 'copUser') {
             //checking for valid token id and user id
             \CopUserLoginCheck::loginCheck($userToken, $viewerId);
+
+            //check user block
+            $block = $this->copBlockUserLog->isBlock($blockUserId = $viewerId, $blockByUserId = $userId, $type = 'cop');
+            if ($block > 1) {
+                return \Lang::get('error.profile.profile_not_found');
+            }
+
             $result = $this->copUserCache
                 ->select('cacheValue')
                 ->where('cacheUserId', $userId)
