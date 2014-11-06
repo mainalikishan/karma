@@ -10,7 +10,7 @@ class CopUserLoginController extends ApiController {
     /**
      * @param CopLogInHandler $copLogInHandler
      */
-    function __construct(CopLogInHandler $copLogInHandler )
+    public function __construct(CopLogInHandler $copLogInHandler )
     {
         $this->copLogInHandler = $copLogInHandler;
     }
