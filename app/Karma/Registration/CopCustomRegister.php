@@ -7,28 +7,22 @@
 
 namespace Karma\Registration;
 
-use Karma\Users\CopUserRepository;
 use Karma\Users\CopUser;
 
 class CopCustomRegister implements CopUserRegisterInterface
 {
 
     /**
-     * @var \Karma\Users\CopUserRepository
-     */
-    private $copUserRepository;
-    /**
      * @var \Karma\Users\CopUser
      */
     private $copUser;
 
+
     /**
-     * @param CopUserRepository $copUserRepository
      * @param CopUser $copUser
      */
-    public function __construct(CopUserRepository $copUserRepository, CopUser $copUser)
+    public function __construct(CopUser $copUser)
     {
-        $this->copUserRepository = $copUserRepository;
         $this->copUser = $copUser;
     }
 
@@ -64,7 +58,7 @@ class CopCustomRegister implements CopUserRegisterInterface
         $user->userDynamicAddressCoordinate = $post->userAddressCoordinate;
         $user->userEmailVerificationCode = $userEmailVerificationCode;
 
-        $this->copUserRepository->save($user);
+        $user->save();
         \Event::fire('copUser.register', $user);
         return $user;
 

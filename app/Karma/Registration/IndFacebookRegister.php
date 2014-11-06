@@ -8,16 +8,11 @@
 namespace Karma\Registration;
 
 
-use Karma\Users\IndUserRepository;
 use Karma\Users\IndUser;
 
 class IndFacebookRegister implements IndUserRegisterInterface
 {
     const oauthType = 'Facebook';
-    /**
-     * @var \Karma\Users\IndUserRepository
-     */
-    private $indUserRepository;
     /**
      * @var \Karma\Users\IndUser
      */
@@ -25,12 +20,10 @@ class IndFacebookRegister implements IndUserRegisterInterface
 
 
     /**
-     * @param IndUserRepository $indUserRepository
      * @param IndUser $indUser
      */
-    public function __construct(IndUserRepository $indUserRepository, IndUser $indUser)
+    public function __construct(IndUser $indUser)
     {
-        $this->indUserRepository = $indUserRepository;
         $this->indUser = $indUser;
     }
 
@@ -79,7 +72,7 @@ class IndFacebookRegister implements IndUserRegisterInterface
             );
         }
 
-        $this->indUserRepository->save($user);
+        $user->save();
 
         return array('action'=>$action, 'user'=>$user);
     }
