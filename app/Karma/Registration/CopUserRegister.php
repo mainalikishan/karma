@@ -72,8 +72,7 @@ class CopUserRegister
             }
         }
 
-        if($this->copUser->checkEmail($post->userEmail)!==false)
-        {
+        if ($this->copUser->checkEmail($post->userEmail) !== false) {
             return \Lang::get('errors.duplicate_email');
         }
 
@@ -105,7 +104,7 @@ class CopUserRegister
                 ->first();
 
             // add internal log
-            CopInternalLogHandler::addInternalLog($user->userId,$post);
+            CopInternalLogHandler::addInternalLog($user->userId, $post);
 
             // create cache for user
             $this->copUserCacheHandler->make($user, 'basic', $user->userId);
