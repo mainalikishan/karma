@@ -23,6 +23,8 @@ return [
         'job_apply_successful' => 'Applied successfully',
     ],
     'profile'=>[
-        'received_report'=>'We have received your report'
+        'received_report'=>'We have received your report',
+        'block_success'=>'User blocked successfully',
+        'unblock_success'=>'User un blocked successfully'
     ]
 ];

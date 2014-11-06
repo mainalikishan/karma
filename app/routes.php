@@ -9,6 +9,8 @@ Route::group(['prefix' => 'api/v1'], function() {
     Route::post('induser/setting/updateAccountStatus', 'IndUserSettingController@updateAccountStatus');
     Route::post('induser/setting/updatePrivacy', 'IndUserSettingController@updatePrivacy');
     Route::post('induser/profile/report', 'IndProfileController@report');
+    Route::post('induser/profile/block', 'IndProfileController@blockUser');
+    Route::post('induser/profile/unBlock', 'IndProfileController@unBlockUser');
 
     // Corporate User routes
     Route::post('copuser/register', 'CopUserRegisterController@register');
@@ -20,6 +22,8 @@ Route::group(['prefix' => 'api/v1'], function() {
     Route::post('copuser/forgotPasswordCodeVerify', 'CopUserForgotPasswordController@codeVerify');
     Route::post('copuser/profile', 'CopProfileController@view');
     Route::post('copuser/profile/report', 'CopProfileController@report');
+    Route::post('copuser/profile/block', 'CopProfileController@blockUser');
+    Route::post('copuser/profile/unBlock', 'CopProfileController@unBlockUser');
     Route::post('copuser/setting/updateAppSetting', 'CopUserSettingController@updateAppSetting');
     Route::post('copuser/setting/updatePreference', 'CopUserSettingController@updatePreference');
     //Jobs routs
