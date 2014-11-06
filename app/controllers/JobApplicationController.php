@@ -9,6 +9,9 @@ class JobApplicationController extends ApiController
      */
     private $applicationHandler;
 
+    /**
+     * @param JobApplicationHandler $applicationHandler
+     */
     function __construct(JobApplicationHandler $applicationHandler)
     {
         $this->applicationHandler = $applicationHandler;

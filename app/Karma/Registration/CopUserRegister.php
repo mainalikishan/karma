@@ -33,6 +33,12 @@ class CopUserRegister
      */
     private $copUser;
 
+    /**
+     * @param CopCustomRegister $copCustomRegister
+     * @param CopLinkedInRegister $copLinkedInRegister
+     * @param CopUserCacheHandler $copUserCacheHandler
+     * @param CopUser $copUser
+     */
     public function __construct(CopCustomRegister $copCustomRegister,
                                 CopLinkedInRegister $copLinkedInRegister,
                                 CopUserCacheHandler $copUserCacheHandler,
@@ -44,6 +50,11 @@ class CopUserRegister
         $this->copUser = $copUser;
     }
 
+    /**
+     * @param $post
+     * @return mixed
+     * @throws \Exception
+     */
     public function checkRegistration($post)
     {
         $oauthType = $post->userOauthType;

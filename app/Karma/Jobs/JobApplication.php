@@ -17,6 +17,9 @@ class JobApplication extends \Eloquent
     //database table used
     protected $table = 'job_app';
 
-    protected $fillable = ['appCopUserId', 'appIndUserId', 'appJobId', 'appAddedDate'];
+    protected $fillable = ['appCopUserId',
+        'appIndUserId',
+        'appJobId',
+        'appAddedDate'];
 
 } 

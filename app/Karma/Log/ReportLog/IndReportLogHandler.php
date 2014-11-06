@@ -24,6 +24,10 @@ class IndReportLogHandler
     private $indUser;
 
 
+    /**
+     * @param IndReportLog $indReportLog
+     * @param indUser $indUser
+     */
     function __construct(IndReportLog $indReportLog,
                          IndUser $indUser)
     {
@@ -31,6 +35,10 @@ class IndReportLogHandler
         $this->indUser = $indUser;
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function addReportLog($data)
     {
         // check post array  fields

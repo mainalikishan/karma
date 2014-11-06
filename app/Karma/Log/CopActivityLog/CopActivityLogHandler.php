@@ -14,11 +14,18 @@ class CopActivityLogHandler
      */
     private $copActivityLog;
 
+    /**
+     * @param CopActivityLog $copActivityLog
+     */
     function __construct(CopActivityLog $copActivityLog)
     {
         $this->copActivityLog = $copActivityLog;
     }
 
+    /**
+     * @param $userId
+     * @param $logText
+     */
     public static function addActivityLog($userId, $logText)
     {
         CopActivityLog::create(array(

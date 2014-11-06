@@ -12,17 +12,25 @@ use Carbon\Carbon;
 class CopNotificationHandler
 {
 
-
     /**
      * @var CopNotification
      */
     private $copNotification;
 
+    /**
+     * @param CopNotification $copNotification
+     */
     function __construct(CopNotification $copNotification)
     {
         $this->copNotification = $copNotification;
     }
 
+    /**
+     * @param $userId
+     * @param $details
+     * @param $type
+     * @param $targetId
+     */
     public function addNotification($userId, $details, $type, $targetId)
     {
 
@@ -34,6 +42,10 @@ class CopNotificationHandler
         }
     }
 
+    /**
+     * @param $data
+     * @return bool
+     */
     public function updateStatus($data)
     {
         // check post array  fields

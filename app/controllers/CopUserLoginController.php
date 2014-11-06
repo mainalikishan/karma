@@ -8,11 +8,17 @@ class CopUserLoginController extends ApiController {
      */
     private $copLogInHandler;
 
+    /**
+     * @param CopLogInHandler $copLogInHandler
+     */
     function __construct(CopLogInHandler $copLogInHandler )
     {
         $this->copLogInHandler = $copLogInHandler;
     }
 
+    /**
+     * @return mixed
+     */
     public function login()
     {
         $post = $this->postRequestHandler();

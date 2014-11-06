@@ -10,6 +10,10 @@ namespace Karma\Users;
 
 class CopUserRepository {
 
+    /**
+     * @param CopUser $users
+     * @return mixed
+     */
     public function save(CopUser $users)
     {
         return $users->save();

@@ -27,6 +27,15 @@ class IndNotification extends \Eloquent
     protected $table = 'ind_notification';
 
 
+    /**
+     * @param $notificationUserId
+     * @param $notificationDetails
+     * @param $notificationTargetType
+     * @param $notificationTargetId
+     * @param $notificationAddedDate
+     * @param $notificationUpdatedDate
+     * @return static
+     */
     public function createNotification($notificationUserId,
                                        $notificationDetails,
                                        $notificationTargetType,
@@ -43,6 +52,10 @@ class IndNotification extends \Eloquent
         return $result;
     }
 
+    /**
+     * @param $userId
+     * @return mixed
+     */
     function checkStatus($userId)
     {
         return $notifications = $this->where('notificationUserId', $userId)

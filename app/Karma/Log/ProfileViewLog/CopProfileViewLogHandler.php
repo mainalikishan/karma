@@ -17,15 +17,22 @@ class CopProfileViewLogHandler {
      */
     private $copProfileViewLog;
 
+    /**
+     * @param CopProfileViewLog $copProfileViewLog
+     */
     function __construct(CopProfileViewLog $copProfileViewLog)
     {
 
         $this->copProfileViewLog = $copProfileViewLog;
     }
 
+    /**
+     * @param $logViewerId
+     * @param $logUserId
+     * @param $logUserType
+     */
     public static function addProfileViewLog($logViewerId,$logUserId,$logUserType)
     {
-
         CopProfileViewLog::create(array(
             'logViewerId' => $logViewerId,
             'logUserId' => $logUserId,

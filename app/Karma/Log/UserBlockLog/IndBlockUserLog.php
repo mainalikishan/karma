@@ -22,6 +22,12 @@ class IndBlockUserLog extends \Eloquent
     protected $table = 'ind_block_user';
 
 
+    /**
+     * @param $blockUserId
+     * @param $blockByUserId
+     * @param $type
+     * @return mixed
+     */
     public function isBlock($blockUserId, $blockByUserId, $type)
     {
         return $user = $this->where('blockUserId', $blockUserId)
@@ -31,6 +37,12 @@ class IndBlockUserLog extends \Eloquent
             ->count();
     }
 
+    /**
+     * @param $blockUserId
+     * @param $blockByUserId
+     * @param $type
+     * @return mixed
+     */
     public function getRecord($blockUserId, $blockByUserId, $type)
     {
         return $user = $this->where('blockUserId', $blockUserId)

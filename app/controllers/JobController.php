@@ -15,6 +15,10 @@ class JobController extends ApiController
      */
     private $jobCacheHandler;
 
+    /**
+     * @param JobsHandler $handler
+     * @param JobCacheHandler $jobCacheHandler
+     */
     public function __construct(JobsHandler $handler, JobCacheHandler $jobCacheHandler)
     {
         $this->handler = $handler;
@@ -46,7 +50,6 @@ class JobController extends ApiController
      */
     public function selectJobCache()
     {
-
         $post = $this->postRequestHandler();
         if (is_object($post)) {
             try {
@@ -58,7 +61,6 @@ class JobController extends ApiController
         }
         return $this->respondUnprocessableEntity();
     }
-
 
     /**
      * @return mixed

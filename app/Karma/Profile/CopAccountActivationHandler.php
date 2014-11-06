@@ -23,18 +23,31 @@ class CopAccountActivationHandler
      */
     private $copUserRepository;
 
-    function __construct(CopUser $copUser, CopUserRepository $copUserRepository)
+    /**
+     * @param CopUser $copUser
+     * @param CopUserRepository $copUserRepository
+     */
+    function __construct(CopUser $copUser,
+                         CopUserRepository $copUserRepository)
     {
         $this->copUser = $copUser;
         $this->copUserRepository = $copUserRepository;
     }
 
+    /**
+     * @param $post
+     * @return mixed
+     * @throws \Exception
+     */
     public function accountActivation($post)
     {
         $email = $post->userEmail;
         $activationCode = $post->activationCode;
 
-        \CustomHelper::postCheck($post, array('userEmail', 'activationCode'), 2);
+        \CustomHelper::postCheck($post,
+            array('userEmail' => 'required',
+                'activationCode' => 'required'),
+            2);
         $user = $this->copUser->checkActivationCode($email, $activationCode);
         if ($user) {
             $user->userId = $user->userId;
@@ -43,6 +56,5 @@ class CopAccountActivationHandler
             return \Lang::get('messages.account_activation_successful');
         }
         throw new \Exception('errors.invalid_activation_code');
-
     }
 } 

@@ -21,6 +21,12 @@ class CopReportLog  extends \Eloquent{
     protected $table = 'cop_report_log';
 
 
+    /**
+     * @param $logUserId
+     * @param $logReportById
+     * @param $type
+     * @return mixed
+     */
     public function isReport($logUserId,$logReportById,$type)
     {
        return  $user = $this->where('logUserId',$logUserId)

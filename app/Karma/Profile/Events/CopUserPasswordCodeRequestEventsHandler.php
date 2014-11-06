@@ -18,18 +18,27 @@ class CopUserPasswordCodeRequestEventsHandler {
      */
     private $copUserPasswordCodeRequest;
 
+    /**
+     * @param CopUserPasswordCodeRequest $copUserPasswordCodeRequest
+     */
     function __construct(CopUserPasswordCodeRequest $copUserPasswordCodeRequest)
     {
 
         $this->copUserPasswordCodeRequest = $copUserPasswordCodeRequest;
     }
 
+    /**
+     * @param $data
+     */
     public function onCodeRequest($data)
     {
 
         $this->copUserPasswordCodeRequest->sendEmail($data);
     }
 
+    /**
+     * @param $events
+     */
     public function subscribe($events)
     {
         $events->listen('copUser.requestCode', 'Karma\Profile\Events\CopUserPasswordCodeRequestEventsHandler@onCodeRequest');

@@ -18,11 +18,20 @@ class IndNotificationHandler
      */
     private $indNotification;
 
+    /**
+     * @param IndNotification $indNotification
+     */
     function __construct(IndNotification $indNotification)
     {
         $this->indNotification = $indNotification;
     }
 
+    /**
+     * @param $userId
+     * @param $details
+     * @param $type
+     * @param $targetId
+     */
     public function addNotification($userId, $details, $type, $targetId)
     {
 
@@ -34,6 +43,10 @@ class IndNotificationHandler
         }
     }
 
+    /**
+     * @param $data
+     * @return bool
+     */
     public function updateStatus($data)
     {
         // check post array  fields

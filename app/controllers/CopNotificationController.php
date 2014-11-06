@@ -2,6 +2,9 @@
 
 use Karma\Notification\CopNotificationHandler;
 
+/**
+ * Class CopNotificationController
+ */
 class CopNotificationController extends ApiController
 
 {
@@ -12,6 +15,9 @@ class CopNotificationController extends ApiController
      */
     private $copNotificationHandler;
 
+    /**
+     * @param CopNotificationHandler $copNotificationHandler
+     */
     public function __construct(CopNotificationHandler $copNotificationHandler)
     {
 

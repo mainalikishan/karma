@@ -14,11 +14,18 @@ class IndActivityLogHandler
      */
     private $indActivityLog;
 
+    /**
+     * @param IndActivityLog $indActivityLog
+     */
     function __construct(IndActivityLog $indActivityLog)
     {
         $this->indActivityLog = $indActivityLog;
     }
 
+    /**
+     * @param $userId
+     * @param $logText
+     */
     public static function addActivityLog($userId, $logText)
     {
         CopActivityLog::create(array(

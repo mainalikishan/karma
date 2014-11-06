@@ -17,7 +17,6 @@ return [
     'invalid_job_type_id' => 'Invalid job type ID',
     'invalid_activation_code' => 'Invalid account activation code',
     'account_activation_successful' => 'Account activated successfully',
-    'invalid_email_address' => 'Invalid email address',
     'invalid_code_email_address' => 'Invalid code or email address',
     'invalid_email_password_address' => 'Invalid email or password',
     'job_not_found' => 'Job not found',
@@ -36,6 +35,7 @@ return [
     ],
 
     'profile' =>[
+        'invalid_email_address' => 'Invalid email address',
         'profile_not_found'=>'This link is temporarily unavailable',
         'already_reported'=>'Already reported',
         'already_blocked'=>'Already blocked',
