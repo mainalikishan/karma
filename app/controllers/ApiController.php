@@ -62,19 +62,19 @@ class ApiController extends BaseController
      * @param array $headers
      * @return mixed
      */
-    public function respond($data, $headers=[])
+    public function respond($data, $headers = [])
     {
         return Response::json($data, $this->getStatusCode(), $headers);
     }
 
+
+    /**
+     * @param $message
+     * @return mixed
+     */
     public function respondWithSuccess($message)
     {
-        return $this->respond([
-            'success' => [
-                'message' => $message,
-                'statusCode' => $this->getStatusCode(),
-            ]
-        ]);
+        return $this->makeResponse($message);
     }
 
 
@@ -84,11 +84,19 @@ class ApiController extends BaseController
      */
     public function respondWithError($message)
     {
+        return $this->makeResponse($message);
+    }
+
+
+    /**
+     * @param $message
+     * @return mixed
+     */
+    private function makeResponse($message)
+    {
         return $this->respond([
-            'error' => [
-                'message' => $message,
-                'status_code' => $this->getStatusCode()
-            ]
+            'response' => $message,
+            'statusCode' => $this->getStatusCode()
         ]);
     }
 

@@ -28,7 +28,7 @@ class CopChangePasswordHandler
     private $copChangeLogHandler;
 
 
-    public function __construct(CopUser $copUser, CopUserRepository $copUserRepository,CopChangeLogHandler $copChangeLogHandler)
+    public function __construct(CopUser $copUser, CopUserRepository $copUserRepository, CopChangeLogHandler $copChangeLogHandler)
     {
         $this->copUser = $copUser;
         $this->copUserRepository = $copUserRepository;
@@ -39,7 +39,14 @@ class CopChangePasswordHandler
     {
 
         // check post array  fields
-        \CustomHelper::postCheck($data, array('userId', 'userToken', 'userPassword', 'newPassword', 'confirmPassword'), 5);
+        \CustomHelper::postCheck($data,
+            array(
+                'userId',
+                'userToken',
+                'userPassword',
+                'newPassword',
+                'confirmPassword'),
+            5);
 
         //getting post value
         $userId = $data->userId;
@@ -63,7 +70,7 @@ class CopChangePasswordHandler
                     $user->userPassword = \Hash::make($newPassword);
                     $this->copUserRepository->save($user);
 
-                   $this->copChangeLogHandler->addChangeLog($userId,'PASSWORD',$user->userPassword);
+                    $this->copChangeLogHandler->addChangeLog($userId, 'PASSWORD', $user->userPassword);
                     return \Lang::get('messages.password_change_successful');
                 }
                 throw new \Exception(\Lang::get('errors.confirm_password_mismatched'));
