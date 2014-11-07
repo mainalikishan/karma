@@ -14,6 +14,9 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::post('induser/profile/report', 'IndProfileController@report');
     Route::post('induser/profile/block', 'IndProfileController@blockUser');
     Route::post('induser/profile/unBlock', 'IndProfileController@unBlockUser');
+    Route::post('induser/profile/review', 'IndProfileController@review');
+    Route::post('induser/profile/reviewReport', 'IndProfileController@reviewReport');
+
 
     // Corporate User
     Route::post('copuser/login', 'CopUserLoginController@login');

@@ -10,3 +10,4 @@ define('DEFAULT_EMAIL_SIGNATURE','Regards, <br>- Jagirr Team');
 
 
 define('GOOGLE_API_KEY', 'AIzaSyCQtR4hWw8Jl7RSf6tQDZj5E7HcMQUujBU');
+define('MAX_REVIEW_REPORT_COUNT',1);// hide the profile Review

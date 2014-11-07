@@ -3,17 +3,17 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReview extends Migration {
+class CreateIndProfileReview extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         //
-        Schema::create('profile_review',function(Blueprint $table){
+        Schema::create('ind_profile_review',function(Blueprint $table){
             $table->bigIncrements('reviewId');
             $table->bigInteger('reviewById');
             $table->bigInteger('reviewToId');
@@ -35,6 +35,7 @@ class CreateReview extends Migration {
     public function down()
     {
         //
-        Schema::drop('profile_review');
+        Schema::drop('ind_profile_review');
     }
+
 }

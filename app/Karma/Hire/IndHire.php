@@ -12,7 +12,7 @@ namespace Karma\Hire;
  * Class IndHire
  * @package Karma\Hire
  */
-class IndHire
+class IndHire extends \Eloquent
 {
     const CREATED_AT = 'hireDate';
     const UPDATED_AT = 'hireUpdatedDate';

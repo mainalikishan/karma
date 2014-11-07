@@ -34,11 +34,11 @@ return [
         'apply_already' => 'Already apply'
     ],
 
-    'profile' =>[
+    'profile' => [
         'invalid_email_address' => 'Invalid email address',
-        'profile_not_found'=>'This link is temporarily unavailable',
-        'already_reported'=>'Already reported',
-        'already_blocked'=>'Already blocked',
-        'already_unblocked'=>'Already un blocked'
+        'profile_not_found' => 'This link is temporarily unavailable',
+        'already_reported' => 'Already reported',
+        'already_blocked' => 'Already blocked',
+        'already_unblocked' => 'Already un blocked'
     ]
 ];

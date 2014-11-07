@@ -6,6 +6,7 @@ use Karma\Log\UserBlockLog\CopBlockUserLogHandler;
 use Karma\Profile\CopProfileHandler;
 use Karma\Profile\CopUserForgotPasswordRequestHandler;
 use Karma\Profile\CopUserForgotPasswordVerifyHandler;
+use Karma\Profile\review\IndReviewHandler;
 
 class CopProfileController extends ApiController
 {
@@ -34,6 +35,10 @@ class CopProfileController extends ApiController
      * @var Karma\Profile\CopUserForgotPasswordVerifyHandler
      */
     private $copUserForgotPasswordVerifyHandler;
+    /**
+     * @var Karma\Profile\review\IndReviewHandler
+     */
+    private $indReviewHandler;
 
     /**
      * @param CopProfileHandler $copProfileHandler
@@ -42,13 +47,15 @@ class CopProfileController extends ApiController
      * @param CopUserCacheHandler $copUserCacheHandler
      * @param CopReportLogHandler $copReportLogHandler
      * @param CopBlockUserLogHandler $copBlockUserLogHandler
+     * @param IndReviewHandler $indReviewHandler
      */
     function __construct(CopProfileHandler $copProfileHandler,
                          CopUserForgotPasswordRequestHandler $copUserForgotPasswordRequestHandler,
                          CopUserForgotPasswordVerifyHandler $copUserForgotPasswordVerifyHandler,
                          CopUserCacheHandler $copUserCacheHandler,
                          CopReportLogHandler $copReportLogHandler,
-                         CopBlockUserLogHandler $copBlockUserLogHandler)
+                         CopBlockUserLogHandler $copBlockUserLogHandler,
+                         IndReviewHandler $indReviewHandler)
     {
         $this->copUserCacheHandler = $copUserCacheHandler;
         $this->copReportLogHandler = $copReportLogHandler;
@@ -56,6 +63,7 @@ class CopProfileController extends ApiController
         $this->copProfileHandler = $copProfileHandler;
         $this->copUserForgotPasswordRequestHandler = $copUserForgotPasswordRequestHandler;
         $this->copUserForgotPasswordVerifyHandler = $copUserForgotPasswordVerifyHandler;
+        $this->indReviewHandler = $indReviewHandler;
     }
 
     /**
