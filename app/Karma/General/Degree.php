@@ -24,13 +24,24 @@ class Degree extends \Eloquent
 
 
     /**
+     * @param $degreeName
+     * @return static
+     */
+    public static function createDegree($degreeName)
+    {
+        $degree = new static (compact('degreeName'));
+        return $degree;
+    }
+
+    /**
      * @param $degreeId
      * @return mixed
      * @throws \Exception
      */
     public static function selectName($degreeId)
     {
-        $degree = self::select(array('degreeName'))
+        $degree =
+            self::select(array('degreeName'))
             ->where(compact('degreeId'))
             ->first();
         if ($degree) {

@@ -19,6 +19,17 @@ class JobType extends \Eloquent
 
     protected $table = 'job_type';
 
+
+    /**
+     * @param $jobTypeName
+     * @return static
+     */
+    public static function createJobType($jobTypeName)
+    {
+        $jobType = new static (compact('jobTypeName'));
+        return $jobType;
+    }
+
     /**
      * @param $jobTypeId
      * @return mixed

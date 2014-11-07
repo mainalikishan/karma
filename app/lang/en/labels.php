@@ -11,12 +11,20 @@ return array(
     'userAddressCoordinate' => 'Address',
     'jobSummary' => 'Job Summary',
     'jobExpDate' => 'Job expiry date',
-    'preference' => array(
-        'Contractor' => 'Contractor',
-        'Freelancer' => 'Freelancer',
-        'Consultant' => 'Consultant',
-        'Yearly' => 'Yearly',
-        'Monthly' => 'Monthly',
-        'Hourly' => 'Hourly',
-    ),
+    // Profile
+    'gender' => 'Gender',
+    'country' => 'Country',
+    'fname' => 'First Name',
+    'lname' => 'Last Name',
+    'dob' => 'Birth Date',
+    'profession' => 'Profession',
+    'skills' => 'Skills',
+    'summary' => 'Summary',
+    // Preference
+    'Contractor' => 'Contractor',
+    'Freelancer' => 'Freelancer',
+    'Consultant' => 'Consultant',
+    'Yearly' => 'Yearly',
+    'Monthly' => 'Monthly',
+    'Hourly' => 'Hourly',
 );

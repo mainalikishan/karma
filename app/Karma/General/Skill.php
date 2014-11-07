@@ -22,6 +22,16 @@ class Skill extends \Eloquent
 
 
     /**
+     * @param $skillName
+     * @return static
+     */
+    public static function createSkill($skillName)
+    {
+        $skill = new static (compact('skillName'));
+        return $skill;
+    }
+
+    /**
      * @param $skillId
      * @return mixed
      * @throws \Exception

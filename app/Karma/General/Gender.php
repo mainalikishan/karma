@@ -22,6 +22,16 @@ class Gender extends \Eloquent
 
 
     /**
+     * @param $genderName
+     * @return static
+     */
+    public static function createGender($genderName)
+    {
+        $gender = new static (compact('genderName'));
+        return $gender;
+    }
+
+    /**
      * @param $genderId
      * @return mixed
      * @throws \Exception

@@ -22,6 +22,16 @@ class Profession extends \Eloquent
 
 
     /**
+     * @param $professionName
+     * @return static
+     */
+    public static function createProfession($professionName)
+    {
+        $profession = new static (compact('professionName'));
+        return $profession;
+    }
+
+    /**
      * @param $professionId
      * @return mixed
      * @throws \Exception

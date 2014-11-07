@@ -126,6 +126,8 @@ class CopUserRegister
                     $this->copDefaultSetting->init($user->userId);
                 }
                 return $this->userMasterCache->init($user->userId);
+            } else {
+                $this->copDefaultSetting->init($user->userId);
             }
 
             return \Lang::get('messages.registration_successful');

@@ -18,6 +18,10 @@ class CopDefaultSetting
      */
     private $copUserCacheHandler;
 
+
+    /**
+     * @param CopUserCacheHandler $copUserCacheHandler
+     */
     public function __construct(CopUserCacheHandler $copUserCacheHandler)
     {
         $this->copUserCacheHandler = $copUserCacheHandler;

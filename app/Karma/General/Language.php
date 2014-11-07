@@ -61,24 +61,4 @@ class Language extends \Eloquent
         return false;
     }
 
-
-    /**
-     * @param $languageName
-     * @param $languageCode
-     * @return Language
-     */
-    public static function makeLang($languageName, $languageCode)
-    {
-        $lang =
-            self::select(array('languageName', 'languageCode'))
-            ->where('languageCode', '=', $languageCode)->first();
-        if ($lang) {
-            return $lang;
-        } else {
-            $lang = self::createLang($languageName, $languageCode);
-            $lang->save();
-            return self::makeLang($languageName, $languageCode);
-        }
-    }
-
 }

@@ -28,6 +28,12 @@ class CopProfileHandler
      */
     private $copUserCacheHandler;
 
+
+    /**
+     * @param CopUser $copUser
+     * @param CopChangeLogHandler $copChangeLogHandler
+     * @param CopUserCacheHandler $copUserCacheHandler
+     */
     public function __construct(CopUser $copUser,
                                 CopChangeLogHandler $copChangeLogHandler,
                                 CopUserCacheHandler $copUserCacheHandler)

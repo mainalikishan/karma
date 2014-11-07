@@ -22,6 +22,16 @@ class University extends \Eloquent
 
 
     /**
+     * @param $universityName
+     * @return static
+     */
+    public static function createUniversity($universityName)
+    {
+        $university = new static (compact('universityName'));
+        return $university;
+    }
+
+    /**
      * @param $universityId
      * @return mixed
      * @throws \Exception

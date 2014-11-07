@@ -19,6 +19,17 @@ class IndustryType extends  \Eloquent{
 
     protected $table = 'industry_type';
 
+
+    /**
+     * @param $industryTypeName
+     * @return static
+     */
+    public static function createIndustryType($industryTypeName)
+    {
+        $industryType = new static (compact('industryTypeName'));
+        return $industryType;
+    }
+
     /**
      * @param $industryTypeId
      * @return mixed
