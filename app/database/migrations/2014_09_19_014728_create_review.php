@@ -23,7 +23,7 @@ class CreateReview extends Migration {
             $table->integer('reviewReportCount');
             $table->enum('reviewReportStatus',array('Y','N'));
             $table->timestamp('reviewAddedDate');
-            $table->timestamp('feedUpdatedDate');
+            $table->timestamp('reviewUpdatedDate');
         });
     }
 

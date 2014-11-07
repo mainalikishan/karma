@@ -21,6 +21,7 @@ return [
     'job_apply' => [
         'job_apply_successful' => 'Applied successfully',
     ],
+
     'profile'=>[
         'password_verification_code_sent'=>'Password verification code sent to email address',
         'password_verification_successful'=>'Code verification is successful. Password sent to email address',
