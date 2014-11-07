@@ -6,6 +6,8 @@ use Karma\Profile\IndProfileBasicHandler;
 use Karma\Profile\IndProfileEducationHandler;
 use Karma\Profile\IndProfileExperienceHandler;
 use Karma\Profile\IndProfileWhatIDoHandler;
+use Karma\Profile\Review\IndReviewHandler;
+use Karma\Profile\Review\IndReviewReportHandler;
 
 class IndProfileController extends ApiController
 {
@@ -33,7 +35,14 @@ class IndProfileController extends ApiController
      * @var Karma\Log\UserBlockLog\IndBlockUserLogHandler
      */
     private $indBlockUserLogHandler;
-
+    /**
+     * @var Karma\Profile\Review\IndReviewHandler
+     */
+    private $indReviewHandler;
+    /**
+     * @var Karma\Profile\Review\IndReviewReportHandler
+     */
+    private $indReviewReportHandler;
 
     /**
      * @param IndProfileBasicHandler $indProfileBasicHandler
@@ -42,6 +51,8 @@ class IndProfileController extends ApiController
      * @param IndProfileEducationHandler $indProfileEducationHandler
      * @param IndReportLogHandler $indReportLogHandler
      * @param IndBlockUserLogHandler $indBlockUserLogHandler
+     * @param IndReviewHandler $indReviewHandler
+     * @param IndReviewReportHandler $indReviewReportHandler
      */
     public function __construct(
         IndProfileBasicHandler $indProfileBasicHandler,
@@ -49,7 +60,9 @@ class IndProfileController extends ApiController
         IndProfileExperienceHandler $indProfileExperienceHandler,
         IndProfileEducationHandler $indProfileEducationHandler,
         IndReportLogHandler $indReportLogHandler,
-        IndBlockUserLogHandler $indBlockUserLogHandler)
+        IndBlockUserLogHandler $indBlockUserLogHandler,
+        IndReviewHandler $indReviewHandler,
+        IndReviewReportHandler $indReviewReportHandler)
     {
         $this->indProfileBasicHandler = $indProfileBasicHandler;
         $this->indProfileWhatIDoHandler = $indProfileWhatIDoHandler;
@@ -57,6 +70,8 @@ class IndProfileController extends ApiController
         $this->indProfileEducationHandler = $indProfileEducationHandler;
         $this->indReportLogHandler = $indReportLogHandler;
         $this->indBlockUserLogHandler = $indBlockUserLogHandler;
+        $this->indReviewHandler = $indReviewHandler;
+        $this->indReviewReportHandler = $indReviewReportHandler;
     }
 
 
@@ -183,4 +198,47 @@ class IndProfileController extends ApiController
         }
         return $this->respondUnprocessableEntity();
     }
+
+    //Profile Review
+    /**
+     * @return mixed
+     */
+    public function review()
+    {
+        $post = $this->postRequestHandler();
+        if (is_object($post)) {
+            try {
+                $return = $this->indReviewHandler->addReview($post);
+                if (is_array($return)) {
+                    \Event::fire('profile.review', $return['data']);
+                    return $this->respondSuccess($return['success']);
+                }
+                return $this->respondSuccess($return);
+            } catch (Exception $e) {
+                return $this->respondUnprocessableEntity($e->getMessage());
+            }
+        }
+
+        return $this->respondUnprocessableEntity();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function reviewReport()
+    {
+        $post = $this->postRequestHandler();
+        if (is_object($post)) {
+            try {
+                $return = $this->indReviewReportHandler->reviewReport($post);
+                return $this->respondSuccess($return);
+            } catch (Exception $e) {
+
+                return $this->respondUnprocessableEntity($e->getMessage());
+            }
+        }
+
+        return $this->respondUnprocessableEntity();
+    }
+
 }
