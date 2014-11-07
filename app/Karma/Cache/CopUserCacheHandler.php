@@ -153,16 +153,17 @@ class CopUserCacheHandler
      * @param $data
      * @return mixed
      */
-    public function viewProfile($data)
+    public function selectCache($data)
     {
         // check post array  fields
         \CustomHelper::postCheck($data,
-            array('userToken' => 'required',
+            array(
+                'userToken' => 'required',
                 'viewerId' => 'required',
                 'userId' => 'required',
                 'type' => 'required'
             ),
-            4);
+        4);
 
         $userToken = $data->userToken;
         $viewerId = $data->viewerId;
@@ -170,47 +171,35 @@ class CopUserCacheHandler
         $type = $data->type;
 
 
-        //add internal log
+        // add internal log
         CopInternalLogHandler::addInternalLog($userId, $data);
 
         if ($type == 'indUser') {
-            //checking for valid token id and user id
+            // checking for valid token id and user id
             IndUser::loginCheck($userToken, $viewerId);
 
-            //check user profile blocked by me (can not access my profile by him/her )
+            // check user profile blocked by me (can not access my profile by him/her )
             $block = $this->copBlockUserLog->isBlock($blockUserId = $viewerId, $blockByUserId = $userId, $type = 'ind');
             if ($block > 1) {
                 return \Lang::get('errors.profile.profile_not_found');
             }
 
-            //check user profile blocked by me (can not access his/her profile )
-            $block = $this->copBlockUserLog->isBlock($blockUserId = $userId, $blockByUserId = $viewerId, $type = 'ind');
-            if ($block > 1) {
-                return \Lang::get('errors.profile.profile_not_found');
-            }
-
             $result = $this->copUserCache
                 ->select('cacheValue')
                 ->where('cacheUserId', $userId)
                 ->first();
 
-            //add profile view log
+            // add profile view log
             CopProfileViewLogHandler::addProfileViewLog($viewerId, $userId, 'ind');
 
             return ($result) ? json_decode($result->cacheValue) : \Lang::get('error.profile.profile_not_found');
 
         } else if ($type == 'copUser') {
-            //checking for valid token id and user id
+            // checking for valid token id and user id
             \CopUserLoginCheck::loginCheck($userToken, $viewerId);
 
-            //check user profile blocked by me (can not access my profile by him/her)
+            // check user profile blocked by me (can not access my profile by him/her)
             $block = $this->copBlockUserLog->isBlock($blockUserId = $viewerId, $blockByUserId = $userId, $type = 'cop');
-            if ($block > 1) {
-                return \Lang::get('errors.profile.profile_not_found');
-            }
-
-            //check user profile blocked by me (can not access his/her profile )
-            $block = $this->copBlockUserLog->isBlock($blockUserId = $userId, $blockByUserId = $viewerId, $type = 'cop');
             if ($block > 1) {
                 return \Lang::get('errors.profile.profile_not_found');
             }
@@ -220,10 +209,12 @@ class CopUserCacheHandler
                 ->where('cacheUserId', $userId)
                 ->first();
 
-            //add profile view log
+            // add profile view log
             CopProfileViewLogHandler::addProfileViewLog($viewerId, $userId, 'cop');
 
-            return ($result) ? json_decode($result->cacheValue) : \Lang::get('error.profile.profile_not_found');
+            return ($result) ?
+                json_decode($result->cacheValue) :
+                \Lang::get('error.profile.profile_not_found');
         }
 
         return \Lang::get('error.profile.profile_not_found');

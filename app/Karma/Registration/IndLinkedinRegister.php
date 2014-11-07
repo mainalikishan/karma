@@ -8,6 +8,7 @@
 namespace Karma\Registration;
 
 
+use Carbon\Carbon;
 use Karma\Users\IndUser;
 
 class IndLinkedinRegister implements IndUserRegisterInterface
@@ -47,8 +48,8 @@ class IndLinkedinRegister implements IndUserRegisterInterface
             $action = 'register';
             $user = $this->indUser->register(
                 $post->genderId,
-                $address? $address->addressCountryISO : 0,
-                $address? $address->addressId: 0,
+                $address ? $address->addressCountryISO : 0,
+                $address ? $address->addressId : 0,
                 $post->addressCoordinate,
                 $post->addressCoordinate, // dynamic coordinate
                 0, // profession will be none at the time of registration
@@ -63,8 +64,8 @@ class IndLinkedinRegister implements IndUserRegisterInterface
                 self::oauthType,
                 $post->summary,
                 'profile_pic',
-                date('Y-m-d H:i:s'),
-                date('Y-m-d H:i:s'),
+                Carbon::now(),
+                Carbon::now(),
                 '1',
                 \Request::getClientIp(true),
                 'Active',
@@ -74,6 +75,6 @@ class IndLinkedinRegister implements IndUserRegisterInterface
 
         $user->save();
 
-        return array('action'=>$action, 'user'=>$user);
+        return array('action' => $action, 'user' => $user);
     }
 }

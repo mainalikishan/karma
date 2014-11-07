@@ -23,6 +23,27 @@ class Country  extends \Eloquent
 
 
     /**
+     * @return mixed
+     */
+    public static function selectCountryAll()
+    {
+        return
+            self::select(array('countryCode', 'countryName'))
+            ->get();
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public static function selectCurrencyAll()
+    {
+        return
+            self::select(array('currencyCode'))
+            ->get();
+    }
+
+    /**
      * @param $countryCode
      * @return bool
      */

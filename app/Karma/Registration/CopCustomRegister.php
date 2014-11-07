@@ -34,7 +34,9 @@ class CopCustomRegister implements CopUserRegisterInterface
     public function register($post, $address=false)
     {
         // check post array  fields
-        \CustomHelper::postCheck($post, array('userCompanyName'=>'required|string',
+        \CustomHelper::postCheck($post,
+            array(
+                'userCompanyName'=>'required|string',
                 'userEmail'=>'required',
                 'userPassword'=>'required|minmax=6,20',
                 'userOauthType'=>'required',

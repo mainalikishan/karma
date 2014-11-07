@@ -39,10 +39,25 @@ class CopUser extends \Eloquent
 
 
     /**
+     * @param $userOauthId
+     * @param $userOauthType
+     * @return bool
+     */
+    public function isRegisted($userOauthId, $userOauthType)
+    {
+        $user = $this->where(compact('userOauthId', 'userOauthType'))->first();
+        if ($user) {
+            return $user;
+        }
+        return false;
+    }
+
+
+    /**
      * @param $username
      * @return mixed
      */
-    public  function getUser($username)
+    public function getUser($username)
     {
         $user = $this->select('userId',
             'userIndustryTypeId',
@@ -73,10 +88,10 @@ class CopUser extends \Eloquent
      * @param $userId
      * @return mixed
      */
-    public  function getUserById($userId)
+    public function getUserById($userId)
     {
-        $user = $this->where('userId',$userId)
-            ->where('userAccountStatus','<>','perDeactivate')
+        $user = $this->where('userId', $userId)
+            ->where('userAccountStatus', '<>', 'perDeactivate')
             ->where('userStatus', 'Y')
             ->first();
         return $user;
@@ -162,8 +177,8 @@ class CopUser extends \Eloquent
             ->first();
         if ($user) {
             return
-                array('name'=>$user->userCompanyName,
-                    'email'=>$user->userEmail);
+                array('name' => $user->userCompanyName,
+                    'email' => $user->userEmail);
         }
         return false;
     }
@@ -174,9 +189,9 @@ class CopUser extends \Eloquent
      */
     public function updateReport($userId)
     {
-        $user = $this->select(array('userReportCount','userId'))->where(compact('userId'))->first();
+        $user = $this->select(array('userReportCount', 'userId'))->where(compact('userId'))->first();
         if ($user) {
-            $user->userReportCount = $user->userReportCount+1;
+            $user->userReportCount = $user->userReportCount + 1;
             $user->save();
         }
         return false;
@@ -190,24 +205,24 @@ class CopUser extends \Eloquent
     {
         // select only what is needed
         return $user = $this->select(array(
-                'userId',
-                'userIndustryTypeId',
-                'userCountryISO',
-                'userAddressId',
-                'userAddressCoordinate',
-                'userDynamicAddressCoordinate',
-                'userCompanyPhone',
-                'userCompanyName',
-                'userEmail',
-                'userCoverPic',
-                'userProfilePic',
-                'userSummary',
-                'userRegDate',
-                'userUpdatedDate',
-                'userOauthId',
-                'userOauthType',
-                'userToken'
-            ))
+            'userId',
+            'userIndustryTypeId',
+            'userCountryISO',
+            'userAddressId',
+            'userAddressCoordinate',
+            'userDynamicAddressCoordinate',
+            'userCompanyPhone',
+            'userCompanyName',
+            'userEmail',
+            'userCoverPic',
+            'userProfilePic',
+            'userSummary',
+            'userRegDate',
+            'userUpdatedDate',
+            'userOauthId',
+            'userOauthType',
+            'userToken'
+        ))
             ->where('userId', '=', $userId)
             ->first();
     }

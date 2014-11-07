@@ -85,7 +85,7 @@ class CopProfileController extends ApiController
         $post = $this->postRequestHandler();
         if (is_object($post)) {
             try {
-                $return = $this->copUserCacheHandler->viewProfile($post);
+                $return = $this->copUserCacheHandler->selectCache($post);
                 return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());

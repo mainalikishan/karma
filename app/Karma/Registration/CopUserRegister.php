@@ -9,7 +9,9 @@ namespace Karma\Registration;
 
 
 use Karma\Cache\CopUserCacheHandler;
+use Karma\Cache\UserMasterCache;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;
+use Karma\Setting\CopDefaultSetting;
 use Karma\Users\CopUser;
 use Karma\General\Address;
 
@@ -32,22 +34,28 @@ class CopUserRegister
      * @var \Karma\Users\CopUser
      */
     private $copUser;
-
     /**
-     * @param CopCustomRegister $copCustomRegister
-     * @param CopLinkedInRegister $copLinkedInRegister
-     * @param CopUserCacheHandler $copUserCacheHandler
-     * @param CopUser $copUser
+     * @var \Karma\Cache\UserMasterCache
      */
+    private $userMasterCache;
+    /**
+     * @var \Karma\Setting\CopDefaultSetting
+     */
+    private $copDefaultSetting;
+
     public function __construct(CopCustomRegister $copCustomRegister,
                                 CopLinkedInRegister $copLinkedInRegister,
                                 CopUserCacheHandler $copUserCacheHandler,
-                                CopUser $copUser)
+                                CopUser $copUser,
+                                CopDefaultSetting $copDefaultSetting,
+                                UserMasterCache $userMasterCache)
     {
         $this->copCustomRegister = $copCustomRegister;
         $this->copLinkedInRegister = $copLinkedInRegister;
         $this->copUserCacheHandler = $copUserCacheHandler;
         $this->copUser = $copUser;
+        $this->userMasterCache = $userMasterCache;
+        $this->copDefaultSetting = $copDefaultSetting;
     }
 
     /**
@@ -77,7 +85,10 @@ class CopUserRegister
         }
 
         $user = $this->$oauthType->register($post, $address);
-
+        if($oauthType=='copLinkedInRegister')
+        {
+            $user = $user['user'];
+        }
         if ($user) {
             // select only what is needed
             $user = $this->copUser
@@ -108,6 +119,15 @@ class CopUserRegister
 
             // create cache for user
             $this->copUserCacheHandler->make($user, 'basic', $user->userId);
+
+            if($oauthType=='copLinkedInRegister')
+            {
+                if ($user['action'] == 'register') {
+                    $this->copDefaultSetting->init($user->userId);
+                }
+                return $this->userMasterCache->init($user->userId);
+            }
+
             return \Lang::get('messages.registration_successful');
         }
     }

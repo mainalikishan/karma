@@ -7,7 +7,7 @@
 
 namespace Karma\Login;
 
-use Karma\Cache\CopUserCache;
+use Karma\Cache\UserMasterCache;
 use Karma\Log\CopActivityLog\CopActivityLogHandler;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;
 use Karma\Users\CopUser;
@@ -19,18 +19,16 @@ class CopLogInHandler
      */
     private $copUser;
     /**
-     * @var \Karma\Cache\CopUserCache
+     * @var \Karma\Cache\UserMasterCache
      */
-    private $copUserCache;
+    private $userMasterCache;
 
-    /**
-     * @param CopUser $copUser
-     * @param CopUserCache $copUserCache
-     */
-    public function __construct(CopUser $copUser, CopUserCache $copUserCache)
+    public function __construct(
+        CopUser $copUser,
+        UserMasterCache $userMasterCache)
     {
         $this->copUser = $copUser;
-        $this->copUserCache = $copUserCache;
+        $this->userMasterCache = $userMasterCache;
     }
 
     /**
@@ -60,7 +58,7 @@ class CopLogInHandler
                 CopActivityLogHandler::addActivityLog($user->userId, "log text");
 
                 //returns cache value
-                return $this->copUserCache->selectCacheValue($user->userId);
+                return $this->userMasterCache->init($user->userId);
             }
         }
         return \Lang::get('errors.invalid_email_password_address');

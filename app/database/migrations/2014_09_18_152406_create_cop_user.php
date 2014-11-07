@@ -29,6 +29,7 @@ class CreateCopUser extends Migration {
             $table->text('userSummary');
             $table->timestamp('userRegDate');
             $table->timestamp('userUpdatedDate');
+            $table->timestamp('userLastLogin');
             $table->integer('userLoginCount');
             $table->string('userLoginIp',20);
             $table->bigInteger('userOauthId');

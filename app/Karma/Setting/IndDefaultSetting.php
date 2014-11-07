@@ -68,7 +68,8 @@ class IndDefaultSetting
             'workAs' => 'Contractor',
             'currencyCode' => 'USD',
             'minSalary' => '100',
-            'salaryRule' => 'Yearly'
+            'salaryRule' => 'Yearly',
+            'langCode' => 'en'
         );
         $preference = IndPreference::createPreference($userId, json_encode($preferenceData));
         $preference->save();
