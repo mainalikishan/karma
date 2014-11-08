@@ -50,4 +50,23 @@ class CopAppSetting extends \Eloquent
         return false;
     }
 
+    /**
+     * @param $settingUserId
+     * @param $key
+     * @return bool
+     */
+    public static function isSubscribed($settingUserId, $key)
+    {
+        $appSetting =
+            self::selectAppSettingByUserId($settingUserId);
+        if($appSetting) {
+            $key = json_decode($appSetting)->$key;
+            if(isset($key))
+            {
+                return $key;
+            }
+        }
+        return false;
+    }
+
 } 
