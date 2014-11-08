@@ -62,9 +62,9 @@ class CopProfileHandler
                 'userToken' => 'required',
                 'userCompanyName' => 'required|string',
                 'userIndustryTypeId' => 'required|integer',
-                'userAddressCoordinate' => 'required',
+                'userAddressCoordinate' => 'optional',
                 'userCompanyPhone' => 'optional',
-                'userSummary' => 'optional'),
+                'userSummary' => 'required'),
             7);
 
         //getting post value
