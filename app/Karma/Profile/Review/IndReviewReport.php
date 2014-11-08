@@ -25,12 +25,18 @@ class IndReviewReport extends \Eloquent
         'logReportText'
     ];
 
-    public function reportCheck($logReviewId, $logReportById, $type)
+    public function isReported($logReviewId, $logReportById, $type)
     {
-        return $user = $this->where('logReviewId', $logReviewId)
+        $report = $this->where('logReviewId', $logReviewId)
             ->where('logReportById', $logReportById)
             ->where('logUserType', $type)
-            ->count();
+            ->first();
+        if($report) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 } 

@@ -30,12 +30,18 @@ class IndReview extends \Eloquent
         'reviewReportStatus'
     ];
 
-    public function reviewCheck($reviewById, $reviewToId, $reviewUserType)
+    public function isReviewed($reviewById, $reviewToId, $reviewUserType)
     {
-        return $user = $this->where('reviewById', $reviewById)
+        $review = $this->where('reviewById', $reviewById)
             ->where('reviewToId', $reviewToId)
             ->where('reviewUserType', $reviewUserType)
-            ->count();
+            ->first();
+        if($review) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public function reviewCheckById($id)

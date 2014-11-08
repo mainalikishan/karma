@@ -14,20 +14,26 @@ namespace Karma\Hire;
  */
 class IndHire extends \Eloquent
 {
-    const CREATED_AT = 'hireDate';
+    const CREATED_AT = 'hireAddedDate';
     const UPDATED_AT = 'hireUpdatedDate';
 
     protected $primaryKey = 'hireId';
 
-    //database table ind_hire
     protected $table = 'ind_hire';
 
-    protected $fillable = ['hireById',
+    protected $fillable = [
+        'hireById',
         'hireToId',
         'hireByUserType',
-        'hireAcceptDate',
-        'hireAccept'
+        'hireAccept',
+        'hireAcceptDate'
     ];
+
+    public static function createHire($hireById, $hireToId, $hireByUserType, $hireAccept, $hireAcceptDate)
+    {
+        $hire = new static (compact('hireById', 'hireToId', 'hireByUserType', 'hireAccept', 'hireAcceptDate'));
+        return $hire;
+    }
 
     /**
      * @param $hireById
@@ -35,12 +41,19 @@ class IndHire extends \Eloquent
      * @param $hireByUserType
      * @return mixed
      */
-    public function hiredCheck($hireById,$hireToId,$hireByUserType)
+    public function isHired($hireById, $hireToId, $hireByUserType)
     {
-        return $user = $this->where('hireById', $hireById)
+        $hire =
+            $this->where('hireById', $hireById)
             ->where('hireToId', $hireToId)
             ->where('hireByUserType', $hireByUserType)
             ->where('hireAccept', 'Y')
-            ->count();
-   }
+            ->first();
+        if($hire) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 } 

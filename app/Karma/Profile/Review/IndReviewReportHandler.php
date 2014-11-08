@@ -58,7 +58,7 @@ class IndReviewReportHandler
                 return false;
             }
 
-            if ($this->indReviewReport->reportCheck($logReviewId, $logReportById, 'ind') < 1) {
+            if (!$this->indReviewReport->isReported($logReviewId, $logReportById, 'ind')) {
 
                 // add internal log
                 CopInternalLogHandler::addInternalLog($logReportById, $data);
@@ -90,7 +90,7 @@ class IndReviewReportHandler
                 return false;
             }
 
-            if ($this->indReviewReport->reportCheck($logReviewId, $logReportById, 'cop') < 1) {
+            if (!$this->indReviewReport->isReported($logReviewId, $logReportById, 'cop')) {
 
                 // add internal log
                 CopInternalLogHandler::addInternalLog($logReportById, $data);

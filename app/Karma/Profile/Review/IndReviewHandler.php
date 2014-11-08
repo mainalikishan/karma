@@ -68,11 +68,11 @@ class IndReviewHandler
             IndUser::loginCheck($userToken, $reviewById);
 
             //check hire or not
-            if ($this->indHire->hiredCheck($reviewById, $reviewToId, 'ind') < 1) {
+            if (!$this->indHire->isHired($reviewById, $reviewToId, 'ind')) {
                 return false;
             }
 
-            if ($this->indReview->reviewCheck($reviewById, $reviewToId, 'ind') < 1) {
+            if (!$this->indReview->isReviewed($reviewById, $reviewToId, 'ind')) {
 
                 // add internal log
                 CopInternalLogHandler::addInternalLog($reviewById, $data);
@@ -109,11 +109,11 @@ class IndReviewHandler
             \CopUserLoginCheck::loginCheck($userToken, $reviewById);
 
             //check hire or not
-            if ($this->indHire->hiredCheck($reviewById, $reviewToId, 'cop') < 1) {
+            if (!$this->indHire->isHired($reviewById, $reviewToId, 'cop')) {
                 return false;
             }
 
-            if ($this->indReview->reviewCheck($reviewById, $reviewToId, 'cop') < 1) {
+            if (!$this->indReview->isReviewed($reviewById, $reviewToId, 'cop')) {
 
                 // add internal log
                 CopInternalLogHandler::addInternalLog($reviewById, $data);
