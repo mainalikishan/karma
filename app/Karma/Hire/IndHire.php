@@ -25,13 +25,15 @@ class IndHire extends \Eloquent
         'hireById',
         'hireToId',
         'hireByUserType',
+        'hireRequest',
+        'hireRequestDate',
         'hireAccept',
         'hireAcceptDate'
     ];
 
-    public static function createHire($hireById, $hireToId, $hireByUserType, $hireAccept, $hireAcceptDate)
+    public function createHire($hireById, $hireToId, $hireByUserType, $hireRequest, $hireRequestDate)
     {
-        $hire = new static (compact('hireById', 'hireToId', 'hireByUserType', 'hireAccept', 'hireAcceptDate'));
+        $hire = new static (compact('hireById', 'hireToId', 'hireByUserType', 'hireRequest', 'hireRequestDate'));
         return $hire;
     }
 
@@ -44,7 +46,8 @@ class IndHire extends \Eloquent
     public function isHired($hireById, $hireToId, $hireByUserType)
     {
         $hire =
-            $this->where('hireById', $hireById)
+            $this->select('hireId', 'hireById', 'hireToId', 'hireByUserType', 'hireDate', 'hireAccept', 'hireAcceptDate')
+            ->where('hireById', $hireById)
             ->where('hireToId', $hireToId)
             ->where('hireByUserType', $hireByUserType)
             ->where('hireAccept', 'Y')

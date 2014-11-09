@@ -1,5 +1,8 @@
 <?php
 
+use Karma\Users\CopUser;
+use Karma\Users\IndUser;
+
 class CustomHelper
 {
 
@@ -18,79 +21,76 @@ class CustomHelper
      * @param $value
      * @return string
      */
-    public static function validate($toValidate, $value) {
+    public static function validate($toValidate, $value)
+    {
         $return = [];
-        foreach($toValidate as $tv) {
+        foreach ($toValidate as $tv) {
             switch ($tv) {
                 case "required":
-                    $return[] = !empty($value)? 'true': 'errors.required';
+                    $return[] = !empty($value) ? 'true' : 'errors.required';
                     break;
                 case "optional":
                     $return[] = 'true';
                     break;
                 case "string":
-                    $return[] = is_string($value)? 'true': 'errors.string';
+                    $return[] = is_string($value) ? 'true' : 'errors.string';
                     break;
                 case "integer":
-                    $return[] = is_numeric($value)? 'true': 'errors.integer';
+                    $return[] = is_numeric($value) ? 'true' : 'errors.integer';
                     break;
                 case "array":
-                    $return[] = is_array($value)? 'true': 'errors.array';
+                    $return[] = is_array($value) ? 'true' : 'errors.array';
                     break;
                 case "object":
-                    $return[] = is_object($value)? 'true': 'errors.object';
+                    $return[] = is_object($value) ? 'true' : 'errors.object';
                     break;
                 case "email":
-                    $return[] = filter_var($value, FILTER_VALIDATE_EMAIL)? 'true': 'errors.email';
+                    $return[] = filter_var($value, FILTER_VALIDATE_EMAIL) ? 'true' : 'errors.email';
                     break;
                 case "name":
-                    $return[] = preg_match("/^[a-zA-Z ]*$/",$value)? 'true': 'errors.name';
+                    $return[] = preg_match("/^[a-zA-Z ]*$/", $value) ? 'true' : 'errors.name';
                     break;
                 case "date":
-                    $return[] = preg_match("/^(19|20)\d\d[\-\/.](0[1-9]|1[012])[\-\/.](0[1-9]|[12][0-9]|3[01])$/",$value)? 'true': 'errors.date';
+                    $return[] = preg_match("/^(19|20)\d\d[\-\/.](0[1-9]|1[012])[\-\/.](0[1-9]|[12][0-9]|3[01])$/", $value) ? 'true' : 'errors.date';
                     break;
             }
 
             // validate more cases
             $moreValidate = (explode('=', $tv));
-            if(count($moreValidate)>1) {
+            if (count($moreValidate) > 1) {
                 $split = preg_split('/[\s,]+/', $moreValidate[1]);
 
-                foreach($moreValidate as $v) {
+                foreach ($moreValidate as $v) {
                     // validate enum
-                    if($v==='enum') {
+                    if ($v === 'enum') {
                         $fails = [];
-                        foreach($split as $s) {
-                            if($value !== $s)
-                            {
+                        foreach ($split as $s) {
+                            if ($value !== $s) {
                                 $fails[] = $s;
                             }
                         }
-                        if(count($fails) == count($split)) {
+                        if (count($fails) == count($split)) {
                             $return[] = false;
                         }
                     }
-                    if($v==='minmax') {
-                        if(count($split)==2) {
-                            if($split[0]>strlen($value)){
-                                $return[] = 'errors.min'.$split[0];
+                    if ($v === 'minmax') {
+                        if (count($split) == 2) {
+                            if ($split[0] > strlen($value)) {
+                                $return[] = 'errors.min' . $split[0];
+                            } elseif ($split[1] < strlen($value)) {
+                                $return[] = 'errors.max' . $split[1];
                             }
-                            elseif($split[1]<strlen($value)) {
-                                $return[] = 'errors.max'.$split[1];
-                            }
-                        }
-                        else {
+                        } else {
                             $return[] = false;
                         }
                     }
-                    if($v==='required') {
+                    if ($v === 'required') {
                         $split = preg_split('/[\s@]+/', $moreValidate[1]);
-                        if(count($split)==2 && isset($_POST[$split[0]])) {
-                            if( $_POST[$split[0]]==$split[1] && empty($value) ){
+                        if (count($split) == 2 && isset($_POST[$split[0]])) {
+                            if ($_POST[$split[0]] == $split[1] && empty($value)) {
                                 $return[] = 'errors.required';
                             }
-                        }
-                        else {
+                        } else {
                             $return[] = false;
                         }
                     }
@@ -99,8 +99,8 @@ class CustomHelper
 
         }
 
-        foreach($return as $r) {
-            if(($r !=='true') OR !$r) {
+        foreach ($return as $r) {
+            if (($r !== 'true') OR !$r) {
                 return $r;
             }
         }
@@ -124,15 +124,14 @@ class CustomHelper
                     list($post_key, $post_value, $allowedPost_key, $allowedPost_value) = $k;
                     $toValidate = (explode('|', $allowedPost_value));
                     $validate = self::validate($toValidate, $post_value);
-                    if(($post_key !== $allowedPost_key) OR (!$validate)) {
+                    if (($post_key !== $allowedPost_key) OR (!$validate)) {
                         throw new \Exception(\Lang::get('errors.invalid_post_request'));
                     }
-                    if($validate!=='true') {
-                        throw new \Exception(\Lang::get('labels.'.$post_key).' '.\Lang::get($validate));
+                    if ($validate !== 'true') {
+                        throw new \Exception(\Lang::get('labels.' . $post_key) . ' ' . \Lang::get($validate));
                     }
                 }
-            }
-            else {
+            } else {
                 foreach (array_map(NULL, array_keys($post), $allowedPost) as $k) {
                     list($post, $allowedPost) = $k;
                     if ($post !== $allowedPost) {
@@ -143,6 +142,22 @@ class CustomHelper
             return true;
         }
         throw new \Exception(\Lang::get('errors.invalid_post_request'));
+    }
+
+    public static function postRequestUserDetailCheck($userType, $token, $id)
+    {
+        $user =
+            $userType === 'copUser' ?
+                CopUser::loginCheck($token, $id) :
+                IndUser::loginCheck($token, $id);
+
+        if (!$user) {
+            throw new \Exception(\Lang::get('errors.invalid_token'));
+        }
+        $name = $userType == 'copUser' ? $user->userCompanyName : $user->userFname . ' ' . $user->userLname;
+        $userType = $userType == 'copUser' ? 'cop' : 'ind';
+
+        return array('name' => $name, 'details' => $user, 'type' => $userType);
     }
 
 
@@ -194,9 +209,9 @@ class CustomHelper
 
             $countryResponse = $country->status === 'OK' ? $country->result->address_components : [];
 
-            foreach($countryResponse as $iso) {
+            foreach ($countryResponse as $iso) {
                 $country = Karma\General\Country::selectCountryNameByISO($iso->short_name);
-                if($country) {
+                if ($country) {
                     $countryISO = $country->countryCode;
                     $countryName = $country->countryName;
                     break;
