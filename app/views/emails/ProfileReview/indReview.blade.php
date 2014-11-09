@@ -50,17 +50,18 @@
 
                         </tbody>
                     </table>
-                    <table cellpadding="0" cellspacing="0" align="right" border="0">
+                    <table cellpadding="0" cellspacing="0"  border="0" width="100%">
                         <tbody>
                         <tr>
                             <td height="10"></td>
                         </tr>
                         <tr>
                             <td style="padding:0;border-collapse:collapse">
-                                <table cellpadding="0" cellspacing="0" align="center" border="0">
+                                <table cellpadding="0" cellspacing="0" align="center" border="0" width="100%">
                                     <tbody>
                                     <tr style="color:#1ABC9C;font-size:11px;font-family:proxima_nova,'Open Sans','Lucida Grande','Segoe UI',Arial,Verdana,'Lucida Sans Unicode',Tahoma,'Sans Serif'">
-                                        <td align="left">&nbsp;
+                                        <td align="left" width="70%" >
+                                            You can <strong>unsubscribe</strong> this email from your "App Settings".
                                         </td>
                                         <td align="right">&copy; {{ date('Y') }} <span>Jagirr</span></td>
                                     </tr>

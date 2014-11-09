@@ -1,6 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
  * User: Prakash
  * Date: 10/29/14
  * Time: 8:53 PM
@@ -15,6 +14,7 @@ use Karma\Cache\JobCacheHandler;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;
 use Karma\notification\CopNotificationHandler;
 use Karma\Users\IndUser;
+use Karma\Setting\CopAppSetting;
 
 class JobApplicationHandler
 {
@@ -35,21 +35,29 @@ class JobApplicationHandler
      * @var \Karma\notification\CopNotificationHandler
      */
     private $copNotificationHandler;
+    /**
+     * @var JobApplicationStatus
+     */
+    private $jobApplicationStatus;
+
 
     /**
      * @param JobApplication $jobApplication
      * @param Jobs $jobs
      * @param JobCacheHandler $jobCacheHandler
      * @param CopNotificationHandler $copNotificationHandler
+     * @param JobApplicationStatus $jobApplicationStatus
      */
     function __construct(JobApplication $jobApplication,
                          Jobs $jobs, JobCacheHandler $jobCacheHandler,
-                         CopNotificationHandler $copNotificationHandler)
+                         CopNotificationHandler $copNotificationHandler,
+                         JobApplicationStatus $jobApplicationStatus)
     {
         $this->jobApplication = $jobApplication;
         $this->jobs = $jobs;
         $this->jobCacheHandler = $jobCacheHandler;
         $this->copNotificationHandler = $copNotificationHandler;
+        $this->jobApplicationStatus = $jobApplicationStatus;
     }
 
     /**
@@ -75,13 +83,13 @@ class JobApplicationHandler
         \CopUserLoginCheck::loginCheck($userToken, $userId);
 
         // check job in job table
-        if ($this->jobs->isJobExists($data->appCopUserId, $data->appJobId) === 0) {
-            return Lang::get('errors.something_went_wrong');
+        if (!$this->jobs->isJobExists($data->appCopUserId, $data->appJobId)) {
+            return false;
         }
 
         //apply count
-        if ($this->applyCount($data->appJobId, $data->appCopUserId, $userId) > 0) {
-            return Lang::get('errors.apply_job.apply_already');
+        if (!$this->applyCount($data->appJobId, $data->appCopUserId, $userId)) {
+            return false;
         }
 
         // add job application if token id and user id is valid
@@ -94,6 +102,9 @@ class JobApplicationHandler
         ///save
         $result = $application->save();
 
+        //last inserted id
+        $applicationId = $application->appId;
+
         if ($result) {
 
             //update job count in job table
@@ -104,6 +115,9 @@ class JobApplicationHandler
 
             $jobs = $this->jobs->selectById($data->appJobId);
 
+            //add application status to application status table
+            $this->jobApplicationStatus->addApplicationStatus($applicationId, 'Applied');
+
             // update cache for job
             $this->jobCacheHandler->make($jobs, $data->appJobId, $data->appCopUserId);
 
@@ -113,14 +127,16 @@ class JobApplicationHandler
             // add Notification
             $indUser = IndUser::selectNameEmail($userId);
             $jobTitle = Jobs::jobTitleById($data->appJobId);
-            $jobTitle=$jobTitle['title'];
+            $jobTitle = $jobTitle['title'];
 
-            $notificationDetails = '<strong>'.$indUser['name'].'</strong> applied on you job: "'.$jobTitle.'"';
+            $notificationDetails = '<strong>' . $indUser['name'] . '</strong> applied on you job: "' . $jobTitle . '"';
 
-            $this->copNotificationHandler->addNotification($userId, $notificationDetails, '_JOB_APPLY_', $data->appJobId);
+            $this->copNotificationHandler->addNotification($data->appCopUserId, $notificationDetails, '_JOB_APPLY_', $data->appJobId);
 
             // fire event when job apply. its Notification to cop user form individual user
-           // \Event::fire('job.apply', $application);
+            if (CopAppSetting::isSubscribed($data->appCopUserId, 'jobApplied')) {
+                \Event::fire('job.apply', $application);
+            }
 
             return Lang::get('messages.job_apply.job_apply_successful');
         }
@@ -137,10 +153,14 @@ class JobApplicationHandler
      */
     private function applyCount($jobId, $copUserId, $indUserId)
     {
-        return $this->jobApplication
+        $result = $this->jobApplication
             ->where('appJobId', '=', $jobId)
             ->where('appCopUserId', '=', $copUserId)
             ->where('appIndUserId', '=', $indUserId)
             ->count();
+        if ($result > 0)
+            return true;
+        else
+            return false;
     }
 }

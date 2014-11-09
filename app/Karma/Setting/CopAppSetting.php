@@ -59,11 +59,13 @@ class CopAppSetting extends \Eloquent
     {
         $appSetting =
             self::selectAppSettingByUserId($settingUserId);
-        if($appSetting) {
-            $key = json_decode($appSetting)->$key;
-            if(isset($key))
+        if ($appSetting) {
+            $notification = json_decode($appSetting->settings)->notification;
+            foreach ($notification as $k)
             {
-                return $key;
+                if (isset($k->$key)) {
+                    return $k->$key=='true'?true:false;
+                }
             }
         }
         return false;

@@ -44,7 +44,8 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::post('jobs/destroy', 'JobController@destroy');
 
     // Jobs Application
-    Route::post('jobs/Application', 'JobApplicationController@apply');
+    Route::post('jobs/application/apply', 'JobController@apply');
+    Route::post('jobs/application/status', 'JobController@applicationStatus');
 
     //Notification
     Route::post('copuser/notification', 'CopNotificationController@updateStatus');

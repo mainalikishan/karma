@@ -67,9 +67,13 @@ class Jobs extends \Eloquent
      */
     public function isJobExists($copUserId, $jobId)
     {
-        return $this->where('jobUserId', $copUserId)
+        $result = $this->where('jobUserId', $copUserId)
             ->where('jobId', $jobId)
             ->count();
+        if($result>0)
+            return true;
+        else
+            return false;
     }
 
     /**
