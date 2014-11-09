@@ -121,6 +121,7 @@ class IndUserCacheHandler
                             'UTC',
                             'toFormattedDateString')
                 );
+                $data->userType = 'indUser';
                 unset(
                 $data->userAddressId,
                 $data->userGenderId,

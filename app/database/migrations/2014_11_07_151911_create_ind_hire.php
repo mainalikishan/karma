@@ -18,9 +18,10 @@ class CreateIndHire extends Migration
             $table->bigInteger('hireById');
             $table->bigInteger('hireToId');
             $table->enum('hireByUserType', array('cop', 'ind'));
-            $table->dateTime('hireDate');
-            $table->enum('hireAccept', array('Y', 'N'))->default('N');
-            $table->dateTime('hireAcceptDate');
+            $table->enum('hireRequest', array('Y', 'N'))->default('N');
+            $table->dateTime('hireRequestDate');
+            $table->enum('hireResponse', array('Unseen', 'Accept', 'Ignore'))->default('Unseen');
+            $table->dateTime('hireResponseDate');
             $table->dateTime('hireAddedDate');
             $table->dateTime('hireUpdatedDate');
         });

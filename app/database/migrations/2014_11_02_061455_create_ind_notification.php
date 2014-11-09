@@ -17,7 +17,7 @@ class CreateIndNotification extends Migration {
             $table->bigIncrements('notificationId');
             $table->bigInteger('notificationUserId');
             $table->text('notificationDetails');
-            $table->enum('notificationTargetType', array('_PROFILE_REVIEW_')); // _PROFILE_REVIEW_ when  profile review by users (ind/cop)
+            $table->enum('notificationTargetType', array('_PROFILE_REVIEW_', '_JOB_APPLICATION_STATUS_')); // _PROFILE_REVIEW_ when  profile review by users (ind/cop)
             $table->bigInteger('notificationTargetId');
             $table->enum('notificationView', array('Y', 'N'))->default('N');
             $table->timestamp('notificationAddedDate');

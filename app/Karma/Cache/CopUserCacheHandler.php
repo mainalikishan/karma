@@ -123,6 +123,7 @@ class CopUserCacheHandler
                     $data->userRegDate,
                     'UTC',
                     'toFormattedDateString');
+                $data->userType = 'copUser';
                 unset(
                 $data->userAddressId,
                 $data->userCountryISO,

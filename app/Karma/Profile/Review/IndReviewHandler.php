@@ -10,6 +10,7 @@ namespace Karma\Profile\Review;
 use Carbon\Carbon;
 use Karma\Hire\IndHire;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;
+use Karma\Log\IndInternalLog\IndInternalLogHandler;
 use Karma\Notification\IndNotificationHandler;
 use Karma\Users\CopUser;
 use Karma\Users\IndUser;
@@ -41,112 +42,67 @@ class IndReviewHandler
         $this->indNotificationHandler = $indNotificationHandler;
     }
 
-    public function addReview($data)
+    public function addReview($post)
     {
 
         // check post array  fields
-        \CustomHelper::postCheck($data,
-            array('userToken' => 'required',
-                'reviewToId' => 'required',
-                'reviewById' => 'required',
+        \CustomHelper::postCheck($post,
+            array(
+                'userToken' => 'required',
+                'reviewToId' => 'required|integer',
+                'reviewById' => 'required|integer',
                 'reviewRatingValue' => 'required',
                 'reviewText' => 'optional',
-                'reviewUserType' => 'required|string'
+                'reviewUserType' => 'required|enum=indUser,copUser'
             ),
-            6);
+        6);
 
-        //getting post value
-        $reviewById = $data->reviewById;
-        $reviewToId = $data->reviewToId;
-        $userToken = $data->userToken;
-        $type = $data->reviewUserType;
-        $reviewText = $data->reviewText;
-        $reviewRatingValue = $data->reviewRatingValue;
+        $user = \CustomHelper::postRequestUserDetailCheck($post->reviewUserType, $post->userToken, $post->reviewById);
 
-        if ($type == 'indUser') {
-            //checking for valid token id and user id
-            IndUser::loginCheck($userToken, $reviewById);
+        // getting post value
+        $reviewById = $post->reviewById;
+        $reviewToId = $post->reviewToId;
+        $reviewText = $post->reviewText;
+        $reviewRatingValue = $post->reviewRatingValue;
 
-            //check hire or not
-            if (!$this->indHire->isHired($reviewById, $reviewToId, 'ind')) {
-                return false;
-            }
 
-            if (!$this->indReview->isReviewed($reviewById, $reviewToId, 'ind')) {
-
-                // add internal log
-                CopInternalLogHandler::addInternalLog($reviewById, $data);
-
-                //add Review and rating
-                $review = IndReview::create(array(
-                    'reviewById' => $reviewById,
-                    'reviewToId' => $reviewToId,
-                    'reviewUserType' => 'ind',
-                    'reviewText' => $reviewText,
-                    'reviewRatingValue' => $reviewRatingValue,
-                    'reviewAddedDate' => Carbon::now(),
-                    'reviewUpdatedDate' => Carbon::now()
-                ));
-
-                //add notification
-                $copUser = CopUser::selectNameEmail($data->reviewById);
-                $detailsVal = "<strong>" . $copUser['name'] . "</strong>" . " Reviewed your profile";
-                if ($reviewText != "") {
-                    $detailsVal .= $reviewText;
-                }
-
-                $this->indNotificationHandler->addNotification($userId = $reviewToId,
-                    $details = $detailsVal,
-                    $type = '_PROFILE_REVIEW_',
-                    $targetId = $review->reviewById);
-
-            }
-            //already reviewed
-            return false;
-
-        } else if ($type == 'copUser') {
-            //checking for valid token id and user id
-            \CopUserLoginCheck::loginCheck($userToken, $reviewById);
-
-            //check hire or not
-            if (!$this->indHire->isHired($reviewById, $reviewToId, 'cop')) {
-                return false;
-            }
-
-            if (!$this->indReview->isReviewed($reviewById, $reviewToId, 'cop')) {
-
-                // add internal log
-                CopInternalLogHandler::addInternalLog($reviewById, $data);
-
-                //add Review and rating
-                $review = IndReview::create(array(
-                    'reviewById' => $reviewById,
-                    'reviewToId' => $reviewToId,
-                    'reviewUserType' => 'cop',
-                    'reviewText' => $reviewText,
-                    'reviewRatingValue' => $reviewRatingValue,
-                    'reviewAddedDate' => Carbon::now(),
-                    'reviewUpdatedDate' => Carbon::now()
-                ));
-
-                //add notification
-                $copUser = CopUser::selectNameEmail($data->reviewById);
-                $detailsVal = "<strong>" . $copUser['name'] . "</strong>" . " Reviewed your profile";
-                if ($reviewText != "") {
-                    $detailsVal .= $reviewText;
-                }
-
-                $this->indNotificationHandler->addNotification($userId = $reviewToId,
-                    $details = $detailsVal,
-                    $type = '_PROFILE_REVIEW_',
-                    $targetId = $review->reviewById);
-
-                return array('success' => \Lang::get('messages.profile.review.review_successful'), 'data' => $data);
-            }
-            //already reviewed
+        // check hire or not
+        if (!$this->indHire->isHired($reviewById, $reviewToId, $user['type'])) {
             return false;
         }
 
-        return \Lang::get('errors.something_went_wrong');
+        if (!$this->indReview->isReviewed($reviewById, $reviewToId, $user['type'])) {
+
+            // add Review and rating
+            $review = IndReview::create(array(
+                'reviewById' => $reviewById,
+                'reviewToId' => $reviewToId,
+                'reviewUserType' => $user['type'],
+                'reviewText' => $reviewText,
+                'reviewRatingValue' => $reviewRatingValue,
+                'reviewAddedDate' => Carbon::now(),
+                'reviewUpdatedDate' => Carbon::now()
+            ));
+
+            // set internal log
+            if($user['type'] == 'cop') {
+                CopInternalLogHandler::addInternalLog($post->userId, $post);
+            } else {
+                IndInternalLogHandler::addInternalLog($post->userId, $post);
+            }
+
+            // now add to notification
+            $message = "<strong>" . $user['name'] . "</strong>" . " reviewed your profile";
+            $this->indNotificationHandler->addNotification(
+                $userId = $reviewToId,
+                $details = $message,
+                $type = '_PROFILE_REVIEW_',
+                $targetId = $review->reviewId);
+
+            return array('success' => \Lang::get('messages.profile.review.review_successful'), 'data' => $post);
+        }
+
+        // oh o...already reviewed
+        return false;
     }
 }
