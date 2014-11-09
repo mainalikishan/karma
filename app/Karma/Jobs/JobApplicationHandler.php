@@ -48,10 +48,13 @@ class JobApplicationHandler
      * @param CopNotificationHandler $copNotificationHandler
      * @param JobApplicationStatus $jobApplicationStatus
      */
-    function __construct(JobApplication $jobApplication,
-                         Jobs $jobs, JobCacheHandler $jobCacheHandler,
-                         CopNotificationHandler $copNotificationHandler,
-                         JobApplicationStatus $jobApplicationStatus)
+    function __construct(
+        JobApplication $jobApplication,
+        Jobs $jobs,
+        JobCacheHandler $jobCacheHandler,
+        CopNotificationHandler $copNotificationHandler,
+        JobApplicationStatus $jobApplicationStatus
+    )
     {
         $this->jobApplication = $jobApplication;
         $this->jobs = $jobs;
@@ -70,14 +73,14 @@ class JobApplicationHandler
         // check post array  fields
         \CustomHelper::postCheck($data,
             array('userToken' => 'required',
-                'jobUserId' => 'required',
+                'userId' => 'required', //ind  user id
                 'appCopUserId' => 'required',
                 'appJobId' => 'required'
             ),
             4);
 
         $userToken = $data->userToken;
-        $userId = $data->jobUserId;
+        $userId = $data->userId;
 
         //checking for valid token id and user id
         \CopUserLoginCheck::loginCheck($userToken, $userId);
@@ -87,8 +90,8 @@ class JobApplicationHandler
             return false;
         }
 
-        //apply count
-        if (!$this->applyCount($data->appJobId, $data->appCopUserId, $userId)) {
+        //apply check
+        if ($this->isApplied($data->appJobId, $data->appCopUserId, $userId)) {
             return false;
         }
 
@@ -151,14 +154,14 @@ class JobApplicationHandler
      * @param $indUserId
      * @return mixed
      */
-    private function applyCount($jobId, $copUserId, $indUserId)
+    private function isApplied($jobId, $copUserId, $indUserId)
     {
         $result = $this->jobApplication
             ->where('appJobId', '=', $jobId)
             ->where('appCopUserId', '=', $copUserId)
             ->where('appIndUserId', '=', $indUserId)
-            ->count();
-        if ($result > 0)
+            ->first();
+        if ($result)
             return true;
         else
             return false;

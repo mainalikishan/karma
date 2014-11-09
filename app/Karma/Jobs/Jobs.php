@@ -69,8 +69,8 @@ class Jobs extends \Eloquent
     {
         $result = $this->where('jobUserId', $copUserId)
             ->where('jobId', $jobId)
-            ->count();
-        if($result>0)
+            ->first();
+        if($result)
             return true;
         else
             return false;

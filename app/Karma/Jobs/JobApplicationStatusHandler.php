@@ -53,8 +53,8 @@ class JobApplicationStatusHandler
         // check post array  fields
         \CustomHelper::postCheck($data,
             array('userToken' => 'required',
-                'jobUserId' => 'required',
-                'appCopUserId' => 'required',
+                'userId' => 'required', //ind user id
+                'indUserId' => 'required',
                 'appJobId' => 'required',
                 'appId' => 'required',
                 'statusName' => 'required'
@@ -62,7 +62,7 @@ class JobApplicationStatusHandler
             6);
 
         $userToken = $data->userToken;
-        $userId = $data->jobUserId;
+        $userId = $data->userId;
 
         //checking for valid token id and user id
         \CopUserLoginCheck::loginCheck($userToken, $userId);
@@ -71,14 +71,9 @@ class JobApplicationStatusHandler
         if (!$this->jobs->isJobExists($userId, $data->appJobId)) {
             return false;
         }
-        $result=$this->jobApplicationStatus->addApplicationStatus($data->appId,$data->statusName);
+        $result = $this->jobApplicationStatus->addApplicationStatus($data->appId, $data->statusName);
 
         if ($result) {
-
-            $jobs = $this->jobs->selectById($data->appJobId);
-
-            // update cache for job
-            $this->jobCacheHandler->make($jobs, $data->appJobId, $userId);
 
             // add internal log
             CopInternalLogHandler::addInternalLog($userId, $data);
@@ -86,17 +81,18 @@ class JobApplicationStatusHandler
             $jobTitle = Jobs::jobTitleById($data->appJobId);
             $jobTitle = $jobTitle['title'];
 
-            $notificationDetails = 'You are <strong>'.$data->statusName.'</strong> for a job : "<strong>' . $jobTitle . '</strong>"';
+            $status = Lang::get('keys.applications_status.' . $data->statusName);
 
-            $this->indNotificationHandler->addNotification($data->appCopUserId, $notificationDetails, '_JOB_APPLICATION_STATUS_', $data->appJobId);
+            $notificationDetails = 'You are <strong>' . $status . '</strong> for a job : "<strong>' . $jobTitle . '</strong>"';
 
-            // fire event when job apply. its Notification to cop user form individual user
-            if(IndAppSetting::createAppSetting($ff,'jobApplicationStatus'))
-//            if (CopAppSetting::isSubscribed($data->appCopUserId, 'jobApplied')) {
-//                \Event::fire('job.apply', $application);
-//            }
+            $this->indNotificationHandler->addNotification($data->indUserId, $notificationDetails, '_JOB_APPLICATION_STATUS_', $data->appJobId);
 
-            return Lang::get('messages.job_apply.job_apply_successful');
+            // fire event when application status changed(added) by cop users
+            if (IndAppSetting::createAppSetting($data->indUserId, 'jobApplicationStatus')) {
+                \Event::fire('application.changeStatus', $data);
+            }
+
+            return true;
         }
 
         return false;

@@ -12,8 +12,6 @@ use Karma\Hire\IndHire;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;
 use Karma\Log\IndInternalLog\IndInternalLogHandler;
 use Karma\Notification\IndNotificationHandler;
-use Karma\Users\CopUser;
-use Karma\Users\IndUser;
 
 class IndReviewHandler
 {
@@ -86,9 +84,9 @@ class IndReviewHandler
 
             // set internal log
             if($user['type'] == 'cop') {
-                CopInternalLogHandler::addInternalLog($post->userId, $post);
+                CopInternalLogHandler::addInternalLog($reviewById, $post);
             } else {
-                IndInternalLogHandler::addInternalLog($post->userId, $post);
+                IndInternalLogHandler::addInternalLog($reviewById, $post);
             }
 
             // now add to notification
@@ -97,7 +95,8 @@ class IndReviewHandler
                 $userId = $reviewToId,
                 $details = $message,
                 $type = '_PROFILE_REVIEW_',
-                $targetId = $review->reviewId);
+                $targetId = $review->reviewId
+            );
 
             return array('success' => \Lang::get('messages.profile.review.review_successful'), 'data' => $post);
         }
