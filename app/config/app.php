@@ -125,6 +125,7 @@ return array(
         'Clockwork\Support\Laravel\ClockworkServiceProvider',
         'Laracasts\Validation\ValidationServiceProvider',
         'Jenssegers\Agent\AgentServiceProvider',
+        'Jenssegers\Date\DateServiceProvider',
 
 	),
 
@@ -194,6 +195,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
         'Clockwork'       => 'Clockwork\Support\Laravel\Facade',
         'Agent'            => 'Jenssegers\Agent\Facades\Agent',
+        'Date'            => 'Jenssegers\Date\Date',
 
 	),
 

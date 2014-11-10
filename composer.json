@@ -8,7 +8,8 @@
         "nesbot/carbon": "1.12.0",
         "laracasts/validation": "~1.0",
         "jenssegers/agent": "*",
-        "guzzlehttp/guzzle": "~4.0"
+        "guzzlehttp/guzzle": "~4.0",
+        "jenssegers/date" : "*"
 	},
     "require-dev": {
         "way/generators": "~2.0",

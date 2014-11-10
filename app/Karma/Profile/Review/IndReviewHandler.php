@@ -8,10 +8,13 @@
 namespace Karma\Profile\Review;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Lang;
 use Karma\Hire\IndHire;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;
 use Karma\Log\IndInternalLog\IndInternalLogHandler;
 use Karma\Notification\IndNotificationHandler;
+use Karma\Users\CopUser;
+use Karma\Users\IndUser;
 
 class IndReviewHandler
 {
@@ -53,7 +56,7 @@ class IndReviewHandler
                 'reviewText' => 'optional',
                 'reviewUserType' => 'required|enum=indUser,copUser'
             ),
-        6);
+            6);
 
         $user = \CustomHelper::postRequestUserDetailCheck($post->reviewUserType, $post->userToken, $post->reviewById);
 
@@ -77,13 +80,14 @@ class IndReviewHandler
                 'reviewToId' => $reviewToId,
                 'reviewUserType' => $user['type'],
                 'reviewText' => $reviewText,
+                'reviewReportStatus' => 'N',
                 'reviewRatingValue' => $reviewRatingValue,
                 'reviewAddedDate' => Carbon::now(),
                 'reviewUpdatedDate' => Carbon::now()
             ));
 
             // set internal log
-            if($user['type'] == 'cop') {
+            if ($user['type'] == 'cop') {
                 CopInternalLogHandler::addInternalLog($reviewById, $post);
             } else {
                 IndInternalLogHandler::addInternalLog($reviewById, $post);
@@ -98,10 +102,41 @@ class IndReviewHandler
                 $targetId = $review->reviewId
             );
 
-            return array('success' => \Lang::get('messages.profile.review.review_successful'), 'data' => $post);
+            return array('success' => Lang::get('messages.profile.review.review_successful'), 'data' => $post);
         }
 
         // oh o...already reviewed
         return false;
+    }
+
+    public function selectReview($post)
+    {
+        // check post array  fields
+        \CustomHelper::postCheck($post,
+            array(
+                'userToken' => 'required',
+                'userId' => 'required|integer', // ind user id
+                'reviewId' => 'required|integer' // target ID
+            ),
+            3);
+
+        //login check
+        IndUser::loginCheck($post->userToken, $post->userId);
+
+        $result = $this->indReview->getReview($post->reviewId);
+
+        if ($result) {
+            $copUser = CopUser::selectNameEmail($result->reviewById);
+            return array(
+                'reviewId' => $result->reviewId,
+                'copUserId' => $result->reviewById,
+                'copUserName' => $copUser['name'],
+                'reviewText' => $result->reviewText,
+                'ratingPoint' => $result->reviewRatingValue,
+                'reviewReportCount' => $result->reviewRatingValue,
+                'date' => \CustomHelper::humanDate($result->reviewAddedDate)
+            );
+        }
+        return Lang::get('errors.global.temporarily_unavailable');
     }
 }

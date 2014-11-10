@@ -36,10 +36,9 @@ class IndReview extends \Eloquent
             ->where('reviewToId', $reviewToId)
             ->where('reviewUserType', $reviewUserType)
             ->first();
-        if($review) {
+        if ($review) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -57,5 +56,12 @@ class IndReview extends \Eloquent
         $review->reviewReportStatus = ($review->reviewReportCount == MAX_REVIEW_REPORT_COUNT) ? 'Y' : 'N';
         $review->reviewUpdatedDate = Carbon::now();
         $review->save();
+    }
+
+    public function getReview($reviewId)
+    {
+        return $this->where('reviewId', $reviewId)
+                    ->where('reviewReportStatus','N')
+            ->first();
     }
 } 

@@ -227,6 +227,22 @@ class IndProfileController extends ApiController
         return $this->respondUnprocessableEntity();
     }
 
+    public function reviewById()
+    {
+        $post = $this->postRequestHandler();
+        if (is_object($post)) {
+            try {
+                $return = $this->indReviewHandler->selectReview($post);
+                return $this->respondSuccess($return);
+            } catch (Exception $e) {
+
+                return $this->respondUnprocessableEntity($e->getMessage());
+            }
+        }
+
+        return $this->respondUnprocessableEntity();
+    }
+
     /**
      * @return mixed
      */

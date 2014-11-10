@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'global'=>[
+        'temporarily_unavailable' => 'This link is temporarily unavailable'
+    ],
     'new_password_not_same_to_old' => 'New password can not be same as old password',
     'confirm_password_mismatched' => 'Password confirm mismatched',
     'something_went_wrong' => 'Something went wrong',
@@ -39,6 +42,7 @@ return [
         'profile_not_found' => 'This link is temporarily unavailable',
         'already_reported' => 'Already reported',
         'already_blocked' => 'Already blocked',
-        'already_unblocked' => 'Already un blocked'
+        'already_unblocked' => 'Already un blocked',
+        'temporarily_unavailable' => 'This link is temporarily unavailable'
     ]
 ];
