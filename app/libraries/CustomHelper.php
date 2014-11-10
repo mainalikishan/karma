@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+use Karma\General\Address;
 use Karma\Users\CopUser;
 use Karma\Users\IndUser;
 
@@ -144,6 +146,14 @@ class CustomHelper
         throw new \Exception(\Lang::get('errors.invalid_post_request'));
     }
 
+
+    /**
+     * @param $userType
+     * @param $token
+     * @param $id
+     * @return array
+     * @throws Exception
+     */
     public static function postRequestUserDetailCheck($userType, $token, $id)
     {
         $user =
@@ -230,6 +240,14 @@ class CustomHelper
             );
         }
         return false;
+    }
+
+    public static function setUserTimeZone($addressId)
+    {
+        $address = Address::selectAddress($addressId);
+        \Config::set('app.timezone', $address->addressTimeZone);
+        echo Carbon::now()->tzName; die();
+        return true;
     }
 
 

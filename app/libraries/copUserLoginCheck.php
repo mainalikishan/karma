@@ -16,6 +16,7 @@ class CopUserLoginCheck {
         {
             if($userId==$user->userId && $tokenId==$user->userToken)
             {
+                \CustomHelper::setUserTimeZone($user->userAddressId);
                 return true;
             }
         }

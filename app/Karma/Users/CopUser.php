@@ -237,6 +237,7 @@ class CopUser extends \Eloquent
         $user = self::where(compact('userToken', 'userId'))->first();
         if ($user) {
             if ($userId == $user->userId && $userToken == $user->userToken) {
+                \CustomHelper::setUserTimeZone($user->userAddressId);
                 return $user;
             }
         }
