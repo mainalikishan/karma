@@ -15,6 +15,7 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::post('induser/profile/block', 'IndProfileController@blockUser');
     Route::post('induser/profile/unBlock', 'IndProfileController@unBlockUser');
     Route::post('induser/profile/review', 'IndProfileController@review');
+    Route::post('induser/profile/reviewById', 'IndProfileController@reviewById');
     Route::post('induser/profile/reviewReport', 'IndProfileController@reviewReport');
     Route::post('induser/hire/request', 'IndHireController@requestHire');
     Route::post('induser/hire/response', 'IndHireController@responseHire');
@@ -46,7 +47,8 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::post('jobs/destroy', 'JobController@destroy');
 
     // Jobs Application
-    Route::post('jobs/Application', 'JobApplicationController@apply');
+    Route::post('jobs/application/apply', 'JobController@apply');
+    Route::post('jobs/application/status', 'JobController@applicationStatus');
 
     //Notification
     Route::post('copuser/notification', 'CopNotificationController@updateStatus');

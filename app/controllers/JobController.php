@@ -1,6 +1,8 @@
 <?php
 
 use Karma\Cache\JobCacheHandler;
+use Karma\Jobs\JobApplicationHandler;
+use Karma\Jobs\JobApplicationStatusHandler;
 use Karma\Jobs\JobsHandler;
 
 class JobController extends ApiController
@@ -14,15 +16,32 @@ class JobController extends ApiController
      * @var Karma\Cache\JobCacheHandler
      */
     private $jobCacheHandler;
+    /**
+     * @var Karma\Jobs\JobApplicationHandler
+     */
+    private $jobApplicationHandler;
+    /**
+     * @var Karma\Jobs\JobApplicationStatusHandler
+     */
+    private $jobApplicationStatusHandler;
+
 
     /**
      * @param JobsHandler $handler
      * @param JobCacheHandler $jobCacheHandler
+     * @param JobApplicationHandler $jobApplicationHandler
+     * @param JobApplicationStatusHandler $jobApplicationStatusHandler
      */
-    public function __construct(JobsHandler $handler, JobCacheHandler $jobCacheHandler)
+    public function __construct(
+        JobsHandler $handler,
+        JobCacheHandler $jobCacheHandler,
+        JobApplicationHandler $jobApplicationHandler,
+        JobApplicationStatusHandler $jobApplicationStatusHandler)
     {
         $this->handler = $handler;
         $this->jobCacheHandler = $jobCacheHandler;
+        $this->jobApplicationHandler = $jobApplicationHandler;
+        $this->jobApplicationStatusHandler = $jobApplicationStatusHandler;
     }
 
     /**
@@ -89,6 +108,42 @@ class JobController extends ApiController
         if (is_object($post)) {
             try {
                 $return = $this->handler->destroy($post);
+                return $this->respondSuccess($return);
+            } catch (Exception $e) {
+                return $this->respondUnprocessableEntity($e->getMessage());
+            }
+        }
+        return $this->respondUnprocessableEntity();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function apply()
+    {
+
+        $post = $this->postRequestHandler();
+
+        if (is_object($post)) {
+            try {
+
+                $return = $this->jobApplicationHandler->apply($post);
+                return $this->respondSuccess($return);
+            } catch (Exception $e) {
+                return $this->respondUnprocessableEntity($e->getMessage());
+            }
+        }
+        return $this->respondUnprocessableEntity();
+    }
+    public function applicationStatus()
+    {
+
+        $post = $this->postRequestHandler();
+
+        if (is_object($post)) {
+            try {
+
+                $return = $this->jobApplicationStatusHandler->addJobStatus($post);
                 return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());

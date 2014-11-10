@@ -287,4 +287,16 @@ class CustomHelper
     {
         return array_keys($arr) !== range(0, count($arr) - 1);
     }
+
+    public static function humanDate($date)
+    {
+        $dt = Date::now();
+        $diffHour = $date->diffInHours($dt);
+        $date = $date->format('Y-m-d H:i:s');
+        $date = Date::parse($date);
+        if ($diffHour < 24)
+            return $date->diffForHumans();
+        else
+            return $date->toFormattedDateString();
+    }
 } 

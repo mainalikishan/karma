@@ -20,7 +20,7 @@
                         <tr style="line-height:0px">
                             <td width="100%" style="font-size:0px" align="center" height="1"><img alt="Jagirr"
                                                                                                   src="{{$logo}}"
-                                                                                                  width="150">
+                                                                                                 width="150">
                             </td>
                         </tr>
                         <tr>
@@ -29,11 +29,10 @@
                                 <span style="color:#666666; font-size: 14px; line-height: 24px; ">
                                     Hi <span style=" font-weight: bold;">{{$toName}}</span> , <br/> <br/>
 
-                                   <span style=" font-weight: bold;"> {{$fromName}} </span> recently reviewed your profile
-                                    @if($reviewSummary!="")
-                                    <br/><br/>
-                                    {{$reviewSummary}}
-                                    @endif
+                                   <span style=" font-weight: bold;"> {{$fromName}} </span> recently applied for job you posted: <br/><br/>
+
+                                    {{$messages}}
+
                                     <br/><br/>
 
                                     <span style="color: #777;">PS: For more information, please login to  <span
@@ -50,7 +49,7 @@
 
                         </tbody>
                     </table>
-                    <table cellpadding="0" cellspacing="0"  border="0" width="100%">
+                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
                         <tbody>
                         <tr>
                             <td height="10"></td>
@@ -60,7 +59,7 @@
                                 <table cellpadding="0" cellspacing="0" align="center" border="0" width="100%">
                                     <tbody>
                                     <tr style="color:#1ABC9C;font-size:11px;font-family:proxima_nova,'Open Sans','Lucida Grande','Segoe UI',Arial,Verdana,'Lucida Sans Unicode',Tahoma,'Sans Serif'">
-                                        <td align="left" width="70%" >
+                                        <td align="left" width="70%">
                                             You can <strong>unsubscribe</strong> this email from your "App Settings".
                                         </td>
                                         <td align="right">&copy; {{ date('Y') }} <span>Jagirr</span></td>

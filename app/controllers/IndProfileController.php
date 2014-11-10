@@ -8,6 +8,7 @@ use Karma\Profile\IndProfileExperienceHandler;
 use Karma\Profile\IndProfileWhatIDoHandler;
 use Karma\Profile\Review\IndReviewHandler;
 use Karma\Profile\Review\IndReviewReportHandler;
+use Karma\Setting\IndAppSetting;
 
 class IndProfileController extends ApiController
 {
@@ -210,11 +211,31 @@ class IndProfileController extends ApiController
             try {
                 $return = $this->indReviewHandler->addReview($post);
                 if (is_array($return)) {
-                    \Event::fire('profile.review', $return['data']);
+
+                    if (IndAppSetting::isSubscribed($post->reviewToId, 'reviewAndRating')) {
+                        \Event::fire('profile.review', $return['data']);
+                    }
+
                     return $this->respondSuccess($return['success']);
                 }
                 return $this->respondSuccess($return);
             } catch (Exception $e) {
+                return $this->respondUnprocessableEntity($e->getMessage());
+            }
+        }
+
+        return $this->respondUnprocessableEntity();
+    }
+
+    public function reviewById()
+    {
+        $post = $this->postRequestHandler();
+        if (is_object($post)) {
+            try {
+                $return = $this->indReviewHandler->selectReview($post);
+                return $this->respondSuccess($return);
+            } catch (Exception $e) {
+
                 return $this->respondUnprocessableEntity($e->getMessage());
             }
         }

@@ -36,7 +36,7 @@ class CreateIndUser extends Migration {
             $table->integer('userLoginCount');
             $table->string('userLastLoginIp',20);
             $table->timestamp('userLastUpdated');
-            $table->enum('userEmailVerification',array('Y','N'))->default('N');
+            $table->enum('userEmailVerification',array('Y','N'))->default('Y');
             $table->integer('userEmailVerificationCode');
             $table->enum('userStatus',array('Active','Block'))->default('Active');
             $table->enum('userAccountStatus',array('Active','perDeactivate','tempDeactivate'))->default('Active');
