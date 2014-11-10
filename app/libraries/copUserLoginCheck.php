@@ -1,4 +1,6 @@
 <?php
+use Karma\Setting\CopPreference;
+
 /**
  * User: Prakash
  * Date: 9/27/14
@@ -16,7 +18,14 @@ class CopUserLoginCheck {
         {
             if($userId==$user->userId && $tokenId==$user->userToken)
             {
-                \CustomHelper::setUserTimeZone($user->userAddressId);
+                $preference = CopPreference::selectPreferenceByUserId($userId);
+                if($preference) {
+                    $userLang = json_decode($preference->preferenceData)->langCode;
+                    \CustomHelper::setUserLocaleTimeZone($user->userAddressId, $userLang);
+                }
+                else {
+                    throw new \Exception(\Lang::get('errors.something_went_wrong'));
+                }
                 return true;
             }
         }

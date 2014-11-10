@@ -116,14 +116,9 @@ class CopUserCacheHandler
                 $data->userAddress = $address ? $address->addressName : '';
                 $data->userAddressCoordinate = $address ? $address->addressCoordinate : '';
                 $data->userCountry = $country ? $country->countryName : '';
-                $data->userRegistered = $address ? \CustomHelper::dateConvertTimezone(
-                    $data->userRegDate,
-                    $address->addressTimeZone,
-                    'toFormattedDateString') : \CustomHelper::dateConvertTimezone(
-                    $data->userRegDate,
-                    'UTC',
-                    'toFormattedDateString');
+                $data->userRegistered = $data->userRegDate;
                 $data->userType = 'copUser';
+                $data->userTypeShort = 'cop';
                 unset(
                 $data->userAddressId,
                 $data->userCountryISO,

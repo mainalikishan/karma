@@ -8,7 +8,7 @@
         "laracasts/validation": "~1.0",
         "jenssegers/agent": "*",
         "guzzlehttp/guzzle": "~4.0",
-        "jenssegers/date" : "*"
+        "jenssegers/date": "*"
 	},
     "require-dev": {
         "way/generators": "~2.0",

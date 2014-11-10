@@ -10,6 +10,7 @@ namespace Karma\Login;
 use Karma\Cache\UserMasterCache;
 use Karma\Log\CopActivityLog\CopActivityLogHandler;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;
+use Karma\Setting\CopPreference;
 use Karma\Users\CopUser;
 
 class CopLogInHandler
@@ -46,9 +47,8 @@ class CopLogInHandler
         if ($user) {
             if (\Hash::check($data->userPassword, $user->userPassword)) {
 
-                //updating cop user table with login information
+                // updating cop user table with login information
                 $user->userLoginCount = $user->userLoginCount + 1;
-                $user->userId = $user->userId;
                 $user->userLoginIp = \Request::getClientIp(true);
                 $user->userToken = \CustomHelper::generateToken($user->userEmail);
                 $user->save();
@@ -57,8 +57,15 @@ class CopLogInHandler
                 CopInternalLogHandler::addInternalLog($user->userId, $data);
                 CopActivityLogHandler::addActivityLog($user->userId, "log text");
 
-                //returns cache value
-                return $this->userMasterCache->init($user->userId);
+                // set user locale and timezone
+                $preference = CopPreference::selectPreferenceByUserId($user->userId);
+                if ($preference) {
+                    $userLang = json_decode($preference->preferenceData)->langCode;
+                    \CustomHelper::setUserLocaleTimeZone($user->userAddressId, $userLang);
+                }
+
+                // returns cache value
+                return $this->userMasterCache->init('cop', $user->userId);
             }
         }
         return \Lang::get('errors.invalid_email_password_address');

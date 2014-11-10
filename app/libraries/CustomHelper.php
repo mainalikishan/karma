@@ -242,11 +242,22 @@ class CustomHelper
         return false;
     }
 
-    public static function setUserTimeZone($addressId)
+    public static function setUserLocaleTimeZone($addressId, $userLang)
     {
+        // first set user locale as per user's lang preference
+        App::setLocale($userLang);
+        Date::setLocale($userLang);
+
+        // select address as per user's address id to find timezone
         $address = Address::selectAddress($addressId);
-        \Config::set('app.timezone', $address->addressTimeZone);
-        echo Carbon::now()->tzName; die();
+
+        $timezone = $address? $address->addressTimeZone: 'UTC';
+        // set user timezone to laravel
+        \Config::set('app.timezone', $timezone);
+
+        // set user timezone to PHP Native(Carbon doesn't set timezone as per laravel)
+        date_default_timezone_set($timezone);
+
         return true;
     }
 

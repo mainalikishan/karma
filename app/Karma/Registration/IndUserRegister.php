@@ -10,6 +10,7 @@ use Karma\Cache\IndUserCacheHandler;
 use Karma\Cache\UserMasterCache;
 use Karma\General\Address;
 use Karma\Setting\IndDefaultSetting;
+use Karma\Setting\IndPreference;
 use Karma\Users\IndUser;
 
 
@@ -130,6 +131,15 @@ class IndUserRegister
         if ($register['action'] == 'register') {
             $this->indDefaultSetting->init($user->userId);
         }
-        return $this->userMasterCache->init($user->userId);
+
+        // set user locale and timezone
+        $preference = IndPreference::selectPreferenceByUserId($user->userId);
+        if($preference) {
+            $userLang = json_decode($preference->preferenceData)->langCode;
+            \CustomHelper::setUserLocaleTimeZone($user->userAddressId, $userLang);
+        }
+
+        // return master cache
+        return $this->userMasterCache->init('ind', $user->userId);
     }
 } 

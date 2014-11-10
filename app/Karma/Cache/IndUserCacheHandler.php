@@ -104,24 +104,10 @@ class IndUserCacheHandler
                 $data->userAddress = $address ? array('id' => $data->userAddressId, 'name' => $address->addressName) : '';
                 $data->userAddressCoordinate = $address ? $address->addressCoordinate : '';
                 $data->userCountry = $country ? $country->countryName : '';
-                $data->userRegistered = $address ? \CustomHelper::dateConvertTimezone(
-                    $data->userRegDate,
-                    $address->addressTimeZone,
-                    'toFormattedDateString') : \CustomHelper::dateConvertTimezone(
-                    $data->userRegDate,
-                    'UTC',
-                    'toFormattedDateString');
-                $dt = Carbon::parse($data->userDOB);
-                $data->userBirthDate = array(
-                    'day' => "$dt->day",
-                    'month' => "$dt->month",
-                    'year' => "$dt->year",
-                    'formattedDate' => \CustomHelper::dateConvertTimezone(
-                            $dt,
-                            'UTC',
-                            'toFormattedDateString')
-                );
+                $data->userRegistered = $data->userRegDate->toFormattedDateString();
+                $data->userBirthDate = Carbon::parse($data->userDOB)->toFormattedDateString();
                 $data->userType = 'indUser';
+                $data->userTypeShort = 'ind';
                 unset(
                 $data->userAddressId,
                 $data->userGenderId,

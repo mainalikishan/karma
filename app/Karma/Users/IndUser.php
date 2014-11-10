@@ -8,6 +8,8 @@
 namespace Karma\Users;
 
 
+use Karma\Setting\IndPreference;
+
 class IndUser extends \Eloquent
 {
     const CREATED_AT = 'userRegDate';
@@ -75,13 +77,21 @@ class IndUser extends \Eloquent
      * @param $userToken
      * @param $userId
      * @return bool
+     * @throws \Exception
      */
     public static function loginCheck($userToken, $userId)
     {
         $user = self::where(compact('userToken', 'userId'))->first();
         if ($user) {
             if ($userId == $user->userId && $userToken == $user->userToken) {
-                \CustomHelper::setUserTimeZone($user->userAddressId);
+                $preference = IndPreference::selectPreferenceByUserId($userId);
+                if($preference) {
+                    $userLang = json_decode($preference->preferenceData)->langCode;
+                    \CustomHelper::setUserLocaleTimeZone($user->userAddressId, $userLang);
+                }
+                else {
+                    throw new \Exception(\Lang::get('errors.something_went_wrong'));
+                }
                 return $user;
             }
         }

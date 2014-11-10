@@ -12,6 +12,7 @@ use Karma\Cache\CopUserCacheHandler;
 use Karma\Cache\UserMasterCache;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;
 use Karma\Setting\CopDefaultSetting;
+use Karma\Setting\CopPreference;
 use Karma\Users\CopUser;
 use Karma\General\Address;
 
@@ -85,8 +86,7 @@ class CopUserRegister
         }
 
         $user = $this->$oauthType->register($post, $address);
-        if($oauthType=='copLinkedInRegister')
-        {
+        if ($oauthType == 'copLinkedInRegister') {
             $user = $user['user'];
         }
         if ($user) {
@@ -120,14 +120,21 @@ class CopUserRegister
             // create cache for user
             $this->copUserCacheHandler->make($user, 'basic', $user->userId);
 
-            if($oauthType=='copLinkedInRegister')
-            {
-                if ($user['action'] == 'register') {
-                    $this->copDefaultSetting->init($user->userId);
-                }
-                return $this->userMasterCache->init($user->userId);
+            if ($oauthType == 'copLinkedInRegister' && $user['action'] == 'register') {
+                $this->copDefaultSetting->init($user->userId);
             } else {
                 $this->copDefaultSetting->init($user->userId);
+            }
+
+            // set user locale and timezone
+            $preference = CopPreference::selectPreferenceByUserId($user->userId);
+            if ($preference) {
+                $userLang = json_decode($preference->preferenceData)->langCode;
+                \CustomHelper::setUserLocaleTimeZone($user->userAddressId, $userLang);
+            }
+
+            if ($oauthType == 'copLinkedInRegister') {
+                return $this->userMasterCache->init('cop', $user->userId);
             }
 
             return \Lang::get('messages.registration_successful');

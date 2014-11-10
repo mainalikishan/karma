@@ -19,26 +19,36 @@ class UserMasterCache
      * @var IndUserCache
      */
     private $indUserCache;
+    /**
+     * @var CopUserCache
+     */
+    private $copUserCache;
 
 
     /**
      * @param IndUserCache $indUserCache
+     * @param CopUserCache $copUserCache
      */
-    public function __construct(IndUserCache $indUserCache)
+    public function __construct(
+        IndUserCache $indUserCache,
+        CopUserCache $copUserCache
+    )
     {
         $this->indUserCache = $indUserCache;
+        $this->copUserCache = $copUserCache;
     }
 
 
     /**
+     * @param $userType
      * @param $userId
      * @return array
      */
-    public function init($userId)
+    public function init($userType, $userId)
     {
         $data = [];
-        $data['profile'] = $this->selectCache($userId);
-        $data['labels'] = $this->labels($userId);
+        $data['profile'] = $this->selectCache($userType, $userId);
+        $data['labels'] = $this->labels();
         $data['languages'] = $this->languages();
         $data['countries'] = $this->countries();
         $data['currencies'] = $this->currencies();
@@ -47,25 +57,27 @@ class UserMasterCache
 
 
     /**
+     * @param $userType
      * @param $userId
      * @return mixed
      */
-    private function selectCache($userId)
+    private function selectCache($userType, $userId)
     {
-        return $this->indUserCache->selectCacheValue($userId);
+        if($userType=='cop') {
+            return $this->copUserCache->selectCacheValue($userId);
+        }
+        else {
+            return $this->indUserCache->selectCacheValue($userId);
+        }
     }
 
 
     /**
-     * @param $userId
      * @return mixed
      */
-    private function labels($userId)
+    private function labels()
     {
-        $preference = IndPreference::selectPreferenceByUserId($userId);
-        $userLang = json_decode($preference->preferenceData)->langCode;
-        \App::setLocale($userLang);
-        return \Lang::get('labels');
+        return \Lang::get('appLabels');
     }
 
 
