@@ -7,12 +7,12 @@
 <div style="padding:0;width:100%!important;margin:0" marginheight="0" marginwidth="0">
     <center>
         <table cellpadding="8" cellspacing="0"
-               style="padding:0;width:100%!important;background:#ffffff;margin:0;background-color:#ffffff" border="0">
+               style="padding:0;width:100%!important;background:#ffffff;margin:0;background-color:#ffffff" border="0" with="500px">
             <tbody>
             <tr>
                 <td valign="top">
                     <table cellpadding="0" cellspacing="0" style="border-radius:4px;border:1px #cccccc solid" border="0"
-                           align="center">
+                            width="100%">
                         <tbody>
                         <tr>
                             <td colspan="3" height="20"></td>
