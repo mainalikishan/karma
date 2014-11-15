@@ -39,4 +39,4 @@ class IndHireEventsHandler {
         $events->listen('indUser.hire', 'Karma\Hire\Events\IndHireEventsHandler@onHire');
     }
 
-} 
+}

@@ -8,25 +8,27 @@ namespace Karma\Registration\Events;
 
 
 
+use Karma\Registration\Mailer\IndRegisterMailer;
+
 class IndUserRegisterEventsHandler {
 
     /**
-     * @var IndUserRegisterEventsHandler
+     * @var \Karma\Registration\Mailer\IndRegisterMailer
      */
-    private $indUserRegisterEventsHandler;
+    private $indRegisterMailer;
 
-    public function __construct(IndUserRegisterEventsHandler $indUserRegisterEventsHandler)
+    public function __construct(IndRegisterMailer $indRegisterMailer)
     {
-        $this->indUserRegisterEventsHandler = $indUserRegisterEventsHandler;
+        $this->indRegisterMailer = $indRegisterMailer;
     }
-
 
     /**
      * @param $data
      */
     public function onUserRegister($data)
     {
-        $this->indUserRegisterEventsHandler->sendWelcomeEmail($data);
+       $this->indRegisterMailer->sendWelcomeEmail($data);
+
     }
 
     /**

@@ -41,4 +41,4 @@ class IndHireMailer
                 $message->to($this->toEmail, $this->toName)->subject($this->fromName . " Hire Request ");
             });
     }
-} 
+}
