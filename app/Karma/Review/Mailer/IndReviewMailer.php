@@ -5,7 +5,7 @@
  * Time: 9:22 PM
  */
 
-namespace Karma\Profile\Review\Mailer;
+namespace Karma\Review\Mailer;
 
 
 use Karma\Users\CopUser;

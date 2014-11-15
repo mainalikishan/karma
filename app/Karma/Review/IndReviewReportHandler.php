@@ -5,7 +5,7 @@
  * Time: 1:29 PM
  */
 
-namespace Karma\Profile\Review;
+namespace Karma\Review;
 
 use Carbon\Carbon;
 use Karma\Log\CopInternalLog\CopInternalLogHandler;

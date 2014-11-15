@@ -5,7 +5,7 @@
  * Time: 12:20 PM
  */
 
-namespace Karma\Profile\Review;
+namespace Karma\Review;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Lang;

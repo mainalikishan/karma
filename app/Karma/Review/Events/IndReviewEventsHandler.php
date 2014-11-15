@@ -5,14 +5,14 @@
  * Time: 3:31 PM
  */
 
-namespace Karma\Profile\Review\Events;
+namespace Karma\Review\Events;
 
-use Karma\Profile\Review\Mailer\IndReviewMailer;
+use Karma\Review\Mailer\IndReviewMailer;
 
 class IndReviewEventsHandler
 {
     /**
-     * @var \Karma\Profile\Review\Mailer\IndReviewMailer
+     * @var \Karma\Review\Mailer\IndReviewMailer
      */
     private $indReviewMailer;
 
@@ -35,7 +35,7 @@ class IndReviewEventsHandler
      */
     public function subscribe($events)
     {
-        $events->listen('profile.review', 'Karma\Profile\Review\Events\IndReviewEventsHandler@onReview');
+        $events->listen('profile.review', 'Karma\Review\Events\IndReviewEventsHandler@onReview');
     }
 
 } 

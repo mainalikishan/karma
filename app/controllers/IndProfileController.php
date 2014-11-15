@@ -6,8 +6,8 @@ use Karma\Profile\IndProfileBasicHandler;
 use Karma\Profile\IndProfileEducationHandler;
 use Karma\Profile\IndProfileExperienceHandler;
 use Karma\Profile\IndProfileWhatIDoHandler;
-use Karma\Profile\Review\IndReviewHandler;
-use Karma\Profile\Review\IndReviewReportHandler;
+use Karma\Review\IndReviewHandler;
+use Karma\Review\IndReviewReportHandler;
 use Karma\Setting\IndAppSetting;
 
 class IndProfileController extends ApiController
@@ -37,11 +37,11 @@ class IndProfileController extends ApiController
      */
     private $indBlockUserLogHandler;
     /**
-     * @var Karma\Profile\Review\IndReviewHandler
+     * @var Karma\Review\IndReviewHandler
      */
     private $indReviewHandler;
     /**
-     * @var Karma\Profile\Review\IndReviewReportHandler
+     * @var Karma\Review\IndReviewReportHandler
      */
     private $indReviewReportHandler;
 

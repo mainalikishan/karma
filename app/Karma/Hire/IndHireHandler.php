@@ -50,14 +50,13 @@ class IndHireHandler
                 'token' => 'required',
                 'hireById' => 'required|integer',
                 'hireToId' => 'required|integer',
-                'hireByUserType' => 'required|enum=ind,cop',
-                'postRequestBy' => 'required|enum=indUser,copUser'
+                'hireByUserType' => 'required|enum=indUser,copUser'
             ),
-        6);
+        5);
 
-        $user = \CustomHelper::postRequestUserDetailCheck($post->postRequestBy, $post->token, $post->userId);
+        $user = \CustomHelper::postRequestUserDetailCheck($post->hireByUserType, $post->token, $post->userId);
 
-        $hire = $this->indHire->checkHireById($post->hireById, $post->hireToId, $post->hireByUserType);
+        $hire = $this->indHire->checkHireById($post->hireById, $post->hireToId, $user['type']);
         if ($hire) {
             $hire->hireRequest = $hire->hireRequest=='N'? 'Y': 'N';
             $hire->hireRequestDate = Carbon::now();
@@ -106,15 +105,14 @@ class IndHireHandler
                 'token' => 'required',
                 'hireById' => 'required|integer',
                 'hireToId' => 'required|integer',
-                'hireByUserType' => 'required|enum=ind,cop',
-                'hireResponse' => 'required|enum=Accept,Ignore',
-                'postRequestBy' => 'required|string'
+                'hireByUserType' => 'required|enum=indUser,copUser',
+                'hireResponse' => 'required|enum=Accept,Ignore'
             ),
-         7);
+         6);
 
-        $user = \CustomHelper::postRequestUserDetailCheck($post->postRequestBy, $post->token, $post->userId);
+        $user = \CustomHelper::postRequestUserDetailCheck($post->hireByUserType, $post->token, $post->userId);
 
-        $hire = $this->indHire->checkHireById($post->hireById, $post->hireToId, $post->hireByUserType);
+        $hire = $this->indHire->checkHireById($post->hireById, $post->hireToId, $user['type']);
         if ($hire && $hire->hireRequest=='Y') {
             $hire->hireResponse = $post->hireResponse;
             $hire->hireResponseDate = Carbon::now();

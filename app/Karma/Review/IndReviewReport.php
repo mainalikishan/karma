@@ -5,7 +5,7 @@
  * Time: 1:20 PM
  */
 
-namespace Karma\Profile\Review;
+namespace Karma\Review;
 
 
 class IndReviewReport extends \Eloquent
