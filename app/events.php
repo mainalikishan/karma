@@ -12,4 +12,4 @@ Event::subscribe('Karma\Registration\Events\IndUserRegisterEventsHandler');
 Event::subscribe('Karma\Jobs\Events\JobApplyEventsHandler');
 Event::subscribe('Karma\Jobs\Events\JobApplicationStatusEventsHandler');
 
-Event::subscribe('Karma\Hire\Events\IndHireEventsHandler');
+Event::subscribe('Karma\Hire\Events\IndHireRequestEventsHandler');

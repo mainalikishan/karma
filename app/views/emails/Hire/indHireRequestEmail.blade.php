@@ -24,54 +24,41 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width="100%" align="center" style="padding: 0 10px;">
+                            <td width="100%" align="left" style="padding: 20px 10px;">
 
-                                <span style="color:#666666; font-size: 16px; line-height: 24px; padding: 0;">
-                                    Dear <span style="font-weight: bold;">{{$toName}}!</span>
-                                    {{$fromName}} send you a hire request.
+                                <span style="color:#666666; font-size: 14px; line-height: 24px; ">
+                                    Hi <span style=" font-weight: bold;">{{$toName}}</span> , <br/> <br/>
+
+                                   <span style=" font-weight: bold;"> {{$fromName}} </span> wants to hire you  on <span
+                                        style=" font-weight: bold;">Jagirr</span>
+
+                                    <br/><br/>
+
+                                    <span style="color: #777;">PS: For more information, please login to  <span
+                                            style=" font-weight: bold;">Jagirr</span>.</span>
                                 </span>
                             </td>
                         <tr>
-                            <td>
-                                <hr style="border:none;border-bottom:1px solid #eee;margin-bottom:20px;margin-top:20px;background-color:#fff;min-height:1px; width: 90%; text-align: center;">
+                            <td width="100%" align="left"
+                                style="padding: 0 10px; color:#666666; font-size: 14px; line-height: 24px; ">
+                                {{$signature}} <br/><br/>
                             </td>
                         </tr>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table cellpadding="0" cellspacing="0" border="0"
-                                       align="center">
-                                    <tbody>
-                                    <tr>
-                                        <td
-                                            style="color:#666666; font-size: 16px;border-collapse:collapse;font-family:proxima_nova,'Open Sans','Lucida Grande','Segoe UI',Arial,Verdana,'Lucida Sans Unicode',Tahoma,'Sans Serif'; text-align: center; padding: 0 10px;"
-                                            valign="top">
 
-                                            <div style="text-align: left;">
-                                                {{$signature}}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td height="36"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
-                    <table cellpadding="0" cellspacing="0" align="right" border="0">
+                    <table cellpadding="0" cellspacing="0"  border="0" width="100%">
                         <tbody>
                         <tr>
                             <td height="10"></td>
                         </tr>
                         <tr>
                             <td style="padding:0;border-collapse:collapse">
-                                <table cellpadding="0" cellspacing="0" align="center" border="0">
+                                <table cellpadding="0" cellspacing="0" align="center" border="0" width="100%">
                                     <tbody>
                                     <tr style="color:#1ABC9C;font-size:11px;font-family:proxima_nova,'Open Sans','Lucida Grande','Segoe UI',Arial,Verdana,'Lucida Sans Unicode',Tahoma,'Sans Serif'">
-                                        <td align="left">&nbsp;
+                                        <td align="left" width="70%" >
+                                            You can <strong>unsubscribe</strong> this email from your "App Settings".
                                         </td>
                                         <td align="right">&copy; {{ date('Y') }} <span>Jagirr</span></td>
                                     </tr>

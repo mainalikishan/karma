@@ -11,7 +11,7 @@ namespace Karma\Hire\Mailer;
 use Karma\Users\CopUser;
 use Karma\Users\IndUser;
 
-class IndHireMailer
+class IndHireRequestMailer
 {
 
     public function sendEmail($data)
@@ -31,14 +31,15 @@ class IndHireMailer
         $this->toEmail = $indUser['email'];
 
 
-        \Mail::send('emails.Hire.indHireEmail',
+        \Mail::send('emails.Hire.indHireRequestEmail',
             array('toName' => $this->toName,
                 'fromName' => $this->fromName,
                 'logo' => DEFAULT_EMAIL_LOGO,
+                'default_name' => DEFAULT_FROM_NAME,
                 'signature' => DEFAULT_EMAIL_SIGNATURE),
             function ($message) {
                 $message->from(DEFAULT_FROM_EMAIL, DEFAULT_FROM_NAME);
-                $message->to($this->toEmail, $this->toName)->subject($this->fromName . " Hire Request ");
+                $message->to($this->toEmail, $this->toName)->subject($this->fromName . " wants to hire you on Jagirr");
             });
     }
 }
