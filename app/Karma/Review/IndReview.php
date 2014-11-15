@@ -61,7 +61,7 @@ class IndReview extends \Eloquent
     public function getReview($reviewId)
     {
         return $this->where('reviewId', $reviewId)
-                    ->where('reviewReportStatus','N')
+            ->where('reviewReportStatus', 'N')
             ->first();
     }
 } 

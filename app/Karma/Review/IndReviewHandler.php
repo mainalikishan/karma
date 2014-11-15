@@ -56,7 +56,7 @@ class IndReviewHandler
                 'reviewText' => 'optional',
                 'reviewUserType' => 'required|enum=indUser,copUser'
             ),
-            6);
+        6);
 
         $user = \CustomHelper::postRequestUserDetailCheck($post->reviewUserType, $post->userToken, $post->reviewById);
 
@@ -120,23 +120,30 @@ class IndReviewHandler
             ),
             3);
 
-        //login check
-        IndUser::loginCheck($post->userToken, $post->userId);
+        // login check
+        $user = IndUser::loginCheck($post->userToken, $post->userId);
+        if ($user) {
+            $result = $this->indReview->getReview($post->reviewId);
 
-        $result = $this->indReview->getReview($post->reviewId);
-
-        if ($result) {
-            $copUser = CopUser::selectNameEmail($result->reviewById);
-            return array(
-                'reviewId' => $result->reviewId,
-                'copUserId' => $result->reviewById,
-                'copUserName' => $copUser['name'],
-                'reviewText' => $result->reviewText,
-                'ratingPoint' => $result->reviewRatingValue,
-                'reviewReportCount' => $result->reviewRatingValue,
-                'date' => \CustomHelper::humanDate($result->reviewAddedDate)
-            );
+            if ($result) {
+                if($result->reviewUserType=='cop') {
+                    $user = CopUser::selectNameEmail($result->reviewById);
+                }
+                else {
+                    $user = IndUser::selectNameEmail($result->reviewById);
+                }
+                return array(
+                    'reviewId' => $result->reviewId,
+                    'userId' => $result->reviewById,
+                    'userName' => $user['name'],
+                    'reviewText' => $result->reviewText,
+                    'ratingPoint' => $result->reviewRatingValue,
+                    'reviewReportCount' => $result->reviewRatingValue,
+                    'date' => \CustomHelper::humanDate($result->reviewAddedDate)
+                );
+            }
+            return Lang::get('errors.global.temporarily_unavailable');
         }
-        return Lang::get('errors.global.temporarily_unavailable');
+        throw new \Exception(\Lang::get('errors.invalid_token'));
     }
 }
