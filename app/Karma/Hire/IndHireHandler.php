@@ -13,6 +13,7 @@ use Karma\Log\CopInternalLog\CopInternalLogHandler;
 use Karma\Log\IndInternalLog\IndInternalLogHandler;
 use Karma\Notification\CopNotificationHandler;
 use Karma\Notification\IndNotificationHandler;
+use Karma\Setting\IndAppSetting;
 
 class IndHireHandler
 {
@@ -87,6 +88,12 @@ class IndHireHandler
             $type = '_HIRE_REQUEST_',
             $targetId = $hire->hireId
         );
+
+        // fire event when application status changed(added) by cop users
+        if (IndAppSetting::createAppSetting($post->hireToId, 'hireRequest')) {
+            \Event::fire('indUser.hire', $post);
+
+        }
         return true;
     }
 

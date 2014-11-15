@@ -129,12 +129,16 @@ class IndUserRegister
         $this->indUserCacheHandler->make($user, 'basic', $user->userId);
 
         if ($register['action'] == 'register') {
+
             $this->indDefaultSetting->init($user->userId);
+
+            // fire event when user sign up
+            \Event::fire('indUser.register', $user);
         }
 
         // set user locale and timezone
         $preference = IndPreference::selectPreferenceByUserId($user->userId);
-        if($preference) {
+        if ($preference) {
             $userLang = json_decode($preference->preferenceData)->langCode;
             \CustomHelper::setUserLocaleTimeZone($user->userAddressId, $userLang);
         }
