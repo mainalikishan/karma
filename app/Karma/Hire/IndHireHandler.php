@@ -14,7 +14,7 @@ use Karma\Log\IndInternalLog\IndInternalLogHandler;
 use Karma\Notification\CopNotificationHandler;
 use Karma\Notification\IndNotificationHandler;
 
-class IndHirehandler
+class IndHireHandler
 {
 
     /**

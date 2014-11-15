@@ -1,5 +1,5 @@
 <?php
-use Karma\Hire\IndHirehandler;
+use Karma\Hire\IndHireHandler;
 
 /**
  * User: kishan
@@ -10,13 +10,13 @@ class IndHireController extends ApiController
 {
 
     /**
-     * @var Karma\Hire\IndHirehandler
+     * @var Karma\Hire\IndHireHandler
      */
-    private $indHirehandler;
+    private $indHireHandler;
 
-    public function __construct(IndHirehandler $indHirehandler)
+    public function __construct(IndHireHandler $indHireHandler)
     {
-        $this->indHirehandler = $indHirehandler;
+        $this->indHireHandler = $indHireHandler;
     }
 
     public function requestHire()
@@ -24,7 +24,7 @@ class IndHireController extends ApiController
         $post = $this->postRequestHandler();
         if (is_object($post)) {
             try {
-                $return = $this->indHirehandler->request($post);
+                $return = $this->indHireHandler->request($post);
                 return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
@@ -38,7 +38,7 @@ class IndHireController extends ApiController
         $post = $this->postRequestHandler();
         if (is_object($post)) {
             try {
-                $return = $this->indHirehandler->response($post);
+                $return = $this->indHireHandler->response($post);
                 return $this->respondSuccess($return);
             } catch (Exception $e) {
                 return $this->respondUnprocessableEntity($e->getMessage());
