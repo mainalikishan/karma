@@ -52,13 +52,13 @@ class IndHireHandler
                 'hireToId' => 'required|integer',
                 'hireByUserType' => 'required|enum=indUser,copUser'
             ),
-        5);
+            5);
 
         $user = \CustomHelper::postRequestUserDetailCheck($post->hireByUserType, $post->token, $post->userId);
 
         $hire = $this->indHire->checkHireById($post->hireById, $post->hireToId, $user['type']);
         if ($hire) {
-            $hire->hireRequest = $hire->hireRequest=='N'? 'Y': 'N';
+            $hire->hireRequest = $hire->hireRequest == 'N' ? 'Y' : 'N';
             $hire->hireRequestDate = Carbon::now();
         } else {
             $hire =
@@ -90,7 +90,7 @@ class IndHireHandler
 
         // fire event when application status changed(added) by cop users
         if (IndAppSetting::createAppSetting($post->hireToId, 'hireRequest')) {
-            \Event::fire('indUser.hire', $post);
+            \Event::fire('indUser.hireRequest', $post);
 
         }
         return true;
@@ -108,12 +108,12 @@ class IndHireHandler
                 'hireByUserType' => 'required|enum=indUser,copUser',
                 'hireResponse' => 'required|enum=Accept,Ignore'
             ),
-         6);
+            6);
 
         $user = \CustomHelper::postRequestUserDetailCheck($post->hireByUserType, $post->token, $post->userId);
 
         $hire = $this->indHire->checkHireById($post->hireById, $post->hireToId, $user['type']);
-        if ($hire && $hire->hireRequest=='Y') {
+        if ($hire && $hire->hireRequest == 'Y') {
             $hire->hireResponse = $post->hireResponse;
             $hire->hireResponseDate = Carbon::now();
             $hire->save();
@@ -125,16 +125,24 @@ class IndHireHandler
                 IndInternalLogHandler::addInternalLog($post->userId, $post);
             }
 
-            // now add to notification
-            $message = "<strong>" . $user['name'] . "</strong>" . " accepted your hire request";
-            $notificationHandler = $post->hireByUserType=='copUser'? 'copNotificationHandler': 'copNotificationHandler';
-            $this->$notificationHandler->addNotification(
-                $userId = $post->hireById,
-                $details = $message,
-                $type = '_HIRE_REQUEST_ACCEPTED_',
-                $targetId = 0
-            );
+            if ($post->hireResponse == 'Accept') {
+                // now add to notification
+                $message = "<strong>" . $user['name'] . "</strong>" . " accepted your hire request";
+                $notificationHandler = $post->hireByUserType == 'copUser' ? 'copNotificationHandler' : 'copNotificationHandler';
+                $this->$notificationHandler->addNotification(
+                    $userId = $post->hireById,
+                    $details = $message,
+                    $type = '_HIRE_REQUEST_ACCEPTED_',
+                    $targetId = 0
+                );
 
+
+                // fire event when hire request accept
+                if (IndAppSetting::createAppSetting($post->hireToId, 'hireRequestConfirmation')) {
+                    \Event::fire('indUser.hireAccept', $post);
+
+                }
+            }
             return true;
         } else {
             throw new \Exception(\Lang::get('errors.something_went_wrong'));

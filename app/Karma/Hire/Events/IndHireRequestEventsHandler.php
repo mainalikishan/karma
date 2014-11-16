@@ -36,7 +36,7 @@ class IndHireRequestEventsHandler {
      */
     public function subscribe($events)
     {
-        $events->listen('indUser.hire', 'Karma\Hire\Events\IndHireRequestEventsHandler@onHire');
+        $events->listen('indUser.hireRequest', 'Karma\Hire\Events\IndHireRequestEventsHandler@onHire');
     }
 
 }

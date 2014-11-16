@@ -29,7 +29,7 @@
                                 <span style="color:#666666; font-size: 14px; line-height: 24px; ">
                                     Hi <span style=" font-weight: bold;">{{$toName}}</span> , <br/> <br/>
 
-                                   <span style=" font-weight: bold;"> {{$fromName}} </span> has confirmed that you're hired on.<span
+                                   <span style=" font-weight: bold;"> {{$fromName}} </span> wants to hire you  on <span
                                         style=" font-weight: bold;">Jagirr</span>
 
                                     <br/><br/>

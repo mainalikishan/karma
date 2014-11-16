@@ -69,6 +69,7 @@ class IndReviewHandler
 
         // check hire or not
         if (!$this->indHire->isHired($reviewById, $reviewToId, $user['type'])) {
+           //
             return false;
         }
 
