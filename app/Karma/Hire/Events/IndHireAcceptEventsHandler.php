@@ -19,7 +19,7 @@ class IndHireAcceptEventsHandler {
 
     public function __construct(IndHireAcceptMailer $indHireAcceptMailer)
     {
-        $this->$indHireAcceptMailer = $indHireAcceptMailer;
+        $this->indHireAcceptMailer = $indHireAcceptMailer;
     }
 
 
@@ -28,7 +28,7 @@ class IndHireAcceptEventsHandler {
      */
     public function onAccept($data)
     {
-        $this->$indHireAcceptMailer->sendEmail($data);
+        $this->indHireAcceptMailer->sendEmail($data);
     }
 
     /**
